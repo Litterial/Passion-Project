@@ -141,13 +141,13 @@ STATIC_URL = '/static/'
 # }
 
 TINYMCE_DEFAULT_CONFIG = {
-    #'mode': "textareas",
+    'mode': "textareas",
     'theme': "advanced",
     'plugins': '''pagebreak, style, layer, table, save, advhr, advimage, advlink,
                emotions, iespell, inlinepopups, insertdatetime, preview, media,
                searchreplace, print, contextmenu, paste, directionality,
                fullscreen, noneditable, visualchars, nonbreaking, xhtmlxtras,
-               template, wordcount, advlist, autosave''',
+               template, wordcount, advlist, autosave, latex''',
 
     'theme_advanced_buttons1': '''bold, italic, underline, strikethrough, |,
                                justifyleft, justifycenter, justifyright,
@@ -156,7 +156,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons2': '''bullist, numlist, |, outdent, indent,
                                blockquote, |, undo, redo, |, link, unlink, |,
                                forecolor, backcolor,''',
-    'theme_advanced_buttons3': '''tablecontrols, |, hr, sub, sup, |, charmap''',
+    'theme_advanced_buttons3': '''tablecontrols, |, hr, sub, sup, |, charmap, |, latex''',
 
     'theme_advanced_toolbar_location': "top",
     'theme_advanced_toolbar_align': "left",
