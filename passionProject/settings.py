@@ -156,7 +156,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons2': '''bullist, numlist, |, outdent, indent,
                                blockquote, |, undo, redo, |, link, unlink, |,
                                forecolor, backcolor,''',
-    'theme_advanced_buttons3': '''tablecontrols, |, hr, sub, sup, |, charmap, |, latex''',
+    'theme_advanced_buttons3': '''tablecontrols, |, hr, sub, sup, |, charmap, |, latex,''',
 
     'theme_advanced_toolbar_location': "top",
     'theme_advanced_toolbar_align': "left",
