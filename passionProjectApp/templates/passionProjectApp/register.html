@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
 </head>
 <body>
 <form method="POST">
-    {% if errors %}
-    {{errors}}
-    {% endif %}
     {% csrf_token %}
     {{form.as_p}}
     <button>Submit</button>

@@ -1,4 +1,6 @@
-.noResize
+.errorlist
 {
-    resize:none;
+    color:green;
+    list-style-type: none;
+
 }

@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{form.media}}
 </head>
 <body>
 <h1>This is the template to answer questions</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+</form>
 
 </body>
 </html>

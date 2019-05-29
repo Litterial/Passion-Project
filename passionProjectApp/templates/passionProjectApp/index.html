@@ -6,6 +6,11 @@
 </head>
 <body>
 <h1>This is the index template for the passion project</h1>
-
+{% if allquestions %}
+{% for x in allquestions %}
+<a href="{% url 'answer' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
+{% autoescape off %} {{x.question}} {% endautoescape %}
+{% endfor%}
+{% endif %}
 </body>
 </html>
