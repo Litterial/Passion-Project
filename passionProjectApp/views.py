@@ -48,9 +48,23 @@ def ask_read(request,ID):
     print(type(question))
     allAnswers=Answer.objects.filter(parent=ID)
     allQuestionComments=RealQuestionComment.objects.filter(parent=ID)
-    allAnswerComments=AnswerComment.objects.filter(parent_id=ID)
+    allAnswerComments=AnswerComment.objects.all()
     print(allAnswers)
-    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":allAnswerComments}
+
+    # print(allAnswers[1].parent)
+    placeholder=[]
+    for x in allAnswers:
+        for y in allAnswerComments:
+            if (len(AnswerComment.objects.filter(parent=x.id))>0):
+                print(len(AnswerComment.objects.filter(parent=x.id)))
+                print(AnswerComment.objects.filter(parent=x.id))
+                placeholder.append(AnswerComment.objects.filter(parent=x.id))
+
+    print("______")
+    print(placeholder)
+    # print(allAnswers.parent)
+    # print(AnswerComment.objects.filter(parent=allAnswers[1].id))
+    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,}
     return render(request,"passionProjectApp/ask_read.html",context)
 
 
