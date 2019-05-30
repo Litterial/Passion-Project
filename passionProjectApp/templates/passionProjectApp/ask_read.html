@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> This is the template when you can read the question</h1>
+{% if question %}
+<strong> {% autoescape off %}{{question.title}} {% endautoescape %}</strong>
+<p>{% autoescape off%}{{question.question}} {% endautoescape %}</p>
+{{question.date_created}}
+{% endif %}
+<p></p>
+<a href="{% url 'answer' question.id %}">Answer</a>
+
+<p></p>
+<h1>Question comments</h1>
+{% if question_comment %}
+{% for x in question_comment %}
+{% autoescape off %} {{x.message}} {% endautoescape %}
+{% endfor %}
+{% endif %}
+<p></p>
+<h1>Answers</h1>
+<p></p>
+{% if answers %}
+{% for x in answers %}
+{% autoescape off%} {{x.message}} {% endautoescape %}
+{% endfor %}
+{% endif %}
+<p></p>
+<h1>Answer Comment</h1>
+{% if answer_comment %}
+{% for x in answer_comment %}
+{% autoescape off %} {{x.message}} {% endautoescape %}
+{% endfor %}
+{% endif %}
+
+</body>
+</html>
