@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1> This is the template when you can read the question</h1>
-{{user.username}}
+{{request.user}}
 <p><a href="{% url 'logout' %}">logout</a></p>
 
 <p></p>
@@ -15,9 +15,17 @@
 <p></p>
 
 {% if question %}
+{{question.author}}
 <strong> {% autoescape off %}{{question.title}} {% endautoescape %}</strong>
 <p>{% autoescape off%}{{question.question}} {% endautoescape %}</p>
 {{question.date_created}}
+{% if request.user == question.author %}
+<a href="{% url 'ask_edit' question.id %}">Edit a Question</a>
+<a href="{% url 'ask_del' question.id %}">Delete on a Question</a>
+
+{% else %}
+They don't match
+{% endif %}
 {% endif %}
 <p></p>
 <p></p>
@@ -25,6 +33,7 @@
 {% if question_comment %}
 {% for x in question_comment %}
 {% autoescape off %} {{x.message}} {% endautoescape %}
+
 {% endfor %}
 {% endif %}
 <a href="{% url 'comment_ask' question.id %}">Comment on a Question</a>
@@ -33,6 +42,8 @@
 {% if answers %}
 {% for x in answers %}
 {% autoescape off%} <h2>This is an answer</h2>{{x.message}} {% endautoescape %}
+<a href="{% url 'answer_edit' x.id %}">Edit an answer</a>
+<a href="{% url 'answer_del' x.id %}">Delete on an answer</a>
 <p></p>
 <h2>Answer Comment</h2>
 {% if answer_comment %}

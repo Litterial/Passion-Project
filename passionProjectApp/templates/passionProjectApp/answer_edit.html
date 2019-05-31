@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{form.media}}
 </head>
 <body>
 <h1>This is the template to edit answers </h1>
+{{answer.author}}
+{% if request.user == answer.author %}
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+</form>
+{% else %}
+<h1>You can't come on this page</h1>
+{% endif %}
 
 </body>
 </html>

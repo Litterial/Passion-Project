@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .forms import RealQuestionForm,RealQuestion,UserForm,AnswerForm,Answer,RealQuestionComment,AnswerComment,CommentAnswerForm,CommentQuestionForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import datetime
 from django.http import HttpResponse
 
 # Create your views here.
@@ -38,35 +39,38 @@ def ask(request):
             context={'form':form,'errors':form.errors}
             return render(request,'passionProjectApp/ask.html',context)
     return render(request,"passionProjectApp/ask.html",{"form":form})
-def ask_edit(request):
-    return render(request,"passionProjectApp/ask_edit.html",)
+def ask_edit(request,ID):
+    questionID=get_object_or_404(RealQuestion,pk=ID)
+    print(questionID.author)
+    form=RealQuestionForm(instance=questionID)
+    if request.method=='POST':
+        print(form)
+        form=RealQuestionForm(request.POST,instance=questionID)
+        print("new form")
+        print(form)
+        if form.is_valid():
+            print('form was valid')
+            questionID.last_update=datetime.datetime.utcnow()
+            form.save()
+            return redirect("ask_read",questionID.id)
+        else:
+            print("i'm on else")
+            form=RealQuestionForm(request.POST,instance=questionID)
+            context={"form":form,"errors":form.errors,"question":questionID}
+            return render(request,"passionProjectApp/ask_edit.html",context)
+    return render(request,"passionProjectApp/ask_edit.html",{'form':form,"question":questionID})
 def ask_del(request):
     return render(request,"passionProjectApp/ask_del.html")
 def ask_read(request,ID):
     question=get_object_or_404(RealQuestion,pk=ID)
-    print(question)
-    print(type(question))
     allAnswers=Answer.objects.filter(parent=ID)
     allQuestionComments=RealQuestionComment.objects.filter(parent=ID)
     allAnswerComments=AnswerComment.objects.all()
-    print("allanswers")
-    print(allAnswers)
-
-    # print(allAnswers[1].parent)
     answercomment_child=[]
     for x in allAnswers:
         for y in allAnswerComments:
             if (y.parent==x):
-                print(y)
-            # if (len(AnswerComment.objects.filter(parent=x.id))>0):
-            #     print(len(AnswerComment.objects.filter(parent=x.id)))
-            #     print(AnswerComment.objects.filter(parent=x.id))
                 answercomment_child.append(y)
-
-    print("______")
-    print(answercomment_child)
-    # print(allAnswers.parent)
-    # print(AnswerComment.objects.filter(parent=allAnswers[1].id))
     context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":answercomment_child}
     return render(request,"passionProjectApp/ask_read.html",context)
 
@@ -84,8 +88,26 @@ def answer(request,ID):
             context={'form':form,'errors':form.errors}
             return render(request,"passionProjectApp/answer.html",context)
     return render(request,"passionProjectApp/answer.html",{"form":form})
-def answer_edit(request):
-    return render(request,"passionProjectApp/answer_edit.html")
+def answer_edit(request,ID):
+    answerID=get_object_or_404(Answer,pk=ID)
+    print(answerID.author)
+    form=AnswerForm(instance=answerID)
+    if request.method=='POST':
+        print(form)
+        form=AnswerForm(request.POST,instance=answerID)
+        print("new form")
+        print(form)
+        if form.is_valid():
+            print('form was valid')
+            answerID.last_update=datetime.datetime.utcnow()
+            form.save()
+            return redirect("ask_read",answerID.parent.id)
+        else:
+            print("i'm on else")
+            form=AnswerForm(request.POST,instance=AnswerForm)
+            context={"form":form,"errors":form.errors,"answer":answerID}
+        return render(request,"passionProjectApp/answer_edit.html",context)
+    return render(request,"passionProjectApp/answer_edit.html",{'form':form,"question":answerID})
 def answer_del(request):
     return render(request,"passionProjectApp/answer_del.html")
 
