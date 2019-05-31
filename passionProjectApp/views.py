@@ -91,19 +91,18 @@ def answer(request,ID):
 def answer_edit(request,ID):
     answerID=get_object_or_404(Answer,pk=ID)
     print(answerID.author)
-    form=AnswerForm(instance=answerID)
+    form=AnswerForm(None, instance=answerID)
     if request.method=='POST':
-        print(form)
-        form=AnswerForm(request.POST,instance=answerID)
         print("new form")
+        form=AnswerForm(request.POST,instance=answerID)
         print(form)
         if form.is_valid():
+            form=AnswerForm(request.POST,instance=answerID)
             print('form was valid')
             answerID.last_update=datetime.datetime.utcnow()
             form.save()
             return redirect("ask_read",answerID.parent.id)
         else:
-            print("i'm on else")
             form=AnswerForm(request.POST,instance=answerID)
             context={"form":form,"errors":form.errors,"answer":answerID}
         return render(request,"passionProjectApp/answer_edit.html",context)
@@ -148,7 +147,7 @@ def comment_ask_del(request):
     return render(request,"passionProjectApp/comment_ask_del.html")
 
 @login_required
-def comment_answer(request,ID):
+def comment_answer(request, ID):
     parentanswerID=get_object_or_404(Answer,pk=ID)
     form=CommentAnswerForm(request.POST or None)
     if request.method=="POST":
@@ -160,8 +159,28 @@ def comment_answer(request,ID):
             context={"form":form,"errors":form.errors}
             return render(request,"passionProjectApp/comment_answer.html",context)
     return render(request,'passionProjectApp/comment_answer.html',{"form":form})
-def comment_answer_edit(request):
-    return render(request,"passionProjectApp/comment_answer_edit.html")
+def comment_answer_edit(request, commentID, grandparentID):
+    answerCommentID=get_object_or_404(AnswerComment,pk=commentID)
+    questionID=get_object_or_404(RealQuestion,pk=grandparentID)
+    print(answerCommentID.author)
+    form=CommentAnswerForm(instance=answerCommentID)
+    if request.method=='POST':
+        print(form)
+        form=CommentAnswerForm(request.POST,instance=answerCommentID)
+        print("new form")
+        print(form)
+        if form.is_valid():
+            print('form was valid')
+            answerCommentID.last_update=datetime.datetime.utcnow()
+            form.save()
+            return redirect("ask_read",questionID.id)
+        else:
+            print("i'm on else")
+            form=CommentAnswerForm(request.POST,instance=answerCommentID)
+            context={"form":form,"errors":form.errors,"answerComment":answerCommentID}
+        return render(request,"passionProjectApp/comment_ask_edit.html",context)
+    return render(request,"passionProjectApp/comment_answer_edit.html",{'form':form,"answerComment":answerCommentID})
+
 def comment_answer_del(request):
     return render(request,"passionProjectApp/comment_answer_del.html")
 

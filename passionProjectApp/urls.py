@@ -23,7 +23,7 @@ urlpatterns=[
     path('ask/comment/<int:ID>/delete',views.comment_ask_del,name='comment_ask_del'),
 
     path('answer/comment/<int:ID>/',views.comment_answer,name='comment_answer'),
-    path('answer/comment/<int:ID>/edit',views.comment_answer_edit,name='comment_answer_edit'),
+    path('answer/comment/<int:commentID>/edit/<int:grandparentID>/',views.comment_answer_edit,name='comment_answer_edit'),
     path('answer/comment/<int:ID>/delete',views.comment_answer_del,name='comment_answer_del'),
 
 

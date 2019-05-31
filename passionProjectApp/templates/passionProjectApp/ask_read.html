@@ -33,9 +33,10 @@ They don't match
 {% if question_comment %}
 {% for x in question_comment %}
 {% autoescape off %} {{x.message}} {% endautoescape %}
-<a href="{% url 'comment_ask_edit' question.id %}">Edit Comment</a>
-<a href="{% url 'comment_ask_del' question.id %}">Delete Comment</a>
-
+{% if request.user == x.author %}
+<a href="{% url 'comment_ask_edit' question.id %}">Edit Q Comment</a>
+<a href="{% url 'comment_ask_del' question.id %}">Delete  Q Comment</a>
+{% endif %}
 {% endfor %}
 {% endif %}
 <p><a href="{% url 'comment_ask' question.id %}">Comment on a Question</a></p>
@@ -52,6 +53,10 @@ They don't match
 {% for y in answer_comment %}
 {% if y.parent == x %}
 {% autoescape off %}{{y.message}} {% endautoescape %}
+{% if request.user == y.author %}
+<a href="{% url 'comment_answer_edit' y.id  x.parent_id %}">Edit A comment</a>
+<a href="{% url 'comment_answer_del' y.id %}">Delete A answer</a>
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}

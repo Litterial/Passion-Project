@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{form.media}}
 </head>
 <body>
-
+<h1>This is the template to edit comments for answers</h1>
+{{answerComment.author}}
+{% if request.user == answerComment.author %}
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+</form>
+{% else %}
+<h1>{{request.user}}, please log-in as {{answerComment.author}}</h1>
+{% endif %}
 </body>
 </html>
