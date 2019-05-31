@@ -13,6 +13,15 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields=['message']
+class CommentQuestionForm(forms.ModelForm):
+    class Meta:
+        model = RealQuestionComment
+        fields=['message']
+class CommentAnswerForm(forms.ModelForm):
+    class Meta:
+        model = AnswerComment
+        fields=['message']
+
 
 
 class UserForm(forms.Form):

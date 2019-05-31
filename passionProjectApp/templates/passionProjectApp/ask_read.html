@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{form.media}}
 </head>
 <body>
 <h1> This is the template when you can read the question</h1>
+{{user.username}}
+<p><a href="{% url 'logout' %}">logout</a></p>
+
+<p></p>
+<a href="{% url 'ask' %}"> Ask a question</a>
+<p></p>
+
 {% if question %}
 <strong> {% autoescape off %}{{question.title}} {% endautoescape %}</strong>
 <p>{% autoescape off%}{{question.question}} {% endautoescape %}</p>
 {{question.date_created}}
 {% endif %}
 <p></p>
-<a href="{% url 'answer' question.id %}">Answer</a>
-
 <p></p>
 <h1>Question comments</h1>
 {% if question_comment %}
@@ -21,21 +27,29 @@
 {% autoescape off %} {{x.message}} {% endautoescape %}
 {% endfor %}
 {% endif %}
+<a href="{% url 'comment_ask' question.id %}">Comment on a Question</a>
 <p></p>
-<h1>Answers</h1>
 <p></p>
 {% if answers %}
 {% for x in answers %}
-{% autoescape off%} {{x.message}} {% endautoescape %}
+{% autoescape off%} <h2>This is an answer</h2>{{x.message}} {% endautoescape %}
+<p></p>
+<h2>Answer Comment</h2>
+{% if answer_comment %}
+{% for y in answer_comment %}
+{% if y.parent == x %}
+{% autoescape off %}{{y.message}} {% endautoescape %}
+{% endif %}
+{% endfor %}
+{% endif %}
+<p><a href="{% url 'comment_answer' x.id%}">Comment on an answer</a></p>
+
 {% endfor %}
 {% endif %}
 <p></p>
-<h1>Answer Comment</h1>
-{% if answer_comment %}
-{% for x in answer_comment %}
-{% autoescape off %} {{x.message}} {% endautoescape %}
-{% endfor %}
-{% endif %}
+
+<a href="{% url 'answer' question.id%}">Your answer</a>
+
 
 </body>
 </html>
