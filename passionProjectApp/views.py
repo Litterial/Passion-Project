@@ -104,10 +104,10 @@ def answer_edit(request,ID):
             return redirect("ask_read",answerID.parent.id)
         else:
             print("i'm on else")
-            form=AnswerForm(request.POST,instance=AnswerForm)
+            form=AnswerForm(request.POST,instance=answerID)
             context={"form":form,"errors":form.errors,"answer":answerID}
         return render(request,"passionProjectApp/answer_edit.html",context)
-    return render(request,"passionProjectApp/answer_edit.html",{'form':form,"question":answerID})
+    return render(request,"passionProjectApp/answer_edit.html",{'form':form,"answer":answerID})
 def answer_del(request):
     return render(request,"passionProjectApp/answer_del.html")
 
@@ -124,8 +124,26 @@ def comment_ask(request,ID):
             context={"form":form,"errors":form.errors}
             return render(request,'passionProjectApp/comment_ask.html',context)
     return render(request,'passionProjectApp/comment_ask.html',{"form":form})
-def comment_ask_edit(request):
-    return render(request,"passionProjectApp/comment_ask_edit.html")
+def comment_ask_edit(request,ID):
+    questionCommentID=get_object_or_404(RealQuestionComment,pk=ID)
+    print(questionCommentID.author)
+    form=CommentQuestionForm(instance=questionCommentID)
+    if request.method=='POST':
+        print(form)
+        form=CommentQuestionForm(request.POST,instance=questionCommentID)
+        print("new form")
+        print(form)
+        if form.is_valid():
+            print('form was valid')
+            questionCommentID.last_update=datetime.datetime.utcnow()
+            form.save()
+            return redirect("ask_read",questionCommentID.parent.id)
+        else:
+            print("i'm on else")
+            form=CommentQuestionForm(request.POST,instance=questionCommentID)
+            context={"form":form,"errors":form.errors,"questionComment":questionCommentID}
+        return render(request,"passionProjectApp/comment_ask_edit.html",context)
+    return render(request,"passionProjectApp/comment_ask_edit.html",{'form':form,"questionComment":questionCommentID})
 def comment_ask_del(request):
     return render(request,"passionProjectApp/comment_ask_del.html")
 

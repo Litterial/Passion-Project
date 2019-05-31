@@ -8,6 +8,7 @@
 <body>
 <h1>This is the template to edit answers </h1>
 {{answer.author}}
+{{request.user}}
 {% if request.user == answer.author %}
 <form method="post">
     {% csrf_token %}

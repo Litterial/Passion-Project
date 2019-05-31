@@ -19,8 +19,8 @@ urlpatterns=[
     path('answer/delete/<int:ID>/',views.answer_del,name="answer_del"),
 
     path('ask/comment/<int:ID>/',views.comment_ask,name='comment_ask'),
-    path('ask/comment/<int:ID>/edit',views.comment_answer_edit,name='comment_answer_edit'),
-    path('ask/comment/<int:ID>/delete',views.comment_answer_del,name='comment_answer_del'),
+    path('ask/comment/<int:ID>/edit',views.comment_ask_edit,name='comment_ask_edit'),
+    path('ask/comment/<int:ID>/delete',views.comment_ask_del,name='comment_ask_del'),
 
     path('answer/comment/<int:ID>/',views.comment_answer,name='comment_answer'),
     path('answer/comment/<int:ID>/edit',views.comment_answer_edit,name='comment_answer_edit'),

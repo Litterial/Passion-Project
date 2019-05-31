@@ -33,10 +33,12 @@ They don't match
 {% if question_comment %}
 {% for x in question_comment %}
 {% autoescape off %} {{x.message}} {% endautoescape %}
+<a href="{% url 'comment_ask_edit' question.id %}">Edit Comment</a>
+<a href="{% url 'comment_ask_del' question.id %}">Delete Comment</a>
 
 {% endfor %}
 {% endif %}
-<a href="{% url 'comment_ask' question.id %}">Comment on a Question</a>
+<p><a href="{% url 'comment_ask' question.id %}">Comment on a Question</a></p>
 <p></p>
 <p></p>
 {% if answers %}
