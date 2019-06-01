@@ -1,9 +1,10 @@
-from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
+from django.shortcuts import render,redirect,get_object_or_404,HttpResponse,HttpResponseRedirect
 from .forms import RealQuestionForm,RealQuestion,UserForm,AnswerForm,Answer,RealQuestionComment,AnswerComment,CommentAnswerForm,CommentQuestionForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login,logout
+from django.utils.http import is_safe_url
 import datetime
-from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -16,7 +17,17 @@ def register(request):
     if request.method =="POST":
         if form.is_valid():
             newuser=User.objects.create_user(username=request.POST['username'],password=request.POST['password'])
-            return render(request,"passionProjectApp/registerPass.html")
+            login_created_author=authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password']) #checks to see if this is a valid user, if so return a user object
+            login(request,login_created_author) #request that this user is logged in
+            redirect_to = request.GET.get('next', '') # use get or Post as per your requirement
+            safe_url=is_safe_url(redirect_to,allowed_hosts=request.get_host())
+            print(redirect_to)
+            print(safe_url)
+            print(request.get_host())
+            if safe_url:
+                return redirect(redirect_to)
+            print('not save')
+            return redirect('register')
         else:
             form=UserForm(request.POST or None)
             context={'form':form,'errors':form.errors}

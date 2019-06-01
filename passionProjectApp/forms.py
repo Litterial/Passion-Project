@@ -36,3 +36,4 @@ class UserForm(forms.Form):
             print("error")
             raise forms.ValidationError("This user already exist")
         return userData
+

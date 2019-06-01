@@ -10,7 +10,7 @@
 {% endif %}
 
 
-Not a member?<a href = "{% url register %}?next={{request.REQUEST.NEXT|urlencode}}">Sign up here</a>
+Not a member?<a href = "{% url 'register' %}?next={{next|urlencode}}">Sign up here</a>
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <div>
