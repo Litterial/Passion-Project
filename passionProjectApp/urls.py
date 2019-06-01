@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns=[
     path("",views.index,name='index'),
-    path('register/',views.register,name='register'),
+    path('register/',views.register,{'form_class':RegistrationFormWithNext,'profile_callback':UserProfile.objects.create},name='register'),
     path('registerpass/',views.registerPass,name='registerpass'),
 
     path('ask/read/<int:ID>/',views.ask_read,name='ask_read'),
@@ -26,8 +26,9 @@ urlpatterns=[
     path('answer/comment/<int:commentID>/edit/<int:grandparentID>/',views.comment_answer_edit,name='comment_answer_edit'),
     path('answer/comment/<int:ID>/delete',views.comment_answer_del,name='comment_answer_del'),
 
-
-
+    path('test/',views.test,name='test'),
+    path('changename/<str:name_change>/',views.nameChange,name='nameChange'),
+    path('nameReset/',views.nameReset,name='nameReset'),
 
     path('search/',views.search,name='search'),
 ]

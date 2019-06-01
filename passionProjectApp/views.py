@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
 from .forms import RealQuestionForm,RealQuestion,UserForm,AnswerForm,Answer,RealQuestionComment,AnswerComment,CommentAnswerForm,CommentQuestionForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -180,10 +180,23 @@ def comment_answer_edit(request, commentID, grandparentID):
             context={"form":form,"errors":form.errors,"answerComment":answerCommentID}
         return render(request,"passionProjectApp/comment_ask_edit.html",context)
     return render(request,"passionProjectApp/comment_answer_edit.html",{'form':form,"answerComment":answerCommentID})
-
 def comment_answer_del(request):
     return render(request,"passionProjectApp/comment_answer_del.html")
 
+def test(request):
+    name='Koichi'
 
+    if 'name_change' in request.COOKIES:
+        name=request.COOKIES['name_change']
+    return HttpResponse(name)
+
+def nameChange(request,name_change):
+    response = redirect('test')
+    response.set_cookie('name_change',name_change)
+    return response
+def nameReset(request):
+    response=redirect('test')
+    response.delete_cookie('name_change')
+    return response
 def search (request):
     return render(request,"passionProjectApp/search.html")
