@@ -1,11 +1,17 @@
-
+var cookie;
 function SaveForm(name,value)
 {
-    var cookie=document.cookie=name+ "=" +(value);
+    console.log(value);
+    cookie=document.cookie=name+ "=" +encodeURIComponent(value+';')+ "; domain="+window.location.hostname+"; path=/";
     console.log(cookie);
-    cookie = document.cookie = "message= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+
+}
+function deleteCookie()
+{
+    cookie = document.cookie = "message= ; expires = Thu, 01 Jan 1970 00:00:00 GMT; domain="+window.location.hostname+"; path=/";
     console.log(cookie);
 }
+
 //
 // othertest[0].addEventListener('input',updatevalue);
 // console.log('hi');

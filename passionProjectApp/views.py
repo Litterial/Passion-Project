@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.utils.http import is_safe_url
 import datetime
+import urllib.request
 
 # Create your views here.
 def index(request):
@@ -90,11 +91,29 @@ def ask_read(request,ID):
 @login_required
 def answer(request,ID):
     parentquestionID=get_object_or_404(RealQuestion,pk=ID)
+    if 'message' in request.COOKIES:
+        print("cookies")
+        print(request.COOKIES['message'])
+        decode=urllib.request.unquote(request.COOKIES['message'])
+        print(decode)
+        if decode[-1] ==";":
+            decode=decode[:-1]
+        cookie={'message':decode}
+        print(cookie)
+        form=AnswerForm(cookie)
+        if form.is_valid():
+            Answer.objects.create(message=decode, parent=parentquestionID,author=request.user)
+            return redirect('ask_read',parentquestionID.id)
+        else:
+            print('not valid')
+            form=AnswerForm(request.POST or None)
+            context={'form':form,'errors':form.errors}
+            return render(request,"passionProjectApp/answer.html",context)
     form=AnswerForm(request.POST or None)
     if request.method=="POST":
         if form.is_valid():
             Answer.objects.create(message=request.POST['message'],parent=parentquestionID,author=request.user)
-            return redirect('index')
+            return redirect('ask_read',parentquestionID)
         else:
             form=AnswerForm(request.POST or None)
             context={'form':form,'errors':form.errors}

@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     {{form.media}}
+    {% load static %}
+    <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
 </head>
 <body>
 <h1>This is the template to answer questions</h1>
-<form method="POST">
+<form onsubmit="deleteCookie()" method="POST">
     {% csrf_token %}
     {{form.as_p}}
     <button>Submit</button>

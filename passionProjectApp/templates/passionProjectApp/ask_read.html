@@ -7,7 +7,7 @@
     {% load static %}
     <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
 </head>
-<body>
+<body onload="deleteCookie()">
 <h1> This is the template when you can read the question</h1>
 {{request.user}}
 <p><a href="{% url 'logout' %}">logout</a></p>
