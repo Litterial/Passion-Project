@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     {{form.media}}
+    {% load static %}
+    <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
 </head>
 <body>
 <h1> This is the template when you can read the question</h1>
@@ -67,12 +69,13 @@ They don't match
 <p></p>
 
 <a href="{% url 'answer' question.id%}">Your answer</a>
-<p><form method ='POST' action="{% url 'answer' question.id %}">
+
+<form  onsubmit="putCookie()" class="askForm" method ='POST' action="{% url 'answer' question.id %}">
     {% csrf_token %}
     {{form.as_p}}
+<p><button >Submit</button></p>
+</form>
 
-<p><button>Submit</button></p>
-</form></p>
 
 </body>
 </html>

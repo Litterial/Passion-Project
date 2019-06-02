@@ -82,7 +82,8 @@ def ask_read(request,ID):
         for y in allAnswerComments:
             if (y.parent==x):
                 answercomment_child.append(y)
-    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":answercomment_child}
+    form=AnswerForm(request.POST or None)
+    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":answercomment_child,"form":form}
     return render(request,"passionProjectApp/ask_read.html",context)
 
 
