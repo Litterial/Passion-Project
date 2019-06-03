@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    {{form.media}}
+    <link rel="stylesheet" href="{% static 'passionProjectApp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
+    <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
+</head>
+<body>
+{% if request.user.is_authenticated %}
+<div class="topbar">
+    <div class ='logo'>Placeholder logo</div>
+    <form class="search">
+        <input type="text" name="search" placeholder="Search...">
+    </form>
+    <div class='registration'>
+        <span class='login'>{{request.user}}</span> <a class='registerlink' href="{% url 'logout' %}"><button type="button" class=" btn registerbutton">Sign Out</button></a></div>
+</div>
+{% else %}
+<div class="topbar">
+    <div class ='logo'>Placeholder logo</div>
+    <form class="search">
+        <input type="text" name="search" placeholder="Search...">
+    </form>
+    <div class='registration'>
+        <a class='login' href="{% url 'login' %}">Login</a> <a class='registerlink' href="{% url 'register' %}"><button type="button" class=" btn registerbutton">SignUp</button></a></div>
+</div>
+{% endif %}
+
+{% block body %}
+
+{% endblock body %}
+
+
+</body>
+</html>

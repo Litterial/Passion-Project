@@ -5,7 +5,16 @@
     <title>Title</title>
 </head>
 <body>
+{% if request.user == answer.author %}
 <h1>This is the template to delete answers </h1>
-
+<form method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button>Submit</button>
+</form>
+<a href="{% url 'ask_read' answer.parent.id %}"><button>Return to previous page</button></a>
+{% else %}
+<h1>GET THE FUCK OFF THIS PAGE. YOU AIN'T THE OWNER YA FOOL</h1>
+{% endif %}
 </body>
 </html>

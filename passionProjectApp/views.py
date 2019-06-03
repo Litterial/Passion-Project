@@ -20,11 +20,13 @@ def register(request):
             newuser=User.objects.create_user(username=request.POST['username'],password=request.POST['password'])
             login_created_author=authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password']) #checks to see if this is a valid user, if so return a user object
             login(request,login_created_author) #request that this user is logged in
-            redirect_to = request.GET.get('next', '') # use get or Post as per your requirement
+            redirect_to = request.GET.get('next', None) # use get or Post as per your requirement
             safe_url=is_safe_url(redirect_to,allowed_hosts=request.get_host())
             print(redirect_to)
             print(safe_url)
             print(request.get_host())
+            if redirect_to==None:
+                return redirect('index')
             if safe_url:
                 return redirect(redirect_to)
             print('not save')
@@ -71,8 +73,15 @@ def ask_edit(request,ID):
             context={"form":form,"errors":form.errors,"question":questionID}
             return render(request,"passionProjectApp/ask_edit.html",context)
     return render(request,"passionProjectApp/ask_edit.html",{'form':form,"question":questionID})
-def ask_del(request):
-    return render(request,"passionProjectApp/ask_del.html")
+@login_required
+def ask_del(request,ID):
+    questionID=get_object_or_404(RealQuestion,pk=ID)
+    form=RealQuestionForm(instance=questionID)
+    if request.method=='POST':
+        questionID.delete()
+        return redirect('index')
+    context={'form':form,'question':questionID}
+    return render(request,"passionProjectApp/ask_del.html",context)
 def ask_read(request,ID):
     question=get_object_or_404(RealQuestion,pk=ID)
     allAnswers=Answer.objects.filter(parent=ID)
@@ -138,8 +147,16 @@ def answer_edit(request,ID):
             context={"form":form,"errors":form.errors,"answer":answerID}
         return render(request,"passionProjectApp/answer_edit.html",context)
     return render(request,"passionProjectApp/answer_edit.html",{'form':form,"answer":answerID})
-def answer_del(request):
-    return render(request,"passionProjectApp/answer_del.html")
+@login_required
+def answer_del(request,ID):
+    answerID=get_object_or_404(Answer,pk=ID)
+    tempanswerID=answerID
+    form=AnswerForm(instance=answerID)
+    context={'form':form,'answer':answerID}
+    if request.method=='POST':
+        answerID.delete()
+        return redirect('ask_read',tempanswerID.parent.id)
+    return render(request,"passionProjectApp/answer_del.html",context)
 
 @login_required
 def comment_ask(request,ID):
@@ -174,8 +191,15 @@ def comment_ask_edit(request,ID):
             context={"form":form,"errors":form.errors,"questionComment":questionCommentID}
         return render(request,"passionProjectApp/comment_ask_edit.html",context)
     return render(request,"passionProjectApp/comment_ask_edit.html",{'form':form,"questionComment":questionCommentID})
-def comment_ask_del(request):
-    return render(request,"passionProjectApp/comment_ask_del.html")
+def comment_ask_del(request,ID):
+    questionCommentID=get_object_or_404(RealQuestionComment,pk=ID)
+    tempquestionCommentID=questionCommentID
+    form=AnswerForm(instance=questionCommentID)
+    context={'form':form,'questionComment':questionCommentID}
+    if request.method=='POST':
+        questionCommentID.delete()
+        return redirect('ask_read',tempquestionCommentID.parent.id)
+    return render(request,"passionProjectApp/comment_ask_del.html",context)
 
 @login_required
 def comment_answer(request, ID):
@@ -211,8 +235,17 @@ def comment_answer_edit(request, commentID, grandparentID):
             context={"form":form,"errors":form.errors,"answerComment":answerCommentID}
         return render(request,"passionProjectApp/comment_ask_edit.html",context)
     return render(request,"passionProjectApp/comment_answer_edit.html",{'form':form,"answerComment":answerCommentID})
-def comment_answer_del(request):
-    return render(request,"passionProjectApp/comment_answer_del.html")
+def comment_answer_del(request,commentID,grandparentID):
+    answerCommentID=get_object_or_404(AnswerComment,pk=commentID)
+    questionID=get_object_or_404(RealQuestion,pk=grandparentID)
+    print(questionID)
+    print(answerCommentID)
+    form=CommentAnswerForm(instance=answerCommentID)
+    context={'form':form,'answerComment':answerCommentID,"question":questionID}
+    if request.method=='POST':
+        answerCommentID.delete()
+        return redirect('ask_read',questionID.id)
+    return render(request,"passionProjectApp/comment_answer_del.html",context)
 
 def test(request):
     name='Koichi'
@@ -231,3 +264,5 @@ def nameReset(request):
     return response
 def search (request):
     return render(request,"passionProjectApp/search.html")
+def base(request):
+    return render(request,'passionProjectApp/base.html')

@@ -36,8 +36,8 @@ They don't match
 {% for x in question_comment %}
 {% autoescape off %} {{x.message}} {% endautoescape %}
 {% if request.user == x.author %}
-<a href="{% url 'comment_ask_edit' question.id %}">Edit Q Comment</a>
-<a href="{% url 'comment_ask_del' question.id %}">Delete  Q Comment</a>
+<a href="{% url 'comment_ask_edit' x.id %}">Edit Q Comment</a>
+<a href="{% url 'comment_ask_del' x.id %}">Delete  Q Comment</a>
 {% endif %}
 {% endfor %}
 {% endif %}
@@ -47,17 +47,19 @@ They don't match
 {% if answers %}
 {% for x in answers %}
 {% autoescape off%} <h2>This is an answer</h2>{{x.message}} {% endautoescape %}
+{% if request.user == x.author %}
 <a href="{% url 'answer_edit' x.id %}">Edit an answer</a>
 <a href="{% url 'answer_del' x.id %}">Delete on an answer</a>
+{% endif %}
 <p></p>
-<h2>Answer Comment</h2>
+<h6>Answer Comment</h6>
 {% if answer_comment %}
 {% for y in answer_comment %}
 {% if y.parent == x %}
 {% autoescape off %}{{y.message}} {% endautoescape %}
 {% if request.user == y.author %}
 <a href="{% url 'comment_answer_edit' y.id  x.parent_id %}">Edit A comment</a>
-<a href="{% url 'comment_answer_del' y.id %}">Delete A answer</a>
+<a href="{% url 'comment_answer_del' y.id x.parent_id %}">Delete A answer</a>
 {% endif %}
 {% endif %}
 {% endfor %}

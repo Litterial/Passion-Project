@@ -4,3 +4,75 @@
     list-style-type: none;
 
 }
+
+html,body
+{
+ width:100vw;
+}
+
+/*******************************************************topbar**************************************************************/
+.topbar
+{
+    display:grid;
+    position:fixed;
+    top:0;
+    right:0;
+    width:100vw;
+    background: #dfdfdf;
+    height:8vh;
+    grid-template-areas: 'logo search registration';
+    grid-template-columns:repeat(3,1fr);
+}
+
+.logo
+{
+    grid-area:logo;
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+    padding-left:15%
+}
+
+.search
+{
+    grid-area:search;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.registration
+{
+    grid-area: registration;
+    position:relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right:15%;
+}
+
+.login,.registerlink
+{
+    text-decoration: none;
+}
+
+
+.login
+{
+    color:#BE90D4;
+}
+.registerlink
+{
+    margin-left:3%;
+}
+
+.registerbutton
+{
+    background:#BE90D4;
+    color:white;
+}
+
+.registerbutton:hover
+{
+    background: #9d77b3;
+
+}

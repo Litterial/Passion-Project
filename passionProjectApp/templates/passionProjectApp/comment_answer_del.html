@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{form.media}}
 </head>
 <body>
-
+{{answerComment.author}}
+{% if request.user == answerComment.author %}
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+</form>
+<a href="{% url 'ask_read' question.id %}"><button>Return to previous page</button></a>
+{% else %}
+<h1>{{request.user}}, please log-in as {{answerComment.author}}</h1>
+{% endif %}
 </body>
 </html>
