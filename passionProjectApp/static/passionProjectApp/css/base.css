@@ -45,7 +45,7 @@ html,body {
     padding-right:15%;
 }
 
-.login,.registerlink {
+.login,.registerlink, .editlinks {
     text-decoration: none;
 }
 
@@ -87,7 +87,7 @@ html,body {
 .test {
     display: grid;
     grid-area:questions;
-    background: green;
+    background: #e58247;
 }
 
 .questionTitle {
@@ -119,13 +119,59 @@ abbr[title]{
     margin: 0 30% 0 6%;
 }
 
+.editlinks
+{
+    grid-area:links;
+    display:flex;
+    justify-content: flex-start;
+    text-decoration: none;
+}
 .createdProfile {
+    grid-area: updates;
     display: flex;
     justify-content: flex-end;
-    font-size:12px;
-    font-style: initial;
+
 }
 
 .dateCreatedMargin {
-    margin-left:2%;
+    margin-left:4%;
+}
+
+.questionOptions {
+    display:grid;
+    grid-template-areas: 'links updates';
+    grid-template-columns: 1fr 1fr;
+    font-size:14px;
+    font-style: initial;
+    padding-top:2%;
+}
+
+.questionOptions span a{
+    color: #848d95;
+}
+.questionFont
+{
+    font-size: 1.3rem;
+}
+
+.editMargins
+{
+ margin-right:4%;
+}
+.qComment
+{
+    margin-left:3.5%;
+}
+.qCommentLinks {
+    font-size: 14px;
+}
+.qCommentLinks a{
+    color:#848d95;
+}
+.qCommentMargin {
+    margin-right:0.8%;
+}
+
+.addQComment {
+    color:#848d95;
 }

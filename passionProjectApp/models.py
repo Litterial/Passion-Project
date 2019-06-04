@@ -15,8 +15,8 @@ import datetime
 class RealQuestion(models.Model):
     title = tinymce_models.HTMLField()
     question = tinymce_models.HTMLField()
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
+    last_update=models.DateTimeField(default=datetime.datetime.now)
+    date_created=models.DateTimeField(default=datetime.datetime.now)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
 
@@ -25,8 +25,8 @@ class RealQuestion(models.Model):
 
 class RealQuestionComment(models.Model):
     message= tinymce_models.HTMLField()
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
+    last_update=models.DateTimeField(default=datetime.datetime.now)
+    date_created=models.DateTimeField(default=datetime.datetime.now)
     parent=models.ForeignKey(RealQuestion,on_delete=models.CASCADE)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
@@ -35,8 +35,8 @@ class RealQuestionComment(models.Model):
 
 class Answer(models.Model):
     message= tinymce_models.HTMLField()
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
+    last_update=models.DateTimeField(default=datetime.datetime.now)
+    date_created=models.DateTimeField(default=datetime.datetime.now)
     parent=models.ForeignKey(RealQuestion,on_delete=models.CASCADE)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
@@ -45,8 +45,8 @@ class Answer(models.Model):
 
 class AnswerComment(models.Model):
     message= tinymce_models.HTMLField()
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
+    last_update=models.DateTimeField(default=datetime.datetime.now)
+    date_created=models.DateTimeField(default=datetime.datetime.now)
     parent=models.ForeignKey(Answer,on_delete=models.CASCADE)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 

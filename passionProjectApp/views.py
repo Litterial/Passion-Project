@@ -64,7 +64,7 @@ def ask_edit(request,ID):
         print(form)
         if form.is_valid():
             print('form was valid')
-            questionID.last_update=datetime.datetime.utcnow()
+            questionID.last_update=datetime.datetime.now()
             form.save()
             return redirect("ask_read",questionID.id)
         else:
@@ -144,7 +144,7 @@ def answer_edit(request,ID):
         if form.is_valid():
             form=AnswerForm(request.POST,instance=answerID)
             print('form was valid')
-            answerID.last_update=datetime.datetime.utcnow()
+            answerID.last_update=datetime.datetime.now()
             form.save()
             return redirect("ask_read",answerID.parent.id)
         else:
@@ -187,7 +187,7 @@ def comment_ask_edit(request,ID):
         print(form)
         if form.is_valid():
             print('form was valid')
-            questionCommentID.last_update=datetime.datetime.utcnow()
+            questionCommentID.last_update=datetime.datetime.now()
             form.save()
             return redirect("ask_read",questionCommentID.parent.id)
         else:
@@ -231,7 +231,7 @@ def comment_answer_edit(request, commentID, grandparentID):
         print(form)
         if form.is_valid():
             print('form was valid')
-            answerCommentID.last_update=datetime.datetime.utcnow()
+            answerCommentID.last_update=datetime.datetime.now()
             form.save()
             return redirect("ask_read",questionID.id)
         else:
