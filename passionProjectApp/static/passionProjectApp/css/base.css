@@ -5,14 +5,12 @@
 
 }
 
-html,body
-{
+html,body {
  width:100vw;
 }
 
 /*******************************************************topbar**************************************************************/
-.topbar
-{
+.topbar {
     display:grid;
     position:fixed;
     top:0;
@@ -24,8 +22,7 @@ html,body
     grid-template-columns:repeat(3,1fr);
 }
 
-.logo
-{
+.logo {
     grid-area:logo;
     display: flex;
     align-items:center;
@@ -33,15 +30,13 @@ html,body
     padding-left:15%
 }
 
-.search
-{
+.search {
     grid-area:search;
     display:flex;
     align-items: center;
     justify-content: center;
 }
-.registration
-{
+.registration {
     grid-area: registration;
     position:relative;
     display: flex;
@@ -50,29 +45,67 @@ html,body
     padding-right:15%;
 }
 
-.login,.registerlink
-{
+.login,.registerlink {
     text-decoration: none;
 }
 
-
-.login
-{
+.login {
     color:#BE90D4;
 }
-.registerlink
-{
+.registerlink {
     margin-left:3%;
 }
 
-.registerbutton
-{
+.registerbutton {
     background:#BE90D4;
     color:white;
 }
 
-.registerbutton:hover
-{
+.registerbutton:hover {
     background: #9d77b3;
+}
+.bodygrid
+{
+    display:grid;
+    grid-template-areas: 'aside questions rando';
+    grid-template-columns: 1fr 5fr;
+    margin-top:8vh;
+    height:100vh;
+}
 
+/*******************************************************asidebar**********************************************************/
+.asidebar {
+    display: grid;
+    grid-area: aside;
+    background:orange;
+}
+.fixed-aside{
+    position:fixed;
+}
+/************************************************************************************************************************/
+
+.test {
+    display: grid;
+    grid-area:questions;
+    background: green;
+}
+
+.questionTitle {
+    display:inline;
+}
+p
+{
+    display: inline;
+}
+
+.titlepadding
+{
+    padding:3% 0 0 1.5%;
+    display:flex;
+    justify-content: space-between;
+}
+
+.askbutton
+{
+    margin-right:5%;
 }

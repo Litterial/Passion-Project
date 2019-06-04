@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'passionProjectApp/base.html' %}
+{% block body %}
 {% if request.user == answer.author %}
 <h1>This is the template to delete answers </h1>
 <form method="post">
@@ -16,5 +11,4 @@
 {% else %}
 <h1>GET THE FUCK OFF THIS PAGE. YOU AIN'T THE OWNER YA FOOL</h1>
 {% endif %}
-</body>
-</html>
+{% endblock body %}

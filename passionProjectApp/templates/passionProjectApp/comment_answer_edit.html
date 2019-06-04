@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {{form.media}}
-</head>
-<body>
+{% extends 'passionProjectApp/base.html' %}
+{% block body %}
 <h1>This is the template to edit comments for answers</h1>
 {{answerComment.author}}
 {% if request.user == answerComment.author %}
@@ -17,5 +11,4 @@
 {% else %}
 <h1>{{request.user}}, please log-in as {{answerComment.author}}</h1>
 {% endif %}
-</body>
-</html>
+{% endblock body %}

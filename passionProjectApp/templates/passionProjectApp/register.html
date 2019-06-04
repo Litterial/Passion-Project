@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
-</head>
-<body>
+{% extends 'passionProjectApp/base.html' %}
+{% block body %}
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
     <input type="hidden" name="next" id="id_next" value="{{ next }}"/>
     <button>Submit</button>
 </form>
-
-</body>
-</html>
+{% endblock body %}

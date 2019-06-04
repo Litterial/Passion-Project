@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {{form.media}}
-</head>
-<body>
+{% extends 'passionProjectApp/base.html' %}
+{% block body %}
 <h1> This is the template to edit Question Comments</h1>
 <a href="{% url 'logout' %}">Logout</a>
 <h1>{{user.username}}</h1>
@@ -19,5 +13,4 @@
 {% else %}
 <h1>Hey you're not {{questionComment.author}}</h1>
 {% endif %}
-</body>
-</html>
+{% endblock body %}

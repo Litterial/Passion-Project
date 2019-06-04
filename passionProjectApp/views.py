@@ -112,12 +112,17 @@ def answer(request,ID):
         form=AnswerForm(cookie)
         if form.is_valid():
             Answer.objects.create(message=decode, parent=parentquestionID,author=request.user)
-            return redirect('ask_read',parentquestionID.id)
+            print('the code works here')
+            response=redirect('ask_read',parentquestionID.id)
+            response.delete_cookie('message')
+            return response
         else:
             print('not valid')
             form=AnswerForm(request.POST or None)
             context={'form':form,'errors':form.errors}
-            return render(request,"passionProjectApp/answer.html",context)
+            response=render(request,"passionProjectApp/answer.html",context)
+            response.delete_cookie('message')
+            return response
     form=AnswerForm(request.POST or None)
     if request.method=="POST":
         if form.is_valid():

@@ -68,9 +68,10 @@ body {
 }
 
 hr {
-  box-sizing: content-box;
-  height: 0;
-  overflow: visible;
+  width:100%;
+  /*box-sizing: content-box;*/
+  /*height: 0;*/
+  /*overflow: visible;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -420,10 +421,10 @@ h6, .h6 {
 }
 
 hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  /*margin-top: 1rem;*/
+  /*margin-bottom: 1rem;*/
+  /*border: 0;*/
+  /*border-top: 1px solid rgba(0, 0, 0, 0.1);*/
 }
 
 small,

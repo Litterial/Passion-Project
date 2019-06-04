@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {{form.media}}
-</head>
-<body>
+{% extends 'passionProjectApp/base.html' %}
+{% block body %}
 <h1>This is the template to edit answers </h1>
 {{answer.author}}
 {{request.user}}
@@ -24,5 +18,4 @@
 <h1>You can't come on this page</h1>
 {% endif %}
 
-</body>
-</html>
+{% endblock body %}

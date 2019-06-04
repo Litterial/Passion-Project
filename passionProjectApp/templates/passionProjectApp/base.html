@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'passionProjectApp/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
     <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
+    <script src="{% static 'passionProjectApp/js/bootstrap.js' %}"></script>
 </head>
 <body>
 {% if request.user.is_authenticated %}
@@ -30,10 +31,17 @@
 </div>
 {% endif %}
 
+<div class="bodygrid">
+<aside class="asidebar">
+    <div class="fixed-aside">info to the left</div>
+</aside>
+
 {% block body %}
 
 {% endblock body %}
-
-
+</div>
+{% block jquery %}
+<script src="{% static 'passionProjectApp/JavaScript/jquery-3.4.1.min.js' %}"></script>
+{% endblock jquery%}
 </body>
 </html>
