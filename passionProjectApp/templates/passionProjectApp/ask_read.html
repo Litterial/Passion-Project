@@ -9,17 +9,25 @@
 </div>
 <hr/>
 
-<p>{% autoescape off%}{{question.question}} {% endautoescape %}</p>
-{{question.date_created|date:'F j, Y G:i'}}UTC
+<div class="questionMargin">{% autoescape off%}{{question.question}} {% endautoescape %}
+    <div>{% if request.user == question.author %}
+    <a href="{% url 'ask_edit' question.id %}">Edit a Question</a>
+    <a href="{% url 'ask_del' question.id %}">Delete on a Question</a>
+    {% endif %}
+    {% if question.last_update > question.date_created %}
+    <span class="createdProfile"><abbr title="{{question.last_update}}">
+        {% load tz %} Edited {{ question.last_update|utc|date:"M j 'y"}} at {{ question.last_update|utc|date:'H:i' }}</abbr> <span class="dateCreatedMargin">Asked <abbr title="{{question.date_created}}"> {{ question.date_created|utc|date:"M j 'y"}} at {{ question.date_created|utc|date:'H:i' }} by {{question.author}}</abbr></span>
+    </span>
+    {% else %}
+        <span ><abbr class="createdProfile" title="{{question.date_created}}">
+            {% load tz %} Asked {{ question.date_created|utc|date:"M j 'y"}} at {{ question.date_created|utc|date:'H:i' }} by {{question.author}}
+        </abbr></span>
+    {% endif %}
+    {% endif %}
+    </div>
+</div>
 
 
-    {% if request.user == question.author %}
-<a href="{% url 'ask_edit' question.id %}">Edit a Question</a>
-<a href="{% url 'ask_del' question.id %}">Delete on a Question</a>
-{% endif %}
-{% endif %}
-<p></p>
-<p></p>
 <h1>Question comments</h1>
 {% if question_comment %}
 {% for x in question_comment %}

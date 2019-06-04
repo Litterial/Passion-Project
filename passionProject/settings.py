@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Chicago'
 
 USE_I18N = True
 
@@ -148,7 +148,7 @@ TINYMCE_DEFAULT_CONFIG = {
                emotions, iespell, inlinepopups, insertdatetime, preview, media,
                searchreplace, print, contextmenu, paste, directionality,
                fullscreen, noneditable, visualchars, nonbreaking, xhtmlxtras,
-               template, wordcount, advlist, autosave, latex''',
+               template, wordcount, advlist, autosave, latex,''',
 
     'theme_advanced_buttons1': '''bold, italic, underline, strikethrough, |,
                                justifyleft, justifycenter, justifyright,

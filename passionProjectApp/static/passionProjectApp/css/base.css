@@ -109,3 +109,23 @@ p
 {
     margin-right:5%;
 }
+abbr[title]{
+    cursor: auto;
+    text-decoration: none;
+}
+
+.questionMargin{
+    padding-top:1%;
+    margin: 0 30% 0 6%;
+}
+
+.createdProfile {
+    display: flex;
+    justify-content: flex-end;
+    font-size:12px;
+    font-style: initial;
+}
+
+.dateCreatedMargin {
+    margin-left:2%;
+}
