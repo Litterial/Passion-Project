@@ -50,16 +50,16 @@
         <a class="addQComment" href="{% url 'comment_ask' question.id %}">Comment on a Question</a>
 
         {% if answers %}
+        <br/><br/><br/><br/><br/><br/><br/>
         <h1>Answers</h1>
         <hr>
         {% for x in answers %}
-        <h1>Answer</h1>
         <div class="questionFont">{% autoescape off%}{{x.message}} {% endautoescape %}</div>
         <div class="questionOptions">
             {% if request.user == x.author %}
             <span class="editlinks">
-    <a class= 'editMargins' href="{% url 'ans_edit' x.id %}"><abbr title="revise and improve post">edit</abbr></a>
-    <a href="{% url 'ans_del' question.id %}"><abbr title="remove post including answers and comments">delete</abbr></a>
+    <a class= 'editMargins' href="{% url 'answer_edit' x.id %}"><abbr title="revise and improve post">edit</abbr></a>
+    <a href="{% url 'answer_del' question.id %}"><abbr title="remove post including answers and comments">delete</abbr></a>
     {% endif %}
     </span>
             {% if x.last_update > x.date_created %}
@@ -70,19 +70,16 @@
             <span ><abbr class="" title="{{x.date_created}}">
             {% load tz %} asked {{ x.date_created|utc|date:"M j 'y"}} at {{ x.date_created|utc|date:'H:i' }} by {{x.author}}
         </abbr></span>
+
             {% endif %}
         </div>
         <hr/>
-<!--        {% if request.user == x.author %}-->
-<!--        <a href="{% url 'answer_edit' x.id %}">Edit an answer</a>-->
-<!--        <a href="{% url 'answer_del' x.id %}">Delete on an answer</a>-->
-<!--        {% endif %}-->
-<!--        <p></p>-->
+
+
         {% if answer_comment %}
         {% for y in answer_comment %}
         {% if y.parent == x %}
         <div class="qComment">
-            <h1>Answer Comment</h1>
             {% autoescape off %} {{y.message}} {% endautoescape %} — <span>{{y.author}}<abbr title="{{y.last_update}}">
             {% load tz %}{{ y.date_created|utc|date:"M j 'y "}}{{ y.date_created|utc|date:'H:i' }}</abbr></span>
             {% if y.last_update > y.date_created %}
@@ -96,31 +93,17 @@
             {% endif %}
         </div>
         <hr/>
-
+        <p><a href="{% url 'comment_answer' x.id%}">Comment on an answer</a></p>
+        <br/><br/>
         {% endif %}
         {% endfor %}
         {% endif %}
-        <p><a href="{% url 'comment_answer' x.id%}">Comment on an answer</a></p>
-<!--        <h6>Answer Comments Right here</h6>-->
-<!--        {% if answer_comment %}-->
-<!--        {% for y in answer_comment %}-->
-<!--        {% if y.parent == x %}-->
-<!--        {% autoescape off %}{{y.message}} {% endautoescape %}-->
-<!--        {% if request.user == y.author %}-->
-<!--        <a href="{% url 'comment_answer_edit' y.id  x.parent_id %}">Edit A comment</a>-->
-<!--        <a href="{% url 'comment_answer_del' y.id x.parent_id %}">Delete A answer</a>-->
-<!--        {% endif %}-->
-<!--        {% endif %}-->
-<!--        {% endfor %}-->
-<!--        {% endif %}-->
-<!--        <p><a href="{% url 'comment_answer' x.id%}">Comment on an answer</a></p>-->
 
-<!--        {% endfor %}-->
-<!--        {% endif %}-->
-<!--        <p></p>-->
 
-        <a href="{% url 'answer' question.id%}">Your answer</a>
 
+        {% endfor %}
+        <h1>Your answer</h1>
+        {% endif %}
         <form  onsubmit="putCookie()" class="askForm" method ='POST' action="{% url 'answer' question.id %}">
             {% csrf_token %}
             {{form.as_p}}
