@@ -32,7 +32,6 @@
         {% autoescape off %} {{x.message}} {% endautoescape %} — <span>{{x.author}}<abbr title="{{x.last_update}}">
             {% load tz %}{{ x.date_created|utc|date:"M j 'y "}}{{ x.date_created|utc|date:'H:i' }}</abbr></span>
            {% if x.last_update > x.date_created %}
-            {% load static %}
             <abbr  class='edit' title="edited on {{x.last_update}}">*</abbr>
             {% endif %}
         {% if request.user == x.author %}
@@ -75,8 +74,6 @@
         </div>
 
 
-
-
         {% if answer_comment %}
         {% for y in answer_comment %}
         {% if y.parent == x %}  <hr/>
@@ -84,7 +81,6 @@
              {% autoescape off %} {{y.message}} {% endautoescape %} — <span>{{y.author}}<abbr title="{{y.last_update}}">
             {% load tz %}{{ y.date_created|utc|date:"M j 'y "}}{{ y.date_created|utc|date:'H:i' }}</abbr></span>
             {% if y.last_update > y.date_created %}
-            {% load static %}
             <abbr title="edited on {{y.last_update}}">*</abbr>
             {% endif %}
             {% if request.user == y.author %}
@@ -94,8 +90,9 @@
             {% endif %}
         </div>
         {% endif %}
-        {% endfor %}       <hr/><div class="qComment"><a class='addQComment' href="{% url 'comment_answer' x.id%}">add comment</a></div></div><br/><br/><br/><br/>
+        {% endfor %}       <!--<hr/><div class="qComment"><a class='addQComment' href="{% url 'comment_answer' x.id%}">add comment</a></div></div><br/>-->
         {% endif %}
+<hr/><div class="qComment"><a class='addQComment' href="{% url 'comment_answer' x.id%}">add comment</a></div></div><br/>
         {% endfor %}
         <h1 class="titlepadding">Your answer</h1>
     {% else %}

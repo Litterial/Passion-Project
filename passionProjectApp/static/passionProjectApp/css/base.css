@@ -200,14 +200,41 @@ abbr.pointer {
     cursor: pointer;
 }
 /******************************************************index***********************************************************/
+.changeColors
+{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+
+}
 div.changeColors:nth-of-type(odd)
 {
+    /*display: flex;*/
+    /*justify-content: flex-start;*/
+    padding: 1%;
     background:burlywood;
 }
 
 div.changeColors:nth-of-type(even)
 {
+    /*display: flex;*/
+    /*justify-content: flex-start;*/
+    padding: 1%;
     background: #f1f1f1;
+}
+
+.answered
+{
+    grid-column: 1;
+    text-align: center;
+    border: 1px solid limegreen;
+    color: green;
+    border-radius: 10%;
+    width:78px;
+}
+
+.questionTitle
+{
+    grid-column: 2;
 }
 /****************************************************Right Aside*******************************************************/
 .rightAside {

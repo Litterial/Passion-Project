@@ -9,7 +9,7 @@ import urllib.request
 
 # Create your views here.
 def index(request):
-    allquestions=RealQuestion.objects.all()
+    allquestions=RealQuestion.objects.all().order_by
     context={"allquestions":allquestions}
     return render(request,"passionProjectApp/index.html",context)
 def register(request):
@@ -173,7 +173,7 @@ def comment_ask(request,ID):
     if request.method =='POST':
         if form.is_valid():
             RealQuestionComment.objects.create(message=request.POST['message'],parent=parentquestionID,author=request.user)
-            return redirect("index")
+            return redirect("ask_read",parentquestionID.id)
         else:
             form=CommentQuestionForm(request.POST or None)
             context={"form":form,"errors":form.errors}
@@ -216,7 +216,7 @@ def comment_answer(request, ID):
     if request.method=="POST":
         if form.is_valid():
             AnswerComment.objects.create(message=request.POST['message'],parent=parentanswerID,author=request.user)
-            return redirect("index")
+            return redirect("ask_read",parentanswerID.parent.id)
         else:
             form=CommentAnswerForm(request.POST or None)
             context={"form":form,"errors":form.errors}
@@ -270,6 +270,12 @@ def nameReset(request):
     response=redirect('test')
     response.delete_cookie('name_change')
     return response
+
+
+# def annotate(request):
+#     count=RealQuestion.objects.all().order_by()
+
+
 def search (request):
     return render(request,"passionProjectApp/search.html")
 def base(request):
