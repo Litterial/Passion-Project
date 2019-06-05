@@ -9,6 +9,20 @@ html,body {
  width:100vw;
 }
 
+/*the p tag is changed to inline because the tinyMCE renders all text as html*/
+p {
+    display: inline;
+}
+
+.bodygrid
+{
+    display:grid;
+    grid-template-areas: 'aside questions rando';
+    grid-template-columns: 1fr 3fr 1fr;
+    margin-top:8vh;
+    height:100vh;
+}
+
 /*******************************************************topbar**************************************************************/
 .topbar {
     display:grid;
@@ -44,14 +58,17 @@ html,body {
     justify-content: flex-end;
     padding-right:15%;
 }
-
+/* removes text decoration for links*/
 .login,.registerlink, .editlinks {
     text-decoration: none;
 }
 
+/* color for login text*/
+
 .login {
     color:#BE90D4;
 }
+/* space between user and login button*/
 .registerlink {
     margin-left:3%;
 }
@@ -63,14 +80,6 @@ html,body {
 
 .registerbutton:hover {
     background: #9d77b3;
-}
-.bodygrid
-{
-    display:grid;
-    grid-template-areas: 'aside questions rando';
-    grid-template-columns: 1fr 3fr 1fr;
-    margin-top:8vh;
-    height:100vh;
 }
 
 /*******************************************************asidebar********************************************************/
@@ -90,17 +99,14 @@ html,body {
     background: white;
 }
 
-.questionTitle {
-    display:inline;
-}
-p {
-    display: inline;
-}
-
 .titlepadding {
     padding:3% 0 0 1.5%;
     display:flex;
     justify-content: space-between;
+}
+/*****************************************************ask_read*********************************************************/
+.questionTitle {
+    display:inline;
 }
 
 .askbutton {
@@ -192,6 +198,16 @@ hr {
 
 abbr.pointer {
     cursor: pointer;
+}
+/******************************************************index***********************************************************/
+div.changeColors:nth-of-type(odd)
+{
+    background:burlywood;
+}
+
+div.changeColors:nth-of-type(even)
+{
+    background: #f1f1f1;
 }
 /****************************************************Right Aside*******************************************************/
 .rightAside {

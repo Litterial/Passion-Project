@@ -8,7 +8,7 @@
 
 {% if allquestions %}
 {% for x in allquestions %}
-<a href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
+<div class="changeColors"><a href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a></div>
 {% endfor%}
 {% endif %}
 
