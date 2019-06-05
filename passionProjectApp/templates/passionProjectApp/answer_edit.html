@@ -1,8 +1,6 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
 <h1>This is the template to edit answers </h1>
-{{answer.author}}
-{{request.user}}
 {% if form.errors %}
 {% for errors in form.errors %}
 {{ errors }}

@@ -150,18 +150,16 @@ TINYMCE_DEFAULT_CONFIG = {
                fullscreen, noneditable, visualchars, nonbreaking, xhtmlxtras,
                template, wordcount, advlist, autosave, latex,''',
 
-    'theme_advanced_buttons1': '''bold, italic, underline, strikethrough, |,
+    'theme_advanced_buttons1': '''bold, italic,|,
                                justifyleft, justifycenter, justifyright,
-                               justifyfull, fontselect, fontsizeselect,
-                               fullscreen, code''',
-    'theme_advanced_buttons2': '''bullist, numlist, |, outdent, indent,
-                               blockquote, |, undo, redo, |, link, unlink, |,
-                               forecolor, backcolor,''',
-    'theme_advanced_buttons3': '''tablecontrols, |, hr, sub, sup, |, charmap, |, latex,''',
+                               justifyfull,|,bullist, numlist, |, outdent, indent, |''',
+    'theme_advanced_buttons2': '''
+                               blockquote, |, undo, redo, |, link, unlink,latex,''',
+    # 'theme_advanced_buttons3': ''' |, ''',
 
     'theme_advanced_toolbar_location': "top",
     'theme_advanced_toolbar_align': "left",
-    'theme_advanced_statusbar_location': "bottom",
+    # 'theme_advanced_statusbar_location': "bottom",
     # 'theme_advanced_resizing': "false",
 
     'template_external_list_url': "lists/template_list.js",

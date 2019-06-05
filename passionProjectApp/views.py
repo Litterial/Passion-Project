@@ -85,6 +85,7 @@ def ask_del(request,ID):
 def ask_read(request,ID):
     question=get_object_or_404(RealQuestion,pk=ID)
     allAnswers=Answer.objects.filter(parent=ID)
+    totalAnswers=len(allAnswers)
     allQuestionComments=RealQuestionComment.objects.filter(parent=ID)
     allAnswerComments=AnswerComment.objects.all()
     answercomment_child=[]
@@ -93,7 +94,7 @@ def ask_read(request,ID):
             if (y.parent==x):
                 answercomment_child.append(y)
     form=AnswerForm(request.POST or None)
-    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":answercomment_child,"form":form}
+    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":answercomment_child,"form":form,"totalAnswers":totalAnswers}
     return render(request,"passionProjectApp/ask_read.html",context)
 
 
@@ -155,12 +156,14 @@ def answer_edit(request,ID):
 @login_required
 def answer_del(request,ID):
     answerID=get_object_or_404(Answer,pk=ID)
+    print(answerID)
     tempanswerID=answerID
     form=AnswerForm(instance=answerID)
-    context={'form':form,'answer':answerID}
     if request.method=='POST':
         answerID.delete()
         return redirect('ask_read',tempanswerID.parent.id)
+    context={'form':form,'answer':answerID}
+    print(request.method)
     return render(request,"passionProjectApp/answer_del.html",context)
 
 @login_required

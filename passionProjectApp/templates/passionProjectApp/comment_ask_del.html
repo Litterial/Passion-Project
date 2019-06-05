@@ -1,7 +1,5 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
-{{questionComment.author}}
-{{questionComment.message}}
 {% if request.user == questionComment.author %}
 <h1>This is the template to delete answers </h1>
 <form method="post">

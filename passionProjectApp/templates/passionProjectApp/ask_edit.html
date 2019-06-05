@@ -1,7 +1,6 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
 <h1>This is the template to edit questions</h1>
-{{question.author}}
 {% if request.user == question.author %}
 <form method="post">
     {% csrf_token %}

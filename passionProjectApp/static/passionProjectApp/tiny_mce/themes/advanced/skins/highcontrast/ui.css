@@ -11,7 +11,7 @@
 .highcontrastSkin .mceExternalClose {position:absolute; top:3px; right:3px; width:7px; height:7px;}
 
 /* Layout */
-.highcontrastSkin table.mceLayout {border: 1px solid;}
+.highcontrastSkin table.mceLayout {border: 1px solid; margin:auto;}
 .highcontrastSkin .mceIframeContainer {border-top:1px solid; border-bottom:1px solid}
 .highcontrastSkin .mceStatusbar a:hover {text-decoration:underline}
 .highcontrastSkin .mceStatusbar {display:block; line-height:1.5em; overflow:visible;}

@@ -1,20 +1,17 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
-<p></p>
-<div class="test">
 {% if question %}
 <div class="titlepadding">
     <h1 class="questionTitle"> {% autoescape off %}{{question.title}} {% endautoescape %}</h1>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
 <hr/>
-
     <div class="questionMargin"><div class="questionFont">{% autoescape off%}{{question.question}} {% endautoescape %}</div>
     <div class="questionOptions">
         {% if request.user == question.author %}
     <span class="editlinks">
-    <a class= 'editMargins' href="{% url 'ask_edit' question.id %}"><abbr title="revise and improve post">edit</abbr></a>
-    <a href="{% url 'ask_del' question.id %}"><abbr title="remove post including answers and comments">delete</abbr></a>
+    <a class= 'editMargins' href="{% url 'ask_edit' question.id %}"><abbr class="pointer" title="revise and improve post">edit</abbr></a>
+    <a href="{% url 'ask_del' question.id %}"><abbr class='pointer' title="remove post including answers and comments">delete</abbr></a>
     {% endif %}
     </span>
     {% if question.last_update > question.date_created %}
@@ -36,30 +33,33 @@
             {% load tz %}{{ x.date_created|utc|date:"M j 'y "}}{{ x.date_created|utc|date:'H:i' }}</abbr></span>
            {% if x.last_update > x.date_created %}
             {% load static %}
-            <abbr title="edited on {{x.last_update}}"><img src="{% static 'passionProjectApp/images/pencil-2x.png'%}"></abbr>
+            <abbr  class='edit' title="edited on {{x.last_update}}">*</abbr>
             {% endif %}
         {% if request.user == x.author %}
         <div class="qCommentLinks">
-            <a class="qCommentMargin" href="{% url 'comment_ask_edit' x.id %}"><abbr title="revise and improve post">edit</abbr></a>
-        <a href="{% url 'comment_ask_del' x.id %}">delete</a></div>
+            <a class="qCommentMargin" href="{% url 'comment_ask_edit' x.id %}"><abbr class="pointer" title="revise and improve comment">edit</abbr></a>
+        <a href="{% url 'comment_ask_del' x.id %}"><abbr title="delete comment">delete</abbr></a></div>
         {% endif %}
         </div>
         <hr/>
         {% endfor %}
         {% endif %}
-        <a class="addQComment" href="{% url 'comment_ask' question.id %}">Comment on a Question</a>
-
+        <a class="addQComment" href="{% url 'comment_ask' question.id %}">add comment</a>
+    </div>
         {% if answers %}
-        <br/><br/><br/><br/><br/><br/><br/>
-        <h1>Answers</h1>
-        <hr>
-        {% for x in answers %}
-        <div class="questionFont">{% autoescape off%}{{x.message}} {% endautoescape %}</div>
+        <br/><br/><br/><br/>
+        {% if totalAnswers != 1 %}
+        <h1 class="titlepadding"> {{totalAnswers}} Answers</h1>
+        {% else %}
+        <h1 class="titlepadding"> 1 Answer</h1>
+        {% endif %}
+        {% for x in answers %} <hr>
+    <div class="questionMargin"> <div class="questionFont"> {% autoescape off%}{{x.message}} {% endautoescape %}</div>
         <div class="questionOptions">
             {% if request.user == x.author %}
             <span class="editlinks">
     <a class= 'editMargins' href="{% url 'answer_edit' x.id %}"><abbr title="revise and improve post">edit</abbr></a>
-    <a href="{% url 'answer_del' question.id %}"><abbr title="remove post including answers and comments">delete</abbr></a>
+    <a href="{% url 'answer_del' x.id %}"><abbr title="remove post including comments">delete</abbr></a>
     {% endif %}
     </span>
             {% if x.last_update > x.date_created %}
@@ -67,48 +67,47 @@
         {% load tz %} edited {{ x.last_update|utc|date:"M j 'y"}} at {{ x.last_update|utc|date:'H:i' }}</abbr> <span class="dateCreatedMargin">Asked <abbr title="{{x.date_created}}"> {{x.date_created|utc|date:"M j 'y"}} at {{x.date_created|utc|date:'H:i' }} by {{x.author}}</abbr></span>
     </span>
             {% else %}
-            <span ><abbr class="" title="{{x.date_created}}">
+            <span class="createdProfile"><abbr title="{{x.date_created}}">
             {% load tz %} asked {{ x.date_created|utc|date:"M j 'y"}} at {{ x.date_created|utc|date:'H:i' }} by {{x.author}}
         </abbr></span>
 
             {% endif %}
         </div>
-        <hr/>
+
+
 
 
         {% if answer_comment %}
         {% for y in answer_comment %}
-        {% if y.parent == x %}
+        {% if y.parent == x %}  <hr/>
         <div class="qComment">
-            {% autoescape off %} {{y.message}} {% endautoescape %} — <span>{{y.author}}<abbr title="{{y.last_update}}">
+             {% autoescape off %} {{y.message}} {% endautoescape %} — <span>{{y.author}}<abbr title="{{y.last_update}}">
             {% load tz %}{{ y.date_created|utc|date:"M j 'y "}}{{ y.date_created|utc|date:'H:i' }}</abbr></span>
             {% if y.last_update > y.date_created %}
             {% load static %}
-            <abbr title="edited on {{y.last_update}}"><img src="{% static 'passionProjectApp/images/pencil-2x.png'%}"></abbr>
+            <abbr title="edited on {{y.last_update}}">*</abbr>
             {% endif %}
             {% if request.user == y.author %}
             <div class="qCommentLinks">
-                <a class="qCommentMargin" href="{% url 'comment_answer_edit' y.id x.parent_id %}"><abbr title="revise and improve post">edit</abbr></a>
-                <a href="{% url 'comment_answer_del' y.id x.parent_id %}">delete</a></div>
+                <a class="qCommentMargin" href="{% url 'comment_answer_edit' y.id x.parent_id %}"><abbr title="revise and improve comment">edit</abbr></a>
+                <a href="{% url 'comment_answer_del' y.id x.parent_id %}"><abbr title="delete comment">delete</abbr></a></div>
             {% endif %}
         </div>
-        <hr/>
-        <p><a href="{% url 'comment_answer' x.id%}">Comment on an answer</a></p>
-        <br/><br/>
+        {% endif %}
+        {% endfor %}       <hr/><div class="qComment"><a class='addQComment' href="{% url 'comment_answer' x.id%}">add comment</a></div></div><br/><br/><br/><br/>
         {% endif %}
         {% endfor %}
-        {% endif %}
+        <h1 class="titlepadding">Your answer</h1>
+    {% else %}
+    <br/><br/><br/><br/>
 
-
-
-        {% endfor %}
-        <h1>Your answer</h1>
+        <h1 class="titlepadding">Be the first to answer</h1>
         {% endif %}
         <form  onsubmit="putCookie()" class="askForm" method ='POST' action="{% url 'answer' question.id %}">
             {% csrf_token %}
-            {{form.as_p}}
-            <p><button >Submit</button></p>
+            <span class="sr-only">{{form.message.label_tag}}</span>
+            {{form.message}}
+
+            <button class=" btn btn-primary askButton">Post your answer</button>
         </form>
-    </div>
-</div>
 {% endblock body %}

@@ -1,6 +1,5 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
-{{answerComment.author}}
 {% if request.user == answerComment.author %}
 <form method="post">
     {% csrf_token %}

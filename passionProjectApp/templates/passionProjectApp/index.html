@@ -1,7 +1,10 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
-<p><a href="{% url 'ask' %}">Ask a question</a></p>
-<p><a href="{% url 'login' %}">Login</a></p>
+<div class="titlepadding">
+    <h1 class="questionTitle">Questions</h1>
+    <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
+</div>
+<hr/>
 
 {% if allquestions %}
 {% for x in allquestions %}

@@ -1,7 +1,6 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
 <h1>This is the template to comment on question</h1>
-<a href="{% url 'logout' %}">Logout</a>
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
