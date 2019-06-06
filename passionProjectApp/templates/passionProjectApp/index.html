@@ -22,7 +22,11 @@
     </div>
 
 
-    <a class='questionIndex'href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a></div>
+    <a class='questionIndex' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
+    <span class ='authorInfo'>{{x.author}} {% if x.last_update > x.date_created %}  <abbr title="edited on {{x.last_update}}"> {{x.date_created|date:"M j 'y H:i"}}*</abbr> {% else %} <abbr title="{{x.date_created}}">{{x.date_created|date:"M j 'y H:i"}}</abbr> {% endif %}</span>
+
+</div>
+
 {% endfor%}
 {% endif %}
 

@@ -216,7 +216,7 @@ abbr.pointer {
 div.changeColors:nth-of-type(odd)
 {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 1%;
     background: #fafafb;
 }
@@ -224,7 +224,7 @@ div.changeColors:nth-of-type(odd)
 div.changeColors:nth-of-type(even)
 {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 1%;
     background: white;
 }
@@ -246,10 +246,18 @@ div.changeColors:nth-of-type(even)
 
 .questionIndex
 {
-    display: flex;
-    align-items: center;
+    margin-right: auto;
+    padding-left: 6%;
+    width: fit-content;
+}
+.authorInfo{
+     display: flex;
+     align-items: flex-start;
     padding-top: 1%;
-    margin-left: 5%;
+    padding-left: 5%;
+    width: fit-content;
+    /* text-align: right; */
+
 }
 /****************************************************Right Aside*******************************************************/
 .rightAside {
