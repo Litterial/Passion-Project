@@ -29,7 +29,6 @@ urlpatterns=[
     path('test/',views.test,name='test'),
     path('changename/<str:name_change>/',views.nameChange,name='nameChange'),
     path('nameReset/',views.nameReset,name='nameReset'),
-    path('base/',views.base,name='base'),
 
     path('search/',views.search,name='search'),
 ]

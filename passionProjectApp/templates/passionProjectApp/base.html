@@ -36,7 +36,12 @@
     <div class="fixed-aside">info to the left</div>
 </aside>
 <div class="rightAside">
-    rightAside
+    right aside
+    {% if randomquestion %}
+    {% for x in randomquestion %}
+    <div>{% autoescape off %} {{x.title}} {% endautoescape  %}</div>
+    {% endfor %}
+    {% endif %}
 </div>
 <div class="test">
 {% block body %}

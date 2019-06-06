@@ -8,9 +8,10 @@ import datetime
 import urllib.request
 
 # Create your views here.
+randomquestion=RealQuestion.objects.all().order_by('?')[:10]
 def index(request):
-    allquestions=RealQuestion.objects.all().order_by
-    context={"allquestions":allquestions}
+    allquestions=RealQuestion.objects.all().order_by(answer)
+    context={"allquestions":allquestions, "randomquestion":randomquestion,}
     return render(request,"passionProjectApp/index.html",context)
 def register(request):
     form=UserForm(request.POST or None)
@@ -34,8 +35,8 @@ def register(request):
         else:
             form=UserForm(request.POST or None)
             context={'form':form,'errors':form.errors}
-            return render(request,"passionProjectApp/register.html",context)
-    return render(request,"passionProjectApp/register.html",{"form":form})
+            return render(request,"passionProjectApp/register.html",context,)
+    return render(request,"passionProjectApp/register.html",{"form":form, "randomquestion":randomquestion})
 def registerPass(request):
     return render(request,"passionProjectApp/registerPass.html")
 
@@ -50,9 +51,9 @@ def ask(request):
             return redirect('index')
         else:
             form=RealQuestionForm(request.POST or None)
-            context={'form':form,'errors':form.errors}
+            context={'form':form,'errors':form.errors, "randomquestion":randomquestion}
             return render(request,'passionProjectApp/ask.html',context)
-    return render(request,"passionProjectApp/ask.html",{"form":form})
+    return render(request,"passionProjectApp/ask.html",{"form":form, "randomquestion":randomquestion})
 def ask_edit(request,ID):
     questionID=get_object_or_404(RealQuestion,pk=ID)
     print(questionID.author)
@@ -70,9 +71,9 @@ def ask_edit(request,ID):
         else:
             print("i'm on else")
             form=RealQuestionForm(request.POST,instance=questionID)
-            context={"form":form,"errors":form.errors,"question":questionID}
+            context={"form":form,"errors":form.errors,"question":questionID, "randomquestion":randomquestion}
             return render(request,"passionProjectApp/ask_edit.html",context)
-    return render(request,"passionProjectApp/ask_edit.html",{'form':form,"question":questionID})
+    return render(request,"passionProjectApp/ask_edit.html",{'form':form,"question":questionID, "randomquestion":randomquestion})
 @login_required
 def ask_del(request,ID):
     questionID=get_object_or_404(RealQuestion,pk=ID)
@@ -80,7 +81,7 @@ def ask_del(request,ID):
     if request.method=='POST':
         questionID.delete()
         return redirect('index')
-    context={'form':form,'question':questionID}
+    context={'form':form,'question':questionID, "randomquestion":randomquestion}
     return render(request,"passionProjectApp/ask_del.html",context)
 def ask_read(request,ID):
     question=get_object_or_404(RealQuestion,pk=ID)
@@ -94,7 +95,7 @@ def ask_read(request,ID):
             if (y.parent==x):
                 answercomment_child.append(y)
     form=AnswerForm(request.POST or None)
-    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":answercomment_child,"form":form,"totalAnswers":totalAnswers}
+    context={"question":question,"answers":allAnswers,"question_comment":allQuestionComments,"answer_comment":answercomment_child,"form":form,"totalAnswers":totalAnswers, "randomquestion":randomquestion}
     return render(request,"passionProjectApp/ask_read.html",context)
 
 
@@ -162,7 +163,7 @@ def answer_del(request,ID):
     if request.method=='POST':
         answerID.delete()
         return redirect('ask_read',tempanswerID.parent.id)
-    context={'form':form,'answer':answerID}
+    context={'form':form,'answer':answerID, "randomquestion":randomquestion}
     print(request.method)
     return render(request,"passionProjectApp/answer_del.html",context)
 
@@ -178,7 +179,7 @@ def comment_ask(request,ID):
             form=CommentQuestionForm(request.POST or None)
             context={"form":form,"errors":form.errors}
             return render(request,'passionProjectApp/comment_ask.html',context)
-    return render(request,'passionProjectApp/comment_ask.html',{"form":form})
+    return render(request,'passionProjectApp/comment_ask.html',{"form":form, "randomquestion":randomquestion})
 def comment_ask_edit(request,ID):
     questionCommentID=get_object_or_404(RealQuestionComment,pk=ID)
     print(questionCommentID.author)
@@ -196,14 +197,14 @@ def comment_ask_edit(request,ID):
         else:
             print("i'm on else")
             form=CommentQuestionForm(request.POST,instance=questionCommentID)
-            context={"form":form,"errors":form.errors,"questionComment":questionCommentID}
+            context={"form":form,"errors":form.errors,"questionComment":questionCommentID, "randomquestion":randomquestion}
         return render(request,"passionProjectApp/comment_ask_edit.html",context)
-    return render(request,"passionProjectApp/comment_ask_edit.html",{'form':form,"questionComment":questionCommentID})
+    return render(request,"passionProjectApp/comment_ask_edit.html",{'form':form,"questionComment":questionCommentID, "randomquestion":randomquestion})
 def comment_ask_del(request,ID):
     questionCommentID=get_object_or_404(RealQuestionComment,pk=ID)
     tempquestionCommentID=questionCommentID
     form=AnswerForm(instance=questionCommentID)
-    context={'form':form,'questionComment':questionCommentID}
+    context={'form':form,'questionComment':questionCommentID, "randomquestion":randomquestion}
     if request.method=='POST':
         questionCommentID.delete()
         return redirect('ask_read',tempquestionCommentID.parent.id)
@@ -219,9 +220,9 @@ def comment_answer(request, ID):
             return redirect("ask_read",parentanswerID.parent.id)
         else:
             form=CommentAnswerForm(request.POST or None)
-            context={"form":form,"errors":form.errors}
+            context={"form":form,"errors":form.errors, "randomquestion":randomquestion}
             return render(request,"passionProjectApp/comment_answer.html",context)
-    return render(request,'passionProjectApp/comment_answer.html',{"form":form})
+    return render(request,'passionProjectApp/comment_answer.html',{"form":form, "randomquestion":randomquestion})
 def comment_answer_edit(request, commentID, grandparentID):
     answerCommentID=get_object_or_404(AnswerComment,pk=commentID)
     questionID=get_object_or_404(RealQuestion,pk=grandparentID)
@@ -240,7 +241,7 @@ def comment_answer_edit(request, commentID, grandparentID):
         else:
             print("i'm on else")
             form=CommentAnswerForm(request.POST,instance=answerCommentID)
-            context={"form":form,"errors":form.errors,"answerComment":answerCommentID}
+            context={"form":form,"errors":form.errors,"answerComment":answerCommentID, "randomquestion":randomquestion}
         return render(request,"passionProjectApp/comment_ask_edit.html",context)
     return render(request,"passionProjectApp/comment_answer_edit.html",{'form':form,"answerComment":answerCommentID})
 def comment_answer_del(request,commentID,grandparentID):
@@ -271,12 +272,10 @@ def nameReset(request):
     response.delete_cookie('name_change')
     return response
 
-
 # def annotate(request):
 #     count=RealQuestion.objects.all().order_by()
 
 
 def search (request):
     return render(request,"passionProjectApp/search.html")
-def base(request):
-    return render(request,'passionProjectApp/base.html')
+
