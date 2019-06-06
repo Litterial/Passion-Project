@@ -4,16 +4,19 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.utils.http import is_safe_url
+from django.db.models import Count
+
 import datetime
 import urllib.request
 
 # Create your views here.
-randomquestion=RealQuestion.objects.all().order_by('?')[:10]
 def index(request):
-    allquestions=RealQuestion.objects.all().order_by(answer)
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
+    allquestions=RealQuestion.objects.annotate(count=Count('answer')).order_by('count').reverse()[:20]
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     return render(request,"passionProjectApp/index.html",context)
 def register(request):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     form=UserForm(request.POST or None)
     print('here')
     if request.method =="POST":
@@ -44,6 +47,7 @@ def registerPass(request):
 
 @login_required
 def ask(request):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     form=RealQuestionForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -55,6 +59,7 @@ def ask(request):
             return render(request,'passionProjectApp/ask.html',context)
     return render(request,"passionProjectApp/ask.html",{"form":form, "randomquestion":randomquestion})
 def ask_edit(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     questionID=get_object_or_404(RealQuestion,pk=ID)
     print(questionID.author)
     form=RealQuestionForm(instance=questionID)
@@ -65,7 +70,7 @@ def ask_edit(request,ID):
         print(form)
         if form.is_valid():
             print('form was valid')
-            questionID.last_update=datetime.datetime.now()
+            questionID.last_update=datetime.datetime.utcnow()
             form.save()
             return redirect("ask_read",questionID.id)
         else:
@@ -76,6 +81,7 @@ def ask_edit(request,ID):
     return render(request,"passionProjectApp/ask_edit.html",{'form':form,"question":questionID, "randomquestion":randomquestion})
 @login_required
 def ask_del(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     questionID=get_object_or_404(RealQuestion,pk=ID)
     form=RealQuestionForm(instance=questionID)
     if request.method=='POST':
@@ -84,6 +90,7 @@ def ask_del(request,ID):
     context={'form':form,'question':questionID, "randomquestion":randomquestion}
     return render(request,"passionProjectApp/ask_del.html",context)
 def ask_read(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     question=get_object_or_404(RealQuestion,pk=ID)
     allAnswers=Answer.objects.filter(parent=ID)
     totalAnswers=len(allAnswers)
@@ -101,6 +108,7 @@ def ask_read(request,ID):
 
 @login_required
 def answer(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     parentquestionID=get_object_or_404(RealQuestion,pk=ID)
     if 'message' in request.COOKIES:
         print("cookies")
@@ -134,8 +142,9 @@ def answer(request,ID):
             form=AnswerForm(request.POST or None)
             context={'form':form,'errors':form.errors}
             return render(request,"passionProjectApp/answer.html",context)
-    return render(request,"passionProjectApp/answer.html",{"form":form})
+    return render(request,"passionProjectApp/answer.html",{"form":form,"randomquestion":randomquestion,})
 def answer_edit(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     answerID=get_object_or_404(Answer,pk=ID)
     print(answerID.author)
     form=AnswerForm(None, instance=answerID)
@@ -146,16 +155,17 @@ def answer_edit(request,ID):
         if form.is_valid():
             form=AnswerForm(request.POST,instance=answerID)
             print('form was valid')
-            answerID.last_update=datetime.datetime.now()
+            answerID.last_update=datetime.datetime.utcnow()
             form.save()
             return redirect("ask_read",answerID.parent.id)
         else:
             form=AnswerForm(request.POST,instance=answerID)
-            context={"form":form,"errors":form.errors,"answer":answerID}
+            context={"form":form,"errors":form.errors,"answer":answerID,"randomquestion":randomquestion,}
         return render(request,"passionProjectApp/answer_edit.html",context)
-    return render(request,"passionProjectApp/answer_edit.html",{'form':form,"answer":answerID})
+    return render(request,"passionProjectApp/answer_edit.html",{'form':form,"answer":answerID,"randomquestion":randomquestion,})
 @login_required
 def answer_del(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     answerID=get_object_or_404(Answer,pk=ID)
     print(answerID)
     tempanswerID=answerID
@@ -169,6 +179,7 @@ def answer_del(request,ID):
 
 @login_required
 def comment_ask(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     parentquestionID=get_object_or_404(RealQuestion,pk=ID)
     form=CommentQuestionForm(request.POST or None)
     if request.method =='POST':
@@ -181,6 +192,7 @@ def comment_ask(request,ID):
             return render(request,'passionProjectApp/comment_ask.html',context)
     return render(request,'passionProjectApp/comment_ask.html',{"form":form, "randomquestion":randomquestion})
 def comment_ask_edit(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     questionCommentID=get_object_or_404(RealQuestionComment,pk=ID)
     print(questionCommentID.author)
     form=CommentQuestionForm(instance=questionCommentID)
@@ -191,7 +203,7 @@ def comment_ask_edit(request,ID):
         print(form)
         if form.is_valid():
             print('form was valid')
-            questionCommentID.last_update=datetime.datetime.now()
+            questionCommentID.last_update=datetime.datetime.utcnow()
             form.save()
             return redirect("ask_read",questionCommentID.parent.id)
         else:
@@ -201,6 +213,7 @@ def comment_ask_edit(request,ID):
         return render(request,"passionProjectApp/comment_ask_edit.html",context)
     return render(request,"passionProjectApp/comment_ask_edit.html",{'form':form,"questionComment":questionCommentID, "randomquestion":randomquestion})
 def comment_ask_del(request,ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     questionCommentID=get_object_or_404(RealQuestionComment,pk=ID)
     tempquestionCommentID=questionCommentID
     form=AnswerForm(instance=questionCommentID)
@@ -212,6 +225,7 @@ def comment_ask_del(request,ID):
 
 @login_required
 def comment_answer(request, ID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     parentanswerID=get_object_or_404(Answer,pk=ID)
     form=CommentAnswerForm(request.POST or None)
     if request.method=="POST":
@@ -224,6 +238,7 @@ def comment_answer(request, ID):
             return render(request,"passionProjectApp/comment_answer.html",context)
     return render(request,'passionProjectApp/comment_answer.html',{"form":form, "randomquestion":randomquestion})
 def comment_answer_edit(request, commentID, grandparentID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     answerCommentID=get_object_or_404(AnswerComment,pk=commentID)
     questionID=get_object_or_404(RealQuestion,pk=grandparentID)
     print(answerCommentID.author)
@@ -235,7 +250,7 @@ def comment_answer_edit(request, commentID, grandparentID):
         print(form)
         if form.is_valid():
             print('form was valid')
-            answerCommentID.last_update=datetime.datetime.now()
+            answerCommentID.last_update=datetime.datetime.utcnow()
             form.save()
             return redirect("ask_read",questionID.id)
         else:
@@ -245,6 +260,7 @@ def comment_answer_edit(request, commentID, grandparentID):
         return render(request,"passionProjectApp/comment_ask_edit.html",context)
     return render(request,"passionProjectApp/comment_answer_edit.html",{'form':form,"answerComment":answerCommentID})
 def comment_answer_del(request,commentID,grandparentID):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     answerCommentID=get_object_or_404(AnswerComment,pk=commentID)
     questionID=get_object_or_404(RealQuestion,pk=grandparentID)
     print(questionID)
