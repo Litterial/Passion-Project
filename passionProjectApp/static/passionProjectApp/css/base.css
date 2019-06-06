@@ -25,38 +25,45 @@ p {
 
 /*******************************************************topbar**************************************************************/
 .topbar {
-    display:grid;
-    position:fixed;
-    top:0;
-    right:0;
-    width:100vw;
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    top: 0;
+    right: 0;
+    width: 100vw;
     background: #fafafb;
-    height:8vh;
+    /* height: 8vh; */
     grid-template-areas: 'logo search registration';
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns: repeat(3,1fr);
+    padding: 1% 0;
+    box-shadow: 0 1px 9px rgba(59,64,69,0.1);
 }
 
 .logo {
-    grid-area:logo;
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: flex-start;
-    padding-left:15%
+    padding-left: 3%;
+    width: 12%;
 }
 
 .search {
-    grid-area:search;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
-.registration {
-    grid-area: registration;
-    position:relative;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding-right:15%;
+    justify-content: center;
+    padding-left: 4%;
+}
+
+input
+{
+    width: 49vw;
+}
+.registration {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 15%;
 }
 /* removes text decoration for links*/
 .login,.registerlink, .editlinks {
@@ -70,12 +77,18 @@ p {
 }
 /* space between user and login button*/
 .registerlink {
-    margin-left:3%;
+    margin-left: 13%;
 }
 
 .registerbutton {
     background:#BE90D4;
     color:white;
+}
+
+.registration .registerbutton
+{
+    width: 6vw;
+
 }
 
 .registerbutton:hover {
