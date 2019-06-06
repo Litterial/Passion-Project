@@ -23,10 +23,16 @@
 
 
     <a class='questionIndex' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
-    <span class ='authorInfo'>{{x.author}} {% if x.last_update > x.date_created %}  <abbr title="edited on {{x.last_update}}"> {{x.date_created|date:"M j 'y H:i"}}*</abbr> {% else %} <abbr title="{{x.date_created}}">{{x.date_created|date:"M j 'y H:i"}}</abbr> {% endif %}</span>
+    <div class="authorInfo">
+        <div class ='authorName'>{{x.author}}</div>
+        {% load tz %}
+            {% if x.last_update > x.date_created %}
+        {% localtime on %} <abbr title="edited on {{x.last_update}}"> {% endlocaltime %}{{x.date_created|date:"M j, Y H:i"}}*</abbr>
+            {% else %}  {% localtime on %}<abbr title="{{x.date_created}}">{% endlocaltime %} asked {{x.date_created|date:"M j Y"}} at {% load tz %}{{x.date_created|utc|date:"G:i"}}</abbr>
+            {% endif %}
 
 </div>
-
+</div>
 {% endfor%}
 {% endif %}
 

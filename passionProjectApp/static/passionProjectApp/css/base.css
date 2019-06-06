@@ -250,14 +250,21 @@ div.changeColors:nth-of-type(even)
     padding-left: 6%;
     width: fit-content;
 }
-.authorInfo{
-     display: flex;
-     align-items: flex-start;
+.authorName{
+    display: flex;
+    align-items: flex-start;
     padding-top: 1%;
     padding-left: 5%;
     width: fit-content;
-    /* text-align: right; */
+    text-align: right;
+    margin-left: auto;
+    padding-bottom: 5%;
 
+}
+
+.authorInfo
+{
+    display:inline-block;
 }
 /****************************************************Right Aside*******************************************************/
 .rightAside {
