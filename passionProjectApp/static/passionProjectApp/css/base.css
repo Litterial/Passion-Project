@@ -32,9 +32,8 @@ p {
     right: 0;
     width: 100vw;
     background: #fafafb;
-    /* height: 8vh; */
-    grid-template-areas: 'logo search registration';
-    grid-template-columns: repeat(3,1fr);
+     height: 8vh;
+
     padding: 1% 0;
     box-shadow: 0 1px 9px rgba(59,64,69,0.1);
 }
@@ -213,16 +212,13 @@ abbr.pointer {
     cursor: pointer;
 }
 /******************************************************index***********************************************************/
-.changeColors
-{
 
-}
 div.changeColors:nth-of-type(odd)
 {
     display: flex;
     justify-content: flex-start;
     padding: 1%;
-    background:burlywood;
+    background: #fafafb;
 }
 
 div.changeColors:nth-of-type(even)
@@ -230,7 +226,7 @@ div.changeColors:nth-of-type(even)
     display: flex;
     justify-content: flex-start;
     padding: 1%;
-    background: #f1f1f1;
+    background: white;
 }
 
 .answered
@@ -243,8 +239,17 @@ div.changeColors:nth-of-type(even)
     width:78px;
 }
 
-.questionTitle
+.questionInfo
 {
+    margin-left: 9%;
+}
+
+.questionIndex
+{
+    display: flex;
+    align-items: center;
+    padding-top: 1%;
+    margin-left: 5%;
 }
 /****************************************************Right Aside*******************************************************/
 .rightAside {
