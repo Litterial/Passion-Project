@@ -166,7 +166,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'external_link_list_url': "lists/link_list.js",
     'external_image_list_url': "lists/image_list.js",
     'media_external_list_url': "lists/media_list.js",
-
     'style_formats': [
         {'title': 'Bold text', 'inline': 'strong'},
         {'title': 'Red text', 'inline': 'span', 'styles': {'color' : '#ff0000'}},

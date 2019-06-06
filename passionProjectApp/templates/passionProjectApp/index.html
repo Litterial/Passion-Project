@@ -13,11 +13,11 @@
 
     <div>
         {% if x.answer_set.count == 1 %}
-        <div class="answered"><span >{{x.answer_set.count}}</span> <div>answer</div></div>
+        <div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div>
         {% elif x.answer_set.count == 0 %}
-        <div class="answered"><span>{{x.answer_set.count}}</span> <div>answers</div></div>
+        <div class="answered"><div >{{x.answer_set.count}}</div> <div>answers</div></div>
         {% else %}
-        <div class="answered"><span >{{x.answer_set.count}}</span> <div>answers</div></div>
+        <div class="answered"><div >{{x.answer_set.count}}</div> <div>answers</div></div>
         {% endif %}
     </div>
 

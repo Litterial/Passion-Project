@@ -30,7 +30,7 @@ p {
     top:0;
     right:0;
     width:100vw;
-    background: #dfdfdf;
+    background: #fafafb;
     height:8vh;
     grid-template-areas: 'logo search registration';
     grid-template-columns:repeat(3,1fr);
@@ -202,29 +202,27 @@ abbr.pointer {
 /******************************************************index***********************************************************/
 .changeColors
 {
-    display:grid;
-    grid-template-columns: 1fr 1fr;
 
 }
 div.changeColors:nth-of-type(odd)
 {
-    /*display: flex;*/
-    /*justify-content: flex-start;*/
+    display: flex;
+    justify-content: flex-start;
     padding: 1%;
     background:burlywood;
 }
 
 div.changeColors:nth-of-type(even)
 {
-    /*display: flex;*/
-    /*justify-content: flex-start;*/
+    display: flex;
+    justify-content: flex-start;
     padding: 1%;
     background: #f1f1f1;
 }
 
 .answered
 {
-    grid-column: 1;
+    display: inline-block;
     text-align: center;
     border: 1px solid limegreen;
     color: green;
@@ -234,7 +232,6 @@ div.changeColors:nth-of-type(even)
 
 .questionTitle
 {
-    grid-column: 2;
 }
 /****************************************************Right Aside*******************************************************/
 .rightAside {
