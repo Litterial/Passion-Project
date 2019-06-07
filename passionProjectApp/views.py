@@ -13,6 +13,7 @@ import urllib.request
 
 def index(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
+    #gets questions  with most answer
     allquestions=RealQuestion.objects.annotate(count=Count('answer')).order_by('count').reverse()[:20]
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     return render(request,"passionProjectApp/index.html",context)
@@ -93,7 +94,6 @@ def ask_del(request,ID):
         return redirect('index')
     context={'form':form,'question':questionID, "randomquestion":randomquestion}
     return render(request,"passionProjectApp/ask_del.html",context)
-@login_required
 def ask_read(request,ID):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     question=get_object_or_404(RealQuestion,pk=ID)

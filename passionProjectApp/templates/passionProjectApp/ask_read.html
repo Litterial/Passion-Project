@@ -65,8 +65,8 @@
         <div class="questionOptions">
             {% if request.user == x.author %}
             <span class="editlinks">
-    <a class= 'editMargins' href="{% url 'answer_edit' x.id %}"><abbr title="revise and improve post">edit</abbr></a>
-    <a href="{% url 'answer_del' x.id %}"><abbr title="remove post including comments">delete</abbr></a>
+    <a class= 'editMargins' href="{% url 'answer_edit' x.id %}"><abbr class='pointer' title="revise and improve post">edit</abbr></a>
+    <a href="{% url 'answer_del' x.id %}"><abbr class='pointer' title="remove post including comments">delete</abbr></a>
     {% endif %}
     </span>
             {% load tz %}
@@ -102,8 +102,8 @@
             {% endif %}
             {% if request.user == y.author %}
             <div class="qCommentLinks">
-                <a class="qCommentMargin" href="{% url 'comment_answer_edit' y.id x.parent_id %}"><abbr title="revise and improve comment">edit</abbr></a>
-                <a href="{% url 'comment_answer_del' y.id x.parent_id %}"><abbr title="delete comment">delete</abbr></a></div>
+                <a class="qCommentMargin" href="{% url 'comment_answer_edit' y.id x.parent_id %}"><abbr class='pointer' title="revise and improve comment">edit</abbr></a>
+                <a href="{% url 'comment_answer_del' y.id x.parent_id %}"><abbr class='pointer' title="delete comment">delete</abbr></a></div>
             {% endif %}
         </div>
         {% endif %}
