@@ -1,11 +1,16 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
-<h1>This is the template to edit comments for answers</h1>
 {% if request.user == answerComment.author %}
+<div class="titlepadding">
+    <h1 class="questionTitle">Edit your comment</h1>
+</div>
+<hr/>
+<br/>
 <form method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <button>Submit</button>
+    <span class="askButton">{{form.message.label_tag}}</span>
+    {{form.message}}
+    <button class=" btn btn-primary askButton">Submit</button>
 </form>
 {% else %}
 <h1>{{request.user}}, please log-in as {{answerComment.author}}</h1>

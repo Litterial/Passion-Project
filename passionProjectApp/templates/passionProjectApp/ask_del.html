@@ -2,13 +2,22 @@
 {% block body %}
 <body>
 {% if request.user == question.author %}
-<h1>This is the template to delete questions</h1>
+<div class="titlepadding">
+    <h1 class="questionTitle">Are you sure you want to delete this post?</h1>
+</div>
+<hr/>
+<br/>
 <form method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <button>Submit</button>
+    <span class="askButton">{{form.title.label_tag}}</span>
+    {{form.title}}
+    <br/><br/>
+    <span class="askButton">{{form.question.label_tag}}</span>
+    {{form.question}}
+
+    <button class=" btn btn-danger askButton">Delete</button>
 </form>
-<a href="{% url 'ask_read' question.id %}"><button>Return to previous page</button></a>
+<a href="{% url 'ask_read' question.id %}"><button class=" btn btn-primary askButton">Return to previous page</button></a>
 {% else %}
 <h1>GET THE FUCK OFF THIS PAGE. YOU AIN'T THE OWNER YA FOOL</h1>
 {% endif %}

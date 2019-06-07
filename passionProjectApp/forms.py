@@ -9,10 +9,12 @@ class RealQuestionForm(forms.ModelForm):
         model = RealQuestion
         fields=['title','question']
 
+
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields=['message']
+
 class CommentQuestionForm(forms.ModelForm):
     class Meta:
         model = RealQuestionComment

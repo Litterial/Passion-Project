@@ -15,12 +15,12 @@
     {% endif %}
     </span>
     {% if question.last_update > question.date_created %}
-    <span class="createdProfile"><abbr title="{{question.last_update}}">
-        {% load tz %} edited {{ question.last_update|utc|date:"M j 'y"}} at {{ question.last_update|utc|date:'H:i' }}</abbr> <span class="dateCreatedMargin">Asked <abbr title="{{question.date_created}}"> {{ question.date_created|utc|date:"M j 'y"}} at {{ question.date_created|utc|date:'H:i' }} by {{question.author}}</abbr></span>
+    <span class="createdProfile">{% load tz %} {% timezone "America/Chicago" %} <abbr title="{{question.last_update}}">{% endtimezone %}
+         edited {{ question.last_update|utc|date:"M j 'y"}} at {{ question.last_update|utc|date:'H:i' }}</abbr> {% timezone "America/Chicago" %}<span class="dateCreatedMargin">Asked <abbr title="{{question.date_created}}">{% endtimezone %}{{ question.date_created|utc|date:"M j 'y"}} at {{ question.date_created|utc|date:'H:i' }} by {{question.author}}</abbr></span>
     </span>
     {% else %}
-        <span ><abbr class="" title="{{question.date_created}}">
-            {% load tz %} asked {{ question.date_created|utc|date:"M j 'y"}} at {{ question.date_created|utc|date:'H:i' }} by {{question.author}}
+        {% load tz %} <span ><abbr class="" title="{{question.date_created}}">
+            asked {{ question.date_created|utc|date:"M j 'y"}} at {{ question.date_created|utc|date:'H:i' }} by {{question.author}}
         </abbr></span>
     {% endif %}
     {% endif %}
@@ -29,10 +29,10 @@
         {% if question_comment %}
         {% for x in question_comment %}
         <div class="qComment">
-        {% autoescape off %} {{x.message}} {% endautoescape %} — <span>{{x.author}}<abbr title="{{x.last_update}}">
-            {% load tz %}{{ x.date_created|utc|date:"M j 'y "}}{{ x.date_created|utc|date:'H:i' }}</abbr></span>
+        {% autoescape off %} {{x.message}} {% endautoescape %} —  {% load tz %}<span>{{x.author}}{% timezone "America/Chicago" %}<abbr title="{{x.last_update}}">{% endtimezone %}
+           {{ x.last_created|utc|date:"M j 'y "}}{{ x.date_created|utc|date:'H:i' }}</abbr></span>
            {% if x.last_update > x.date_created %}
-            <abbr  class='edit' title="edited on {{x.last_update}}">*</abbr>
+            <abbr  class='edit' title="edited on {{x.last_update}}"></abbr>
             {% endif %}
         {% if request.user == x.author %}
         <div class="qCommentLinks">

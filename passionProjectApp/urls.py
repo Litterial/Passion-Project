@@ -5,7 +5,7 @@ urlpatterns=[
     path("",views.index,name='index'),
     path('register/',views.register,name='register'),
     path('registerpass/',views.registerPass,name='registerpass'),
-
+    path('allquestions/',views.allquestions,name='allquestions'),
     path('ask/read/<int:ID>/',views.ask_read,name='ask_read'),
 
     path("ask/",views.ask,name='ask'),
@@ -26,9 +26,7 @@ urlpatterns=[
     path('answer/comment/<int:commentID>/edit/<int:grandparentID>/',views.comment_answer_edit,name='comment_answer_edit'),
     path('answer/comment/<int:commentID>/delete/<int:grandparentID>/',views.comment_answer_del,name='comment_answer_del'),
 
-    path('test/',views.test,name='test'),
-    path('changename/<str:name_change>/',views.nameChange,name='nameChange'),
-    path('nameReset/',views.nameReset,name='nameReset'),
+
 
     path('search/',views.search,name='search'),
 ]

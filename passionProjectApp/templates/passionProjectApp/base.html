@@ -33,13 +33,16 @@
 
 <div class="bodygrid">
 <aside class="asidebar">
-    <div class="fixed-aside">info to the left</div>
+    <div class=" fixed-aside">
+    <div><a href="{% url 'index' %}">Home</a></div>
+    <div><a href="{% url 'allquestions' %}">Questions</a></div>
+    </div>
 </aside>
 <div class="rightAside">
-    right aside
+    <div class="randoQTitle">Related questions</div>
     {% if randomquestion %}
     {% for x in randomquestion %}
-    <div>{% autoescape off %} {{x.title}} {% endautoescape  %}</div>
+    <div class="randoQ"><a href="{% url 'ask_read' x.id %}">{% autoescape off %} {{x.title}} {% endautoescape %}</a></div>
     {% endfor %}
     {% endif %}
 </div>

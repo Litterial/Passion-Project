@@ -1,9 +1,14 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
-<h1>This is the template to comment on question</h1>
+<div class="titlepadding">
+    <h1 class="questionTitle">Post your comment</h1>
+</div>
+<hr/>
+<br/>
 <form method="POST">
     {% csrf_token %}
-    {{form.as_p}}
-    <button>Submit</button>
+    <span class="askButton">{{form.message.label_tag}}</span>
+    {{form.message}}
+    <button class=" btn btn-primary askButton">Submit</button>
 </form>
 {% endblock body %}

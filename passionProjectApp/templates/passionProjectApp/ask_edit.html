@@ -1,11 +1,20 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
-<h1>This is the template to edit questions</h1>
 {% if request.user == question.author %}
-<form method="post">
+<div class="titlepadding">
+    <h1 class="questionTitle">Edit your post</h1>
+</div>
+<hr/>
+<br/>
+<form class ='askForm' method="post">
     {% csrf_token %}
-    {{form.as_p}}
-   <button>Submit</button>
+    <span class="askButton">{{form.title.label_tag}}</span>
+    {{form.title}}
+    <br/><br/>
+    <span class="askButton">{{form.question.label_tag}}</span>
+    {{form.question}}
+
+    <button class=" btn btn-primary askButton">Submit</button>
 </form>
 {% else %}
 <h1>You can't come on this page</h1>
