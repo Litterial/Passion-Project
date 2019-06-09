@@ -10,7 +10,7 @@
     <span class="askButton">{{form.message.label_tag}}</span>
     {{form.message}}
 
-    <button class=" btn btn-danger askButton">Delete</button>
+    <button class=" btn btn-danger askButton" name="delete">Delete</button>
 </form>
 <a href="{% url 'ask_read' question.id %}"><button class=" btn btn-primary askButton">Return to previous page</button></a>
 {% else %}

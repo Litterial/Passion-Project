@@ -90,8 +90,11 @@ def ask_del(request,ID):
     questionID=get_object_or_404(RealQuestion,pk=ID)
     form=RealQuestionForm(instance=questionID)
     if request.method=='POST':
-        questionID.delete()
-        return redirect('index')
+        if 'delete' in request.POST:
+            questionID.delete()
+            return redirect('index')
+        else:
+            return redirect('ask_read',questionID.id)
     context={'form':form,'question':questionID, "randomquestion":randomquestion}
     return render(request,"passionProjectApp/ask_del.html",context)
 def ask_read(request,ID):
@@ -177,8 +180,11 @@ def answer_del(request,ID):
     tempanswerID=answerID
     form=AnswerForm(instance=answerID)
     if request.method=='POST':
-        answerID.delete()
-        return redirect('ask_read',tempanswerID.parent.id)
+        if 'delete' in request.POST:
+            answerID.delete()
+            return redirect('ask_read',tempanswerID.parent.id)
+        else:
+            return redirect('ask_read',tempanswerID.parent.id)
     context={'form':form,'answer':answerID, "randomquestion":randomquestion}
     print(request.method)
     return render(request,"passionProjectApp/answer_del.html",context)
@@ -228,8 +234,11 @@ def comment_ask_del(request,ID):
     context={'form':form,'questionComment':questionCommentID, "randomquestion":randomquestion}
     print('comment_ask_del')
     if request.method=='POST':
-        questionCommentID.delete()
-        return redirect('ask_read',tempquestionCommentID.parent.id)
+        if 'delete' in request.POST:
+            questionCommentID.delete()
+            return redirect('ask_read',tempquestionCommentID.parent.id)
+        else:
+            return redirect('ask_read',tempquestionCommentID.parent.id)
     return render(request,"passionProjectApp/comment_ask_del.html",context)
 @login_required
 def comment_answer(request, ID):
@@ -278,8 +287,11 @@ def comment_answer_del(request,commentID,grandparentID):
     form=CommentAnswerForm(instance=answerCommentID)
     context={'form':form,'answerComment':answerCommentID,"question":questionID}
     if request.method=='POST':
-        answerCommentID.delete()
-        return redirect('ask_read',questionID.id)
+        if 'delete' in request.POST:
+            answerCommentID.delete()
+            return redirect('ask_read',questionID.id)
+        else:
+            return('ask_read',questionID.id)
     return render(request,"passionProjectApp/comment_answer_del.html",context)
 
 

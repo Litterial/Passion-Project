@@ -9,6 +9,11 @@ html,body {
  width:100vw;
 }
 
+body
+{
+    background-image:url('../images/background.png');
+}
+
 /*the p tag is changed to inline because the tinyMCE renders all text as html*/
 p {
     display: inline;
@@ -18,9 +23,11 @@ p {
 {
     display:grid;
     grid-template-areas: 'aside questions rando';
-    grid-template-columns: 0.4fr 3fr 1fr;
-    margin-top:8vh;
+    grid-template-columns: 0.5fr 3fr 1fr;
+    padding-top:8vh;
     height:100vh;
+    margin-top: 8%;
+    margin-right: 10%;
 }
 
 /*******************************************************topbar**************************************************************/
@@ -32,7 +39,7 @@ p {
     right: 0;
     width: 100vw;
     background: #fafafb;
-     height: 8vh;
+    height: 8vh;
 
     padding: 1% 0;
     box-shadow: 0 1px 9px rgba(59,64,69,0.1);
@@ -100,24 +107,22 @@ p {
     display: grid;
     grid-area: aside;
     background: #ffffff;
-    /*position:fixed;*/
-    text-align:right;
+    /*position: fixed;*/
+    text-align: right;
     height: 100%;
-    /*width:20%;*/
+    top: 9%;
 }
 .fixed-aside{
-    top: 45%;
+    top: 55%;
     position: fixed;
-    display: flex;
-    flex-direction: column;
-    left: 1%;
-
 }
 
 .fixed-aside div{
-    padding-right:5%;
+
+    padding-right: 5%;
     padding-bottom: 8%;
     font-size: 1.3rem;
+
 }
 /******************************************************Main body********************************************************/
 
@@ -146,8 +151,9 @@ abbr[title]{
 }
 
 .questionMargin{
-    padding-top:1%;
-    margin: 0 0 0 6%;
+    padding: 0 0 0 6%;
+    border-bottom: 1px solid #9a9a9a;
+    margin-top: 2%;
 }
 
 .editlinks
@@ -183,17 +189,14 @@ abbr[title]{
 }
 .questionFont
 {
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
 
 .editMargins
 {
  margin-right:4%;
 }
-.qComment
-{
-    margin-left:3.5%;
-}
+
 .qCommentLinks {
     font-size: 14px;
 }
@@ -227,7 +230,23 @@ hr {
 abbr.pointer {
     cursor: pointer;
 }
-/******************************************************index***********************************************************/
+.qComment
+{
+    font-size: 14px;
+    border-top: 1px solid #9a9a9a;
+    padding: 1% 0 1% 3.5%;
+}
+
+.qComment:nth-of-type(odd)
+{
+    background:#fafafb;
+}
+.qComment:last-of-type
+ {
+     background:white;
+ }
+
+/****************************************************index***********************************************************/
 
 div.changeColors:nth-of-type(odd)
 {

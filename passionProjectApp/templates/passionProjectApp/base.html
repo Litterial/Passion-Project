@@ -10,7 +10,7 @@
     <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
     <script src="{% static 'passionProjectApp/js/bootstrap.js' %}"></script>
 </head>
-<body>
+<body >
 {% if request.user.is_authenticated %}
 <div class="topbar">
     <div class ='logo'><a href="{% url 'index' %}">Placeholder logo</a></div>
@@ -30,14 +30,14 @@
         <a class='login' href="{% url 'login' %}">Login</a> <a class='registerlink' href="{% url 'register' %}"><button type="button" class=" btn registerbutton">SignUp</button></a></div>
 </div>
 {% endif %}
-
-<div class="bodygrid">
 <aside class="asidebar">
     <div class=" fixed-aside">
-    <div><a href="{% url 'index' %}">Home</a></div>
-    <div><a href="{% url 'allquestions' %}">Questions</a></div>
+        <div id="home"><a href="{% url 'index' %}">Home</a></div>
+        <div id="questions"><a href="{% url 'allquestions' %}">Questions</a></div>
     </div>
 </aside>
+<div class="bodygrid">
+
 <div class="rightAside">
     <div class="randoQTitle">Related questions</div>
     {% if randomquestion %}

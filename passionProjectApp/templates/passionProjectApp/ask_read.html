@@ -2,7 +2,7 @@
 {% block body %}
 {% if question %}
 <div class="titlepadding">
-    <h1 class="questionTitle"> {% autoescape off %}{{question.title}} {% endautoescape %}</h1>
+    <h3 class="questionTitle"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
 <hr/>
@@ -25,7 +25,7 @@
     {% endif %}
     {% endif %}
     </div>
-        <hr/>
+
         {% if question_comment %}
         {% for x in question_comment %}
         <div class="qComment">
@@ -48,7 +48,6 @@
         <a href="{% url 'comment_ask_del' x.id %}"><abbr title="delete comment">delete</abbr></a></div>
         {% endif %}
         </div>
-        <hr/>
         {% endfor %}
         {% endif %}
         <a class="addQComment" href="{% url 'comment_ask' question.id %}">add comment</a>
@@ -56,11 +55,11 @@
         {% if answers %}
         <br/><br/><br/><br/>
         {% if totalAnswers != 1 %}
-        <h1 class="titlepadding"> {{totalAnswers}} Answers</h1>
+        <h3 class="titlepadding"> {{totalAnswers}} Answers</h3>
         {% else %}
-        <h1 class="titlepadding"> 1 Answer</h1>
+        <h3 class="titlepadding"> 1 Answer</h3>
         {% endif %}
-        {% for x in answers %} <hr>
+        {% for x in answers %}
     <div class="questionMargin"> <div class="questionFont"> {% autoescape off%}{{x.message}} {% endautoescape %}</div>
         <div class="questionOptions">
             {% if request.user == x.author %}
@@ -85,7 +84,7 @@
 
         {% if answer_comment %}
         {% for y in answer_comment %}
-        {% if y.parent == x %}  <hr/>
+        {% if y.parent == x %}
         <div class="qComment">
             {% load tz %}
             {% if y.last_update > y.date_created %}
@@ -109,13 +108,13 @@
         {% endif %}
         {% endfor %}       <!--<hr/><div class="qComment"><a class='addQComment' href="{% url 'comment_answer' x.id%}">add comment</a></div></div><br/>-->
         {% endif %}
-<hr/><div class="qComment"><a class='addQComment' href="{% url 'comment_answer' x.id%}">add comment</a></div></div><br/>
+<div class="qComment"><a class='addQComment' href="{% url 'comment_answer' x.id%}">add comment</a></div></div><br/>
         {% endfor %}
-        <h1 class="titlepadding">Your answer</h1>
+        <h3 class="titlepadding">Your answer</h3>
     {% else %}
     <br/><br/><br/><br/>
 
-        <h1 class="titlepadding">Be the first to answer</h1>
+        <h3 class="titlepadding">Be the first to answer</h3>
         {% endif %}
         <form  onsubmit="putCookie()" class="askForm" method ='POST' action="{% url 'answer' question.id %}">
             {% csrf_token %}
