@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.utils.http import is_safe_url
 from django.db.models import Count
-
+from django.core.paginator import Paginator
 import datetime
 import urllib.request
 
@@ -14,7 +14,7 @@ import urllib.request
 def index(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     #gets questions  with most answer
-    allquestions=RealQuestion.objects.annotate(count=Count('answer')).order_by('count').reverse()[:20]
+    allquestions=RealQuestion.objects.annotate(count=Count('answer')).order_by('count').reverse()[:10]
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     return render(request,"passionProjectApp/index.html",context)
 def register(request):
@@ -46,8 +46,18 @@ def registerPass(request):
     return render(request,"passionProjectApp/registerPass.html")
 def allquestions(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
-    questionlist=RealQuestion.objects.all()
-    return render(request,'passionProjectApp/allquestions.html',{'questionlist':questionlist,'randomquestion':randomquestion})
+    questionlist=RealQuestion.objects.all().order_by('date_created')
+    paginator=Paginator(questionlist,10)
+    page=request.GET.get('page')
+    print('lastpage')
+    questionpage=paginator.get_page(page)
+    print("questions")
+    print(questionpage)
+    print("Count")
+    print(paginator.num_pages)
+    print("paginator")
+    print(paginator)
+    return render(request,'passionProjectApp/allquestions.html',{'questionlist':questionlist,'randomquestion':randomquestion,'questionpage':questionpage})
 
 @login_required
 def ask(request):

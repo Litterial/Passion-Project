@@ -6,8 +6,8 @@
 </div>
 <hr/>
 
-{% if questionlist %}
-{% for x in questionlist %}
+{% if questionpage %}
+{% for x in questionpage %}
 <!-- element.child_set accesses a reverse foreign key-->
 <div class="changeColors">
 
@@ -36,5 +36,26 @@
 </div>
 {% endfor%}
 {% endif %}
+{% load mathfilters %}
+<!--{{questionpage.paginator.num_pages}}-->
+{% if questionpage.has_previous %}
+<a href="?page=1">First</a>
+<a href="?page={{questionpage.previous_page_number}}">Previous</a>
+{% endif %}
+
+{% for y in  questionpage.paginator.page_range %}
+    {% if questionpage.number == y %}
+    <b>{{y}}</b>
+    {% elif y > questionpage.number|sub:3  and y < questionpage.number|add:3 %}
+<div>{{y}}</div>
+    {% endif %}
+    {% endfor %}
+{% if questionpage.has_next %}
+<a href="?page={{questionpage.next_page_number}}">Next</a>
+{% if questionpage.number != questionpage.pagination.num_pages %}
+<a href="?page={{questionpage.paginator.num_pages}}">Last</a>
+{% endif %}
+{% endif %}
+
 
 {% endblock body %}
