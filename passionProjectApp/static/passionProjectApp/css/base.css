@@ -136,6 +136,7 @@ p {
     padding:3% 0 0 1.5%;
     display:flex;
     justify-content: space-between;
+    height:7rem;
 }
 /*****************************************************ask_read*********************************************************/
 .questionTitle {

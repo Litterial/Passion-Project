@@ -7,14 +7,17 @@ from django.utils.http import is_safe_url
 from django.db.models import Count
 from django.core.paginator import Paginator
 import datetime
+import os
+from django.conf import settings
 import urllib.request
+from django.db.models import Q
 
 # Create your views here.
 
 def index(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     #gets questions  with most answer
-    allquestions=RealQuestion.objects.annotate(count=Count('answer')).order_by('count').reverse()[:10]
+    allquestions=RealQuestion.objects.filter(last_update__range=[datetime.datetime.utcnow()+datetime.timedelta(days=1),datetime.datetime.utcnow()-datetime.timedelta(days=1,hours=1)]).annotate(count=Count('answer')).order_by('-count')
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     return render(request,"passionProjectApp/index.html",context)
 def register(request):
@@ -311,5 +314,25 @@ def comment_answer_del(request,commentID,grandparentID):
 
 
 def search (request):
-    return render(request,"passionProjectApp/search.html")
+    search=request.POST['search']
+    newsearch='' + search + " "
+    questionsearch=RealQuestion.objects.filter(Q(title__icontains=newsearch) or Q(question__icontains=newsearch)).distinct().annotate(count=Count('answer')).order_by('-count')
+    tempsearch=RealQuestion.objects.filter(Q(title__icontains=newsearch) or Q(question__icontains=newsearch)).annotate(count=Count('answer'))
+    print(questionsearch)
+    paginator=Paginator(questionsearch,10)
+    print(paginator)
+
+    page=request.GET.get('page')
+    searchpage=paginator.get_page(page)
+    print(searchpage)
+    sum=len(tempsearch)
+    context={ 'search':search,'searchpage':searchpage,'sum':sum,}
+    file_ = open(os.path.join(settings.BASE_DIR,  'common'))
+    a=file_.read().split()
+    for x in a:
+        if x == search.lower():
+            return render(request,'passionProjectApp/broadsearch.html',context)
+    if sum == 0:
+        return render(request,'passionProjectApp/broadsearch.html',context)
+    return render(request,"passionProjectApp/search.html",context)
 

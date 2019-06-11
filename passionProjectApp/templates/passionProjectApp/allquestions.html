@@ -47,7 +47,7 @@
     {% if questionpage.number == y %}
     <b>{{y}}</b>
     {% elif y > questionpage.number|sub:3  and y < questionpage.number|add:3 %}
-<div>{{y}}</div>
+<a href="?page={{y}}">{{y}}</a>
     {% endif %}
     {% endfor %}
 {% if questionpage.has_next %}
