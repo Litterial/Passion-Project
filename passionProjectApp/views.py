@@ -17,9 +17,40 @@ from django.db.models import Q
 def index(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     #gets questions  with most answer
-    allquestions=RealQuestion.objects.filter(last_update__range=[datetime.datetime.utcnow()+datetime.timedelta(days=1),datetime.datetime.utcnow()-datetime.timedelta(days=1,hours=1)]).annotate(count=Count('answer')).order_by('-count')
+    today=datetime.datetime.utcnow()
+    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)
+    allquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
+    print('today')
+    print(today)
+    print('cutoff')
+    print(cutoff)
     return render(request,"passionProjectApp/index.html",context)
+def weekResults(request):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
+    #gets questions  with most answer
+    today=datetime.datetime.utcnow()
+    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=7)
+    allquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    context={"allquestions":allquestions, "randomquestion":randomquestion,}
+    print('today')
+    print(today)
+    print('cutoff')
+    print(cutoff)
+    return render(request,"passionProjectApp/weekResults.html",context)
+def monthResults(request):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
+    #gets questions  with most answer
+    today=datetime.datetime.utcnow()
+    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=31)
+    allquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    context={"allquestions":allquestions, "randomquestion":randomquestion,}
+    print('today')
+    print(today)
+    print('cutoff')
+    print(cutoff)
+    return render(request,"passionProjectApp/monthResults.html",context)
+
 def register(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     form=UserForm(request.POST or None)

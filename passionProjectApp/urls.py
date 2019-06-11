@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns=[
     path("",views.index,name='index'),
+    path('week/',views.weekResults,name='week'),
+    path('month/',views.monthResults,name='month'),
     path('register/',views.register,name='register'),
     path('registerpass/',views.registerPass,name='registerpass'),
     path('allquestions/',views.allquestions,name='allquestions'),

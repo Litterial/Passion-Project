@@ -1,9 +1,8 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
 <div class="titlepadding">
-    <h1 class="questionTitle">Top questions of today</h1>
+    <h1 class="questionTitle">Top questions of the week</h1>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
-
 </div>
 <div class="dateResults">
     <a href="{% url 'index' %}"><button class="btn btn-primary">Today</button></a>
@@ -32,13 +31,13 @@
     <div class="authorInfo">
         <div class ='authorName'>{{x.author}}</div>
         {% load tz %}
-            {% if x.last_update > x.date_created %}
+        {% if x.last_update > x.date_created %}
         {% timezone "America/Chicago" %}
         <abbr title="created {{x.last_update}}"> {% endtimezone %}edited {{x.last_update|date:"M j, Y H:i"}}</abbr>
-            {% else %} {% timezone "America/Chicago" %} <abbr title="{{x.date_created}}"> {% endtimezone %} asked {{x.date_created|date:"M j Y"}} at {% load tz %}{{x.date_created|utc|date:"G:i"}}</abbr>
-            {% endif %}
+        {% else %} {% timezone "America/Chicago" %} <abbr title="{{x.date_created}}"> {% endtimezone %} asked {{x.date_created|date:"M j Y"}} at {% load tz %}{{x.date_created|utc|date:"G:i"}}</abbr>
+        {% endif %}
 
-</div>
+    </div>
 </div>
 {% endfor%}
 {% endif %}

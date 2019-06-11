@@ -302,6 +302,16 @@ div.changeColors:nth-of-type(even)
 {
     display:inline-block;
 }
+.dateResults{
+    display:flex;
+    justify-content: flex-end;
+}
+
+.dateResults a:not(first-of-type)
+{
+    padding-left:3%;
+}
+
 /****************************************************Right Aside*******************************************************/
 .rightAside {
     grid-area: rando;
