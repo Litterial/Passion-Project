@@ -25,7 +25,7 @@ SECRET_KEY = 'g(9z(qfp1nk%d2336e8p92hh#jry)ww#n*db502v)*_(a2g45+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['45.55.38.143','app3.juwanmoore.com']
+ALLOWED_HOSTS = ['45.55.38.143','app3.juwanmoore.com','juwanmoore.com','127.0.0.1']
 
 
 # Application definition
