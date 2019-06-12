@@ -6,11 +6,13 @@ from django.contrib.auth import authenticate,login,logout
 from django.utils.http import is_safe_url
 from django.db.models import Count
 from django.core.paginator import Paginator
-import datetime
-import os
+import datetime,os
 from django.conf import settings
 import urllib.request
 from django.db.models import Q
+from rest_framework.decorators import api_view,renderer_classes,permission_classes,authentication_classes
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
 # Create your views here.
 
@@ -367,11 +369,12 @@ def search (request):
         return render(request,'passionProjectApp/broadsearch.html',context)
     return render(request,"passionProjectApp/search.html",context)
 
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
 def questionUpvote(request,ID):
     like=get_object_or_404(RealQuestion,pk=ID)
     upvote=False
     update=False
-    data={'upvote':upvote,"update":update}
     if request.user.is_authenticated:
         if request.user in like.upvote.all():
             like.upvote.remove(request.user)
@@ -383,33 +386,34 @@ def questionUpvote(request,ID):
         voteTotal=(len(like.upvote.all())-len(like.downvote.all()))
         print(voteTotal)
         data={'upvote':upvote,"update":update,"voteTotal":voteTotal}
-        return HttpResponse(data)
+        return Response(data)
         # return redirect('index')
     else:
         print('hi')
         # return Response(context)
         return redirect ('index')
 
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
 def questionDownvote(request,ID):
     dislike=get_object_or_404(RealQuestion,pk=ID)
     downvote=False
     update=False
-    data={'downvote':downvote,"update":update}
     if request.user.is_authenticated:
-        if request.user in dislike.downvovte.all():
-            dislike.downvovte.remove(request.user)
-            dislike.update.remove(request.user)
+        if request.user in dislike.downvote.all():
+            dislike.downvote.remove(request.user)
+            dislike.upvote.remove(request.user)
             print('remove')
         else:
             downvote=True
-            dislike.downvovte.add(request.user)
-            dislike.update.remove(request.user)
+            dislike.downvote.add(request.user)
+            dislike.upvote.remove(request.user)
             print('add')
         update=True
-        voteTotal=(len(dislike.update.all())-len(dislike.downvovte.all()))
+        voteTotal=(len(dislike.upvote.all())-len(dislike.downvote.all()))
         data={'downvote':downvote,"update":update,"voteTotal":voteTotal}
         print(data)
-        return HttpResponse(data)
+        return Response(data)
         # return redirect('index')
     else:
         print('hi')

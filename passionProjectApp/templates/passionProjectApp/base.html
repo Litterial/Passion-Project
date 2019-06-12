@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     {% load static %}
-    {{form.media}}
+
     <link rel="stylesheet" href="{% static 'passionProjectApp/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
     <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
     <script src="{% static 'passionProjectApp/js/bootstrap.js' %}"></script>
+
+    {{form.media}}
 </head>
 <body >
 {% if request.user.is_authenticated %}
@@ -55,8 +57,8 @@
 </div>
 
 </div>
-{% block jquery %}
-<script src="{% static 'passionProjectApp/JavaScript/jquery-3.4.1.min.js' %}"></script>
-{% endblock jquery%}
 </body>
+<script src="{% static 'passionProjectApp/JavaScript/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'passionProjectApp/JavaScript/voting.js' %}"></script>
+
 </html>

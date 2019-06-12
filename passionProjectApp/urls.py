@@ -33,6 +33,6 @@ urlpatterns=[
     path('search/',views.search,name='search'),
 
     path('upvote/question/<int:ID>/',views.questionUpvote,name='questionUpvote'),
-    path('upvote/question/<int:ID>/',views.questionDownvote,name='questionDownvote'),
+    path('downvote/question/<int:ID>/',views.questionDownvote,name='questionDownvote'),
 
 ]
