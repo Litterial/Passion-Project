@@ -40,6 +40,8 @@ class Answer(models.Model):
     last_update=models.DateTimeField(default=datetime.datetime.utcnow())
     date_created=models.DateTimeField(default=datetime.datetime.utcnow())
     parent=models.ForeignKey(RealQuestion,on_delete=models.CASCADE)
+    upvote=models.ManyToManyField(User,blank=True,related_name='answer_upvotes')
+    downvote=models.ManyToManyField(User,blank=True,related_name='answer_downvotes')
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):

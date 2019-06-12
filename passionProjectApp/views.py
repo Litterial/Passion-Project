@@ -419,3 +419,54 @@ def questionDownvote(request,ID):
         print('hi')
         # return Response(context)
         return redirect ('index')
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def answerUpvote(request,ID):
+    like=get_object_or_404(Answer,pk=ID)
+    upvote=False
+    update=False
+    if request.user.is_authenticated:
+        if request.user in like.upvote.all():
+            like.upvote.remove(request.user)
+            like.downvote.remove(request.user)
+        else:
+            like.upvote.add(request.user)
+            like.downvote.remove(request.user)
+        update=True
+        voteTotal=(len(like.upvote.all())-len(like.downvote.all()))
+        print(voteTotal)
+        data={'upvote':upvote,"update":update,"voteTotal":voteTotal}
+        return Response(data)
+        # return redirect('index')
+    else:
+        print('hi')
+        # return Response(context)
+        return redirect ('index')
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def answerDownvote(request,ID):
+    dislike=get_object_or_404(Answer,pk=ID)
+    downvote=False
+    update=False
+    if request.user.is_authenticated:
+        if request.user in dislike.downvote.all():
+            dislike.downvote.remove(request.user)
+            dislike.upvote.remove(request.user)
+            print('remove')
+        else:
+            downvote=True
+            dislike.downvote.add(request.user)
+            dislike.upvote.remove(request.user)
+            print('add')
+        update=True
+        voteTotal=(len(dislike.upvote.all())-len(dislike.downvote.all()))
+        data={'downvote':downvote,"update":update,"voteTotal":voteTotal}
+        print(data)
+        return Response(data)
+        # return redirect('index')
+    else:
+        print('hi')
+        # return Response(context)
+        return redirect ('index')

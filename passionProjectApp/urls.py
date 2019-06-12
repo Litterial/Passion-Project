@@ -34,5 +34,6 @@ urlpatterns=[
 
     path('upvote/question/<int:ID>/',views.questionUpvote,name='questionUpvote'),
     path('downvote/question/<int:ID>/',views.questionDownvote,name='questionDownvote'),
-
+    path('upvote/answer/<int:ID>/',views.answerUpvote,name='answerUpvote'),
+    path('downvote/answer/<int:ID>',views.answerDownvote,name='answerDownvote'),
 ]
