@@ -15,8 +15,8 @@ import datetime
 class RealQuestion(models.Model):
     title = tinymce_models.HTMLField()
     question = tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow())
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow())
+    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
+    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
     upvote=models.ManyToManyField(User,blank=True,related_name='question_upvotes')
     downvote=models.ManyToManyField(User,blank=True,related_name='question_downvotes')
     author = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -27,9 +27,11 @@ class RealQuestion(models.Model):
 
 class RealQuestionComment(models.Model):
     message= tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow())
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow())
+    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
+    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
     parent=models.ForeignKey(RealQuestion,on_delete=models.CASCADE)
+    upvote=models.ManyToManyField(User,blank=True,related_name='questcom_upvotes')
+    downvote=models.ManyToManyField(User,blank=True,related_name='questcom_downvotes')
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -37,8 +39,8 @@ class RealQuestionComment(models.Model):
 
 class Answer(models.Model):
     message= tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow())
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow())
+    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
+    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
     parent=models.ForeignKey(RealQuestion,on_delete=models.CASCADE)
     upvote=models.ManyToManyField(User,blank=True,related_name='answer_upvotes')
     downvote=models.ManyToManyField(User,blank=True,related_name='answer_downvotes')
@@ -49,9 +51,11 @@ class Answer(models.Model):
 
 class AnswerComment(models.Model):
     message= tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.now())
-    date_created=models.DateTimeField(default=datetime.datetime.now())
+    last_update=models.DateTimeField(default=datetime.datetime.now)
+    date_created=models.DateTimeField(default=datetime.datetime.now)
     parent=models.ForeignKey(Answer,on_delete=models.CASCADE)
+    upvote=models.ManyToManyField(User,blank=True,related_name='anscom_upvotes')
+    downvote=models.ManyToManyField(User,blank=True,related_name='anscom_downvotes')
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
