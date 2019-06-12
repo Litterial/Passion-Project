@@ -15,7 +15,7 @@
 <body >
 {% if request.user.is_authenticated %}
 <div class="topbar">
-    <div class ='logo'><a href="{% url 'index' %}">Placeholder logo</a></div>
+    <div class ='logo'><a href="{% url 'index' %}">Math.Alpha</a></div>
     <form action='{% url "search" %}' method="POST" class="search">
         {% csrf_token %}
         <input type="text" name="search" placeholder="Search...">
@@ -25,7 +25,7 @@
 </div>
 {% else %}
 <div class="topbar">
-    <div class ='logo'><a href="{% url 'index' %}">Placeholder logo</a></div>
+    <div class ='logo'><a href="{% url 'index' %}">Math.Alpha</a></div>
     <form action='{% url "search" %}' method="POST" class="search">
         {% csrf_token %}
         <input type="text" name="search" placeholder="Search...">
@@ -51,11 +51,12 @@
     {% endif %}
 </div>
 <div class="test">
+    <div>
 {% block body %}
 
 {% endblock body %}
 </div>
-
+</div>
 </div>
 </body>
 <script src="{% static 'passionProjectApp/JavaScript/jquery-3.4.1.min.js' %}"></script>

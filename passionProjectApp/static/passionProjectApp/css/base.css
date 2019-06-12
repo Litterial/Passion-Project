@@ -144,7 +144,7 @@ p {
 }
 
 .askbutton {
-    margin-right:2%;
+    /*margin-right:2%;*/
 }
 abbr[title]{
     cursor: auto;
@@ -309,7 +309,7 @@ div.changeColors:nth-of-type(even)
 
 .dateResults a:not(first-of-type)
 {
-    padding-left:3%;
+    margin-left:3%;
 }
 
 /****************************************************Right Aside*******************************************************/
