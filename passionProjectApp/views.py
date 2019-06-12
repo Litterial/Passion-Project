@@ -81,7 +81,7 @@ def registerPass(request):
 def allquestions(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     questionlist=RealQuestion.objects.all().order_by('date_created')
-    paginator=Paginator(questionlist,10)
+    paginator=Paginator(questionlist,2)
     page=request.GET.get('page')
     print('lastpage')
     questionpage=paginator.get_page(page)
@@ -367,3 +367,51 @@ def search (request):
         return render(request,'passionProjectApp/broadsearch.html',context)
     return render(request,"passionProjectApp/search.html",context)
 
+def questionUpvote(request,ID):
+    like=get_object_or_404(RealQuestion,pk=ID)
+    upvote=False
+    update=False
+    data={'upvote':upvote,"update":update}
+    if request.user.is_authenticated:
+        if request.user in like.upvote.all():
+            like.upvote.remove(request.user)
+            like.downvote.remove(request.user)
+        else:
+            like.upvote.add(request.user)
+            like.downvote.remove(request.user)
+        update=True
+        voteTotal=(len(like.upvote.all())-len(like.downvote.all()))
+        print(voteTotal)
+        data={'upvote':upvote,"update":update,"voteTotal":voteTotal}
+        return HttpResponse(data)
+        # return redirect('index')
+    else:
+        print('hi')
+        # return Response(context)
+        return redirect ('index')
+
+def questionDownvote(request,ID):
+    dislike=get_object_or_404(RealQuestion,pk=ID)
+    downvote=False
+    update=False
+    data={'downvote':downvote,"update":update}
+    if request.user.is_authenticated:
+        if request.user in dislike.downvovte.all():
+            dislike.downvovte.remove(request.user)
+            dislike.update.remove(request.user)
+            print('remove')
+        else:
+            downvote=True
+            dislike.downvovte.add(request.user)
+            dislike.update.remove(request.user)
+            print('add')
+        update=True
+        voteTotal=(len(dislike.update.all())-len(dislike.downvovte.all()))
+        data={'downvote':downvote,"update":update,"voteTotal":voteTotal}
+        print(data)
+        return HttpResponse(data)
+        # return redirect('index')
+    else:
+        print('hi')
+        # return Response(context)
+        return redirect ('index')

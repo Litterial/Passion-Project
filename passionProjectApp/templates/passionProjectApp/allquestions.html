@@ -38,16 +38,24 @@
 {% endif %}
 {% load mathfilters %}
 <!--{{questionpage.paginator.num_pages}}-->
+<div style="text-align: center">
+{% if questionpage.paginator.num_pages > 6 %}
 {% if questionpage.has_previous %}
 <a href="?page=1">First</a>
+{% if questionpage.number != 1 or questionpage.number != 2 %}
 <a href="?page={{questionpage.previous_page_number}}">Previous</a>
 {% endif %}
-
+{% endif %}
+{% endif %}
 {% for y in  questionpage.paginator.page_range %}
-    {% if questionpage.number == y %}
-    <b>{{y}}</b>
-    {% elif y > questionpage.number|sub:3  and y < questionpage.number|add:3 %}
-<a href="?page={{y}}">{{y}}</a>
+    {% if questionpage.paginator.num_pages < 6 %}
+    <a href ="?page={{y}}">{{y}}</a>
+    {% else %}
+        {% if questionpage.number == y %}
+        <b>{{y}}</b>
+        {% elif y > questionpage.number|sub:3  and y < questionpage.number|add:3 %}
+        <a href="?page={{y}}">{{y}}</a>
+        {% endif %}
     {% endif %}
     {% endfor %}
 {% if questionpage.has_next %}
@@ -56,6 +64,6 @@
 <a href="?page={{questionpage.paginator.num_pages}}">Last</a>
 {% endif %}
 {% endif %}
-
+</div>
 
 {% endblock body %}

@@ -335,3 +335,58 @@ div.changeColors:nth-of-type(even)
 {
     color: #3af;
 }
+/****************************************************Search************************************************************/
+.searchGrid
+{
+    display: grid;
+    grid-template-areas: 'answer title title'
+                        'answer body body'
+                        'vote body body'
+                        'vote tags name';
+    grid-template-columns: 1fr 7fr 2fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+
+}
+
+.answer
+{   background: red;
+    grid-area:answer;
+}
+.vote
+{   background: orange;
+    grid-area:vote;
+}
+.searchTitle
+{   background:yellow;
+    grid-area:title;
+}
+.searchQuestion
+{
+    background:green;
+    grid-area:body;
+}
+.author
+{
+    background:blue;
+    grid-area:name;
+}
+.tags{
+    background:purple;
+    grid-area:tags;
+}
+
+.questionEllipse{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right:auto;
+    margin-left:3%;
+}
+
+.questionData{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left:auto;
+}
+

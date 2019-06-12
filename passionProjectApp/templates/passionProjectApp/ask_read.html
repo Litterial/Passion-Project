@@ -1,7 +1,12 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
+{% load mathfilters %}
 {% if question %}
 <div class="titlepadding">
+    Upvote:<a class='Q-upvote-link' data-upvote= "{{question.id}}" data-href='{% url "questionUpvote" question.id %}' href ="{% url 'questionUpvote' question.id %}">Upvote</a>
+    <div id="question{{question.id}}">{{question.upvote.count|sub:question.downvote.count}}</div>
+    Downvote:<a class="Q-downvote-link" data-downvote="{{question.id}}" data-href="{% url 'questionDownvote' question.id %}" href="{% url 'questionDownvote' question.id %}">Downvote</a>
+
     <h3 class="questionTitle"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>

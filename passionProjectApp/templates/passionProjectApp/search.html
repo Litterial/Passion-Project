@@ -9,8 +9,9 @@
 {% if searchpage %}
 {% for x in searchpage %}
 <!-- element.child_set accesses a reverse foreign key-->
-<div class="changeColors">
 
+
+<div class="changeColors">
     <div class="questionInfo">
         {% if x.answer_set.count == 1 %}
         <div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div>
@@ -21,19 +22,21 @@
         {% endif %}
     </div>
 
+<div class="questionEllipse">
+    <a class='' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
+    <div> {% autoescape off %}{{x.question|slice:":90"}} {% if x.question|length > 90 %} ... {% endif %} {% endautoescape %}</div>
+</div>
 
-    <a class='questionIndex' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
-    <div>{{x.question|slice:":90"}}</div>
-    <div class="authorInfo">
-        <div class ='authorName'>{{x.author}}</div>
+    <div class="questionData">
+        <div class ='dateResults'>{{x.author}}</div>
         {% load tz %}
         {% if x.last_update > x.date_created %}
         {% timezone "America/Chicago" %}
         <abbr title="created {{x.last_update}}"> {% endtimezone %}edited {{x.last_update|date:"M j, Y H:i"}}</abbr>
         {% else %} {% timezone "America/Chicago" %} <abbr title="{{x.date_created}}"> {% endtimezone %} asked {{x.date_created|date:"M j Y"}} at {% load tz %}{{x.date_created|utc|date:"G:i"}}</abbr>
         {% endif %}
-
     </div>
+
 </div>
 {% endfor%}
 {% endif %}
@@ -56,5 +59,21 @@
 <a href="?page={{searchpage.paginator.num_pages}}">Last</a>
 {% endif %}
 {% endif %}
+<!--<div class="searchGrid">-->
+<!--    <div class="answer"><div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div></div>-->
+<!--    <div class="vote"> <div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div></div>-->
+<!--    <div class="searchTitle">{% autoescape off %}{{x.title}}{% endautoescape %}</div>-->
+<!--    <div class="searchQuestion">{% autoescape off %}{{x.question}}{% endautoescape %}</div>-->
+<!--    <div class="tags">tags</div>-->
+<!--    <div class="author"> <div class="authorInfo">-->
+<!--        <div class ='authorName'>{{x.author}}</div>-->
+<!--        {% load tz %}-->
+<!--        {% if x.last_update > x.date_created %}-->
+<!--        {% timezone "America/Chicago" %}-->
+<!--        <abbr title="created {{x.last_update}}"> {% endtimezone %}edited {{x.last_update|date:"M j, Y H:i"}}</abbr>-->
+<!--        {% else %} {% timezone "America/Chicago" %} <abbr title="{{x.date_created}}"> {% endtimezone %} asked {{x.date_created|date:"M j Y"}} at {% load tz %}{{x.date_created|utc|date:"G:i"}}</abbr>-->
+<!--        {% endif %}-->
+<!--    </div></div>-->
+<!--</div>-->
 
 {% endblock body %}

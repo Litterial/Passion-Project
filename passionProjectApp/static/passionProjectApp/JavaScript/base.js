@@ -12,10 +12,6 @@ function deleteCookie()
     console.log(cookie);
 }
 
-//
-// othertest[0].addEventListener('input',updatevalue);
-// console.log('hi');
-// console.log(othertest);
 
 
 function putCookie(e)
@@ -27,8 +23,83 @@ function putCookie(e)
 }
 
 
-function test()
-{
-    console.log('test');
 
+
+function updateText(count,newcount)
+{
+    console.log('updateText');
+    count.text(newcount);
+    console.log(newcount)
 }
+
+
+
+$(".Q-upvote-link ").click(function (e) {
+    console.log('test');
+    e.preventDefault();
+    console.log('preventDefault works');
+    var dataUrl = $(this).attr('data-href');
+    var questionID="question"+($(this).attr("data-upvote"));
+    console.log(questionID);
+    $.ajax({
+            url: dataUrl,
+            method: "GET",
+            data: {},
+            success: function (data) {
+                console.log(data);
+                var newLikes;
+                if(data.upvote){
+                    newLikes=data.voteTotal;
+                    console.log('upvote');
+                    console.log(newLikes);
+                    updateText(questionID,newLikes);
+
+                }
+                else{
+                    newLikes=data.voteTotal;
+                    updateText(questionID,newLikes);
+                }
+
+            },
+            error: function (fail) {
+                console.log('fail');
+                console.log(fail)
+            }
+        }
+    )
+});
+
+$(".Q-downvote-link ").click(function (e) {
+    console.log('test');
+    e.preventDefault();
+    console.log('preventDefault works');
+    var dataUrl = $(this).attr('data-href');
+    var questionID="question"+($(this).attr("data-downvote"));
+    console.log(questionID);
+    $.ajax({
+            url: dataUrl,
+            method: "GET",
+            data: {},
+            success: function (data) {
+                console.log(data);
+                var newLikes;
+                if(data.downvote){
+                    newLikes=data.voteTotal;
+                    console.log('upvote');
+                    console.log(newLikes);
+                    updateText(questionID,newLikes);
+
+                }
+                else{
+                    newLikes=data.voteTotal;
+                    updateText(questionID,newLikes);
+                }
+
+            },
+            error: function (fail) {
+                console.log('fail');
+                console.log(fail)
+            }
+        }
+    )
+});
