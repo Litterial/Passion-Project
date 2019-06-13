@@ -19,13 +19,15 @@ from rest_framework import authentication, permissions
 def index(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     #gets questions  with most answer
-    today=datetime.datetime.utcnow()
+    today=datetime.datetime.utcnow()-datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)
     tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
-    paginator=Paginator(tempquestions,2)
+    paginator=Paginator(tempquestions,10)
     page=request.GET.get('page')
     print('lastpage')
     allquestions=paginator.get_page(page)
+    print(allquestions)
+    print(len(tempquestions))
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     print('today')
     print(today)
@@ -38,7 +40,7 @@ def weekResults(request):
     today=datetime.datetime.utcnow()
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=7)
     tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
-    paginator=Paginator(tempquestions,2)
+    paginator=Paginator(tempquestions,10)
     page=request.GET.get('page')
     print('lastpage')
     allquestions=paginator.get_page(page)
@@ -53,7 +55,11 @@ def monthResults(request):
     #gets questions  with most answer
     today=datetime.datetime.utcnow()
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=31)
-    allquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    paginator=Paginator(tempquestions,10)
+    page=request.GET.get('page')
+    print('lastpage')
+    allquestions=paginator.get_page(page)
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     print('today')
     print(today)
@@ -91,7 +97,7 @@ def registerPass(request):
 def allquestions(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     questionlist=RealQuestion.objects.all().order_by('date_created')
-    paginator=Paginator(questionlist,2)
+    paginator=Paginator(questionlist,10)
     page=request.GET.get('page')
     print('lastpage')
     questionpage=paginator.get_page(page)
