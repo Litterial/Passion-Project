@@ -6,7 +6,14 @@
     <h3 class="questionTitle"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
+<div>
+    Likes:<a class='Q-upvote-link' data-upvote= "{{question.id}}" data-href='{% url "questionUpvote" question.id %}' href ="{% url 'questionUpvote' question.id %}">Upvote</a>
+    <div id="question{{question.id}}">{{question.upvote.count|sub:question.downvote.count}}</div>
+    Dislikes:<a class="Q-downvote-link" data-downvote="{{question.id}}" data-href="{% url 'questionDownvote' question.id %}" href="{% url 'questionDownvote' question.id %}">Downvote</a>
+</div>
+
 <hr/>
+
     <div class="questionMargin"><div class="questionFont">{% autoescape off%}{{question.question}} {% endautoescape %}</div>
     <div class="questionOptions">
         {% if request.user == question.author %}
@@ -61,6 +68,7 @@
         <h3 class="titlepadding"> 1 Answer</h3>
         {% endif %}
         {% for x in answers %}
+
     <div class="questionMargin"> <div class="questionFont"> {% autoescape off%}{{x.message}} {% endautoescape %}</div>
         <div class="questionOptions">
             {% if request.user == x.author %}
