@@ -42,5 +42,38 @@
 </div>
 {% endfor%}
 {% endif %}
+{% load mathfilters %}
+<!--{{questionpage.paginator.num_pages}}-->
+<div style="text-align: center">
+    {% if allquestions.paginator.num_pages > 6 %}
+    {% if allquestions.has_previous %}
+    <a href="?page=1">First</a>
+    {% if allquestions.number != 1 or allquestions.number != 2 %}
+    <a href="?page={{allquestions.previous_page_number}}">Previous</a>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% for y in  allquestions.paginator.page_range %}
+    {% if allquestions.paginator.num_pages < 6 %}
+    {% if allquestions.number == y %}
+    <a href ="?page={{y}}"><b>{{y}}</b></a>
+    {% else %}
+    <a href ="?page={{y}}">{{y}}</a>
+    {% endif %}
+    {% else %}
+    {% if allquestions.number == y %}
+    <b>{{y}}</b>
+    {% elif y > allquestions.number|sub:3  and y < allquestions.number|add:3 %}
+    <a href="?page={{y}}">{{y}}</a>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% if allquestions.has_next %}
+    <a href="?page={{allquestions.next_page_number}}">Next</a>
+    {% if allquestions.number != allquestions.pagination.num_pages %}
+    <a href="?page={{allquestions.paginator.num_pages}}">Last</a>
+    {% endif %}
+    {% endif %}
+</div>
 
 {% endblock body %}

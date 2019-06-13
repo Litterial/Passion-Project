@@ -21,7 +21,11 @@ def index(request):
     #gets questions  with most answer
     today=datetime.datetime.utcnow()
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)
-    allquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    paginator=Paginator(tempquestions,2)
+    page=request.GET.get('page')
+    print('lastpage')
+    allquestions=paginator.get_page(page)
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     print('today')
     print(today)
@@ -33,7 +37,11 @@ def weekResults(request):
     #gets questions  with most answer
     today=datetime.datetime.utcnow()
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=7)
-    allquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    paginator=Paginator(tempquestions,2)
+    page=request.GET.get('page')
+    print('lastpage')
+    allquestions=paginator.get_page(page)
     context={"allquestions":allquestions, "randomquestion":randomquestion,}
     print('today')
     print(today)
