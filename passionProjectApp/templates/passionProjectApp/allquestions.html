@@ -4,6 +4,13 @@
     <h1 class="questionTitle">All Questions</h1>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
+<div class="dateResults">
+    <a href="{% url 'allquestions' %}"><button class="btn btn-primary">All Questions</button></a>
+    <a href="{% url 'index' %}"><button class="btn btn-primary">Today</button></a>
+    <a href="{% url 'week' %}"><button class="btn btn-primary">Week</button></a>
+    <a href="{% url 'month' %}"><button class="btn btn-primary">Month</button></a>
+</div>
+
 <hr/>
 
 {% if questionpage %}

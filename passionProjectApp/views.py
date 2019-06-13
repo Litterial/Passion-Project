@@ -357,16 +357,19 @@ def comment_answer_del(request,commentID,grandparentID):
 def search (request):
     search=request.POST['search']
     newsearch='' + search + " "
-    questionsearch=RealQuestion.objects.filter(Q(title__icontains=newsearch) or Q(question__icontains=newsearch)).distinct().annotate(count=Count('answer')).order_by('-count')
+    print(search)
+    print(newsearch)
+    questionsearch=RealQuestion.objects.filter(Q(title__icontains=search) or Q(question__icontains=search)).distinct().annotate(count=Count('answer')).order_by('-count')
     tempsearch=RealQuestion.objects.filter(Q(title__icontains=newsearch) or Q(question__icontains=newsearch)).annotate(count=Count('answer'))
     print(questionsearch)
+    print(tempsearch)
     paginator=Paginator(questionsearch,10)
     print(paginator)
 
     page=request.GET.get('page')
     searchpage=paginator.get_page(page)
     print(searchpage)
-    sum=len(tempsearch)
+    sum=len(questionsearch)
     context={ 'search':search,'searchpage':searchpage,'sum':sum,}
     file_ = open(os.path.join(settings.BASE_DIR,  'common'))
     a=file_.read().split()

@@ -5,6 +5,7 @@
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
 <div class="dateResults">
+    <a href="{% url 'allquestions' %}"><button class="btn btn-primary">All Questions</button></a>
     <a href="{% url 'index' %}"><button class="btn btn-primary">Today</button></a>
     <a href="{% url 'week' %}"><button class="btn btn-primary">Week</button></a>
     <a href="{% url 'month' %}"><button class="btn btn-primary">Month</button></a>
@@ -54,17 +55,23 @@
     {% endif %}
     {% for y in  allquestions.paginator.page_range %}
     {% if allquestions.paginator.num_pages < 6 %}
-    <a href ="?page={{y}}">{{y}}</a>
+        {% if y == allquestions.number %}
+         <b>{{y}}</b>
+        {% else %}
+        <a href ="?page={{y}}">{{y}}</a>
+        {% endif %}
     {% else %}
-    {% if allquestions.number < 6 and y < 6 %}
-    <a href ="?page={{y}}">{{y}}</a>
+        {% if allquestions.number < 6 and y < 6 %}
+            {% if y == allquestions.number %}
+            <b>{{y}}</b>
+            {% else %}
+            <a href ="?page={{y}}">{{y}}</a>
+            {% endif %}
     {% elif allquestions.number == y %}
-    second test
-    <b>{{y}}</b>
-    {% elif y > allquestions.number|sub:3  and y < allquestions.number|add:3  and allquestions.number > 5%}
-    third test
-    <a href="?page={{y}}">{{y}}</a>
-    {% endif %}
+        <b>{{y}}</b>
+        {% elif y > allquestions.number|sub:3  and y < allquestions.number|add:3  and allquestions.number > 5%}
+        <a href="?page={{y}}">{{y}}</a>
+        {% endif %}
     {% endif %}
     {% endfor %}
     {% if allquestions.has_next %}
