@@ -361,6 +361,7 @@ def comment_answer_del(request,commentID,grandparentID):
 
 
 def search (request):
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     search=request.POST['search']
     newsearch='' + search + " "
     print(search)
@@ -376,7 +377,7 @@ def search (request):
     searchpage=paginator.get_page(page)
     print(searchpage)
     sum=len(questionsearch)
-    context={ 'search':search,'searchpage':searchpage,'sum':sum,}
+    context={ 'search':search,'searchpage':questionsearch,'sum':sum,'randomquestion':randomquestion}
     file_ = open(os.path.join(settings.BASE_DIR,  'common'))
     a=file_.read().split()
     for x in a:

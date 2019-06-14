@@ -29,7 +29,6 @@ class CommentAnswerForm(forms.ModelForm):
 class UserForm(forms.Form):
     username=forms.CharField(max_length=30)
     password=forms.CharField(widget=forms.PasswordInput)
-    # widgets={'password': forms.PasswordInput()}
 
     def clean_username(self):
         userData=self.cleaned_data['username']

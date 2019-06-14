@@ -52,6 +52,10 @@ p {
     padding-left: 3%;
     width: 12%;
 }
+.logo a{
+    color:#BE90D4;
+
+}
 
 .search {
     display: flex;
@@ -388,5 +392,26 @@ div.changeColors:nth-of-type(even)
     flex-direction: column;
     justify-content: space-around;
     margin-left:auto;
+}
+
+.formContainer
+{
+    margin:7% 15% 0 15%;
+    background:white;
+    height:100%;
+}
+
+.loginForm {
+
+    height: 100vh;
+    margin-left: 9%;}
+
+.loginForm input:not(last-of-type)
+{
+margin-bottom:3%;
+}
+.formPadding
+{
+    margin-top:2%;
 }
 

@@ -1,9 +1,49 @@
-{% extends 'passionProjectApp/base.html' %}
-{% block body %}
-<form method="POST">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'passionProjectApp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
+    <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
+    <script src="{% static 'passionProjectApp/js/bootstrap.js' %}"></script>
+</head>
+<body>
+<div class="topbar">
+    <div class ='logo'><a href="{% url 'index' %}">Math.Alpha</a></div>
+    <form action='{% url "search" %}' method="POST" class="search">
+        {% csrf_token %}
+        <input type="text" name="search" placeholder="Search...">
+    </form>
+    <div class='registration'>
+        <a class='login' href="{% url 'login' %}">Login</a> <a class='registerlink' href="{% url 'register' %}"><button type="button" class=" btn registerbutton">Sign Up</button></a></div>
+</div>
+
+<div class="formContainer">
+    {% if errors %}
+    *This user already exist
+    {% endif %}
+<form class=loginForm method="POST">
     {% csrf_token %}
-    {{form.as_p}}
+    <div>
+        <h1>Create an account</h1>
+        <div class="formPadding">
+            <div>
+                <div>{{ form.username.label_tag }}</div>
+                <div>{{ form.username }}</div>
+            </div>
+
+            <div>
+                <div>{{ form.password.label_tag }}</div>
+                <div>{{ form.password }}</div>
+            </div>
+        </div>
+    </div>
     <input type="hidden" name="next" id="id_next" value="{{ next }}"/>
-    <button>Submit</button>
+    <button class="btn btn-primary">Submit</button>
 </form>
-{% endblock body %}
+</div>
+
+</body>
+</html>

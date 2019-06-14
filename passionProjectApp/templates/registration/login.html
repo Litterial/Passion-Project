@@ -3,54 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'passionProjectApp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
+    <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
+    <script src="{% static 'passionProjectApp/js/bootstrap.js' %}"></script>
 </head>
 <body>
+<div class="topbar">
+    <div class ='logo'><a href="{% url 'index' %}">Math.Alpha</a></div>
+    <form action='{% url "search" %}' method="POST" class="search">
+        {% csrf_token %}
+        <input type="text" name="search" placeholder="Search...">
+    </form>
+    <div class='registration'>
+        <a class='login' href="{% url 'login' %}">Login</a> <a class='registerlink' href="{% url 'register' %}"><button type="button" class=" btn registerbutton">Sign Up</button></a></div>
+</div>
+
+<div class="formContainer">
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 {% if next %}
-Not a member?<a href = "{% url 'register' %}?next={{next|urlencode:''}}">Sign up here</a>
-<form method="post" action="{% url 'login' %}">
+<form class=loginForm method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <div>
+            <h1>Log in</h1>
+            <div class="formPadding">
+                <div>
 
-        <div>
-            <p>{{ form.username.label_tag }}</p>
-            <p>{{ form.username }}</p>
+                    <div>{{ form.username.label_tag }}</div>
+                    <div>{{ form.username }}</div>
+                </div>
+
+                <div>
+                    <div>{{ form.password.label_tag }}</div>
+                    <div>{{ form.password }}</div>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <p>{{ form.password.label_tag }}</p>
-            <p>{{ form.password }}</p>
-        </div>
-    </div>
-
-    <input type="submit" value="Login" />
+    <div>Not a member?<a href = "{% url 'register' %}?next={{next|urlencode:''}}">Sign up here</a></div>
+    <input class="btn btn-primary formPadding" type="submit" value="Login"/>
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
+</div>
 {% else %}
+<div class="formContainer">
 
-Not a member?<a href = "{% url 'register' %}">Sign up here</a>
-<form method="post" action="{% url 'login' %}">
+<form class=loginForm method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <div>
-
+        <h1>Log in</h1>
+        <div class="formPadding">
         <div>
-            <p>{{ form.username.label_tag }}</p>
-            <p>{{ form.username }}</p>
+
+            <div>{{ form.username.label_tag }}</div>
+            <div>{{ form.username }}</div>
         </div>
 
         <div>
-            <p>{{ form.password.label_tag }}</p>
-            <p>{{ form.password }}</p>
+            <div>{{ form.password.label_tag }}</div>
+            <div>{{ form.password }}</div>
         </div>
     </div>
-
-    <input type="submit" value="Login" />
+    </div>
+    <div>Not a member? <a href = "{% url 'register' %}">Sign up here</a></div>
+    <input class="btn btn-primary formPadding" type="submit" value="Login" />
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
-
+</div>
 {% endif %}
 
 

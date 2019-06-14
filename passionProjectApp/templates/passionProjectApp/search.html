@@ -22,9 +22,9 @@
         {% endif %}
     </div>
 
+
 <div class="questionEllipse">
     <a class='' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
-    <div> {% autoescape off %}{{x.question|slice:":90"}} {% if x.question|length > 90 %} ... {% endif %} {% endautoescape %}</div>
 </div>
 
     <div class="questionData">
@@ -40,25 +40,7 @@
 </div>
 {% endfor%}
 {% endif %}
-{% load mathfilters %}
-{% if searchpage.has_previous %}
-<a href="?page=1">First</a>
-<a href="?page={{searchpage.previous_page_number}}">Previous</a>
-{% endif %}
 
-{% for y in  searchpage.paginator.page_range %}
-{% if searchpage.number == y %}
-<b>{{y}}</b>
-{% elif y > searchpage.number|sub:3  and y < searchpage.number|add:3 %}
-<a href="?page={{y}}">{{y}}</a>
-{% endif %}
-{% endfor %}
-{% if searchpage.has_next %}
-<a href="?page={{searchpage.next_page_number}}">Next</a>
-{% if searchpage.number != searchpage.pagination.num_pages %}
-<a href="?page={{searchpage.paginator.num_pages}}">Last</a>
-{% endif %}
-{% endif %}
 <!--<div class="searchGrid">-->
 <!--    <div class="answer"><div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div></div>-->
 <!--    <div class="vote"> <div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div></div>-->

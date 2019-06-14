@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-No results
-</body>
-</html>
+{% extends 'passionProjectApp/base.html' %}
+{% block body %}
+
+<div class="titlepadding">
+    <h1 class="questionTitle">Your search '{{search}}' did not match any documents.</h1>
+</div>
+<br/>
+<div>
+<h2><ul>Suggestions:</ul></h2>
+<h4>
+    <li>Make sure all words are spelled correctly.</li>
+    <li>Try different keywords.</li>
+    <li>Avoid using overly general keywords </li></h4>
+    </ul></div>
+{% endblock body %}
