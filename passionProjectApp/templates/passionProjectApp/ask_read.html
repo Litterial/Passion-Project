@@ -3,7 +3,12 @@
 {% load mathfilters %}
 {% if question %}
 <div class="titlepadding">
-    <h3 class="questionTitle"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
+    <div class ='voting'>
+        <a class='Q-upvote-link' data-upvote= "{{question.id}}" data-href='{% url "questionUpvote" question.id %}' href ="{% url 'questionUpvote' question.id %}"><div class='triangleup'></div></a>
+        <div class='numberMargin' id="question{{question.id}}">{{question.upvote.count|sub:question.downvote.count}}</div>
+      <a class="Q-downvote-link" data-downvote="{{question.id}}" data-href="{% url 'questionDownvote' question.id %}" href="{% url 'questionDownvote' question.id %}"><div class="triangledown"></div></a>
+    </div>
+    <h3 class="questionTitle questionTitleRight"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
 <hr/>
@@ -62,8 +67,11 @@
         <h3 class="titlepadding"> 1 Answer</h3>
         {% endif %}
         {% for x in answers %}
-
-    <div class="questionMargin"> <div class="questionFont"> {% autoescape off%}{{x.message}} {% endautoescape %}</div>
+    <div class="questionMargin"> <div class="voting">
+        <a class='A-upvote-link' data-upvote= "{{x.id}}" data-href='{% url "answerUpvote" x.id %}' href ="{% url 'answerUpvote' x.id %}"><div class='triangleup'></div></a>
+        <div class='numberMargin' id="answer{{x.id}}">{{x.upvote.count|sub:x.downvote.count}}</div>
+        <a class="A-downvote-link" data-downvote="{{x.id}}" data-href="{% url 'answerDownvote' x.id %}" href="{% url 'answerDownvote' x.id %}"><div class="triangledown"></div></a>
+    </div><h3 class="questionFont"> {% autoescape off%}{{x.message}} {% endautoescape %}</h3>
         <div class="questionOptions">
             {% if request.user == x.author %}
             <span class="editlinks">

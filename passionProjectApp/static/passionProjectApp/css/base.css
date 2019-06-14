@@ -142,9 +142,40 @@ p {
     justify-content: space-between;
     height:7rem;
 }
+
 /*****************************************************ask_read*********************************************************/
+.voting{
+    display:inline-block;
+    margin-right:2%;
+    margin-bottom:2%;
+
+}
+
+.triangleup{
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #555;
+}
+.triangledown{
+width: 0;
+height: 0;
+border-left: 10px solid transparent;
+border-right: 10px solid transparent;
+border-top: 20px solid #555;
+}
+
+.numberMargin
+{
+    margin-left: 21%;
+}
 .questionTitle {
     display:inline;
+}
+.questionTitleRight
+{
+    margin-right: auto;
 }
 
 .askbutton {
