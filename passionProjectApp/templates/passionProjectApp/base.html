@@ -43,7 +43,7 @@
 <div class="bodygrid">
 
 <div class="rightAside">
-    <div class="randoQTitle">Related questions</div>
+    <div class="randoQTitle">Other questions</div>
     {% if randomquestion %}
     {% for x in randomquestion %}
     <div class="randoQ"><a href="{% url 'ask_read' x.id %}">{% autoescape off %} {{x.title}} {% endautoescape %}</a></div>
