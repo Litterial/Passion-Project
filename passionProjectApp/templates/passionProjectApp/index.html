@@ -35,7 +35,7 @@
         {% load tz %}
             {% if x.last_update > x.date_created %}
         {% timezone "America/Chicago" %}
-        <abbr title="created {{x.last_update}}"> {% endtimezone %}edited {{x.last_update|date:"M j, Y H:i"}}</abbr>
+        <abbr title="created {{x.date_created}} edited {{x.last_update}}"> {% endtimezone %}edited {{x.last_update|date:"M j, Y H:i"}}</abbr>
             {% else %} {% timezone "America/Chicago" %} <abbr title="{{x.date_created}}"> {% endtimezone %} asked {{x.date_created|date:"M j Y"}} at {% load tz %}{{x.date_created|utc|date:"G:i"}}</abbr>
             {% endif %}
 

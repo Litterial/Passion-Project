@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="{% static 'passionProjectApp/css/base.css' %}">
     <script src="{% static 'passionProjectApp/JavaScript/base.js' %}"></script>
     <script src="{% static 'passionProjectApp/js/bootstrap.js' %}"></script>
-
     {{form.media}}
 </head>
 <body >
 {% if request.user.is_authenticated %}
 <div class="topbar">
-    <div class ='logo'><a href="{% url 'index' %}">Math.Alpha</a></div>
+    <div class ='logo login'><a href="{% url 'index' %}">Math.Alpha</a></div>
     <form action='{% url "search" %}' method="POST" class="search">
         {% csrf_token %}
         <input type="text" name="search" placeholder="Search...">
@@ -25,7 +24,7 @@
 </div>
 {% else %}
 <div class="topbar">
-    <div class ='logo'><a href="{% url 'index' %}">Math.Alpha</a></div>
+    <div class ='logo login'><a href="{% url 'index' %}">Math.Alpha</a></div>
     <form action='{% url "search" %}' method="POST" class="search">
         {% csrf_token %}
         <input type="text" name="search" placeholder="Search...">

@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-    <div>Not a member?<a href = "{% url 'register' %}?next={{next|urlencode:''}}">Sign up here</a></div>
+    <div>Not a member?<a href = "{% url 'register' %}?next={{next|urlencode:''}}"> Sign up here</a></div>
     <input class="btn btn-primary formPadding" type="submit" value="Login"/>
     <input type="hidden" name="next" value="{{ next }}" />
 </form>

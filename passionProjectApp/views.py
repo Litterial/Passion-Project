@@ -21,7 +21,7 @@ def index(request):
     #gets questions  with most answer
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)
-    tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
     paginator=Paginator(tempquestions,10)
     page=request.GET.get('page')
     print('lastpage')
@@ -39,7 +39,7 @@ def weekResults(request):
     #gets questions  with most answer
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=7)
-    tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
     paginator=Paginator(tempquestions,10)
     page=request.GET.get('page')
     print('lastpage')
@@ -55,7 +55,7 @@ def monthResults(request):
     #gets questions  with most answer
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=31)
-    tempquestions=RealQuestion.objects.filter(last_update__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
     paginator=Paginator(tempquestions,10)
     page=request.GET.get('page')
     print('lastpage')
@@ -366,7 +366,7 @@ def search (request):
     newsearch='' + search + " "
     print(search)
     print(newsearch)
-    questionsearch=RealQuestion.objects.filter(Q(title__icontains=search) or Q(question__icontains=search)).distinct().annotate(count=Count('answer')).order_by('-count')
+    questionsearch=RealQuestion.objects.filter(Q(title__icontains=search) | Q(question__icontains=search)).distinct().annotate(count=Count('answer')).order_by('-count')
     tempsearch=RealQuestion.objects.filter(Q(title__icontains=newsearch) or Q(question__icontains=newsearch)).annotate(count=Count('answer'))
     print(questionsearch)
     print(tempsearch)

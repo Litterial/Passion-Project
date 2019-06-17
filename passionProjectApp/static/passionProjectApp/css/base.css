@@ -1,6 +1,5 @@
 .errorlist
 {
-    color:green;
     list-style-type: none;
 
 }
@@ -15,19 +14,18 @@ body
 }
 
 /*the p tag is changed to inline because the tinyMCE renders all text as html*/
-p {
-    display: inline;
-}
+/*p {*/
+/*    display: inline;*/
+/*}*/
 
 .bodygrid
 {
     display:grid;
-    grid-template-areas: 'aside questions rando';
-    grid-template-columns: 0.5fr 3fr 1fr;
+    grid-template-areas: 'questions rando';
+    grid-template-columns:  3fr 1fr;
     padding-top:8vh;
     height:100vh;
-    margin-top: 8%;
-    margin-right: 10%;
+    margin:8% 10% 0 10%;
 }
 
 /*******************************************************topbar**************************************************************/
@@ -53,7 +51,7 @@ p {
     width: 12%;
 }
 .logo a{
-    color:#BE90D4;
+    color:#609;
 
 }
 
@@ -83,7 +81,7 @@ p {
 /* color for login text*/
 
 .login {
-    color:#BE90D4;
+    color:#609;
     font-size: 1.3rem;
 }
 /* space between user and login button*/
@@ -92,7 +90,7 @@ p {
 }
 
 .registerbutton {
-    background:#BE90D4;
+    background:#609;
     color:white;
 }
 
@@ -103,7 +101,7 @@ p {
 }
 
 .registerbutton:hover {
-    background: #9d77b3;
+    background: #401d40;
 }
 
 /*******************************************************asidebar********************************************************/
@@ -140,10 +138,16 @@ p {
     padding:3% 0 0 1.5%;
     display:flex;
     justify-content: space-between;
-    height:7rem;
+    /*height:7rem;*/
 }
 
 /*****************************************************ask_read*********************************************************/
+
+.answerpadding
+{
+    padding:3% 0 0 1.5%;
+    display:flex;
+}
 .voting{
     display:inline-block;
     margin-right:2%;
@@ -158,6 +162,15 @@ p {
     border-right: 10px solid transparent;
     border-bottom: 20px solid #555;
 }
+
+.triangleupvoted
+{
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid orange;
+}
 .triangledown{
 width: 0;
 height: 0;
@@ -165,19 +178,35 @@ border-left: 10px solid transparent;
 border-right: 10px solid transparent;
 border-top: 20px solid #555;
 }
+.triangledownvoted{
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid blue;
+}
 
 .numberMargin
 {
-    margin-left: 21%;
+    text-align: center;
 }
 .questionTitle {
     display:inline;
+
 }
 .questionTitleRight
 {
     margin-right: auto;
+    padding-left: 3%;
+    font-size: 2.3rem;
+    padding-top: 1%;
 }
-
+.answerTitleRight
+{
+    padding-left: 3%;
+    font-size: 2.3rem;
+    padding-top: 1%;
+}
 .askbutton {
     /*margin-right:2%;*/
 }
@@ -190,6 +219,11 @@ abbr[title]{
     padding: 0 0 0 6%;
     border-bottom: 1px solid #9a9a9a;
     margin-top: 2%;
+}
+
+.questionMargin p
+{
+    display:inline;
 }
 
 .editlinks
@@ -225,7 +259,7 @@ abbr[title]{
 }
 .questionFont
 {
-    font-size: 1rem;
+    font-size: 1.3rem;
 }
 
 .editMargins
@@ -355,13 +389,13 @@ div.changeColors:nth-of-type(even)
 
 .randoQ
 {
-    padding-left: 8%;
-    padding-bottom: 8%;
+    padding-left: 25%;
+    padding-bottom: 3%;
     font-size: 0.9rem;
 }
 .randoQTitle
 {
-    padding: 8% 0 5% 8%;
+    padding: 8% 0 5% 25%;
     font-size: 1.3rem;
 }
 
@@ -371,44 +405,18 @@ div.changeColors:nth-of-type(even)
     color: #3af;
 }
 /****************************************************Search************************************************************/
-.searchGrid
-{
-    display: grid;
-    grid-template-areas: 'answer title title'
-                        'answer body body'
-                        'vote body body'
-                        'vote tags name';
-    grid-template-columns: 1fr 7fr 2fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+/*.searchGrid*/
+/*{*/
+/*    display: grid;*/
+/*    grid-template-areas: 'answer title title'*/
+/*                        'answer body body'*/
+/*                        'vote body body'*/
+/*                        'vote tags name';*/
+/*    grid-template-columns: 1fr 7fr 2fr;*/
+/*    grid-template-rows: 1fr 1fr 1fr 1fr;*/
 
-}
+/*}*/
 
-.answer
-{   background: red;
-    grid-area:answer;
-}
-.vote
-{   background: orange;
-    grid-area:vote;
-}
-.searchTitle
-{   background:yellow;
-    grid-area:title;
-}
-.searchQuestion
-{
-    background:green;
-    grid-area:body;
-}
-.author
-{
-    background:blue;
-    grid-area:name;
-}
-.tags{
-    background:purple;
-    grid-area:tags;
-}
 
 .questionEllipse{
     display: flex;
