@@ -1,7 +1,7 @@
 {% extends 'passionProjectApp/base.html' %}
 {% block body %}
 <div class="titlepadding">
-    <h1 class="questionTitle">Results</h1>
+    <h1 class="">Results</h1>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
 <hr/>
@@ -12,7 +12,7 @@
 
 
 <div class="changeColors">
-    <div class="questionInfo">
+    <div class="answerAndVote">
         {% if x.answer_set.count == 1 %}
         <div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div>
         {% elif x.answer_set.count == 0 %}
@@ -23,7 +23,7 @@
     </div>
 
 
-<div class="questionEllipse">
+<div class="questionIndexTitle">
     <a class='' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
 </div>
 

@@ -8,7 +8,7 @@
         <div class='numberMargin' id="question{{question.id}}">{{question.upvote.count|sub:question.downvote.count}}</div>
       <a class="Q-downvote-link" data-downvote="{{question.id}}" data-href="{% url 'questionDownvote' question.id %}" href="{% url 'questionDownvote' question.id %}"><div class="triangledown"></div></a>
     </div>
-    <h3 class="questionTitle questionTitleRight"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
+    <h3 class="questionTitleRight"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
 </div>
 <hr/>
@@ -108,7 +108,7 @@
                 {% endtimezone %} {{ y.last_update|date:"M j 'y "}}{{ y.last_created|date:'H:i' }}</abbr></span>
 
             {% else %}
-            {% autoescape off %} {{x.message}} {% endautoescape %} — <span>{{x.author}}
+            {% autoescape off %} {{y.message}} {% endautoescape %} — <span>{{y.author}}
                 {% timezone "America/Chicago" %}
                 <abbr title="{{y.last_update}}">
                 {% endtimezone %} {{ y.date_created|date:"M j 'y "}}{{ y.date_created|date:'H:i' }}</abbr></span>

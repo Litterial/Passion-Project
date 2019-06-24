@@ -18,18 +18,16 @@
 <!-- element.child_set accesses a reverse foreign key-->
 <div class="changeColors">
 
-    <div class="questionInfo">
+    <div class="answerAndVote">
         {% if x.answer_set.count == 1 %}
         <div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div>
-        {% elif x.answer_set.count == 0 %}
-        <div class="answered"><div >{{x.answer_set.count}}</div> <div>answers</div></div>
         {% else %}
         <div class="answered"><div >{{x.answer_set.count}}</div> <div>answers</div></div>
         {% endif %}
     </div>
 
 
-    <a class='questionIndex' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
+    <a class='questionIndexTitle' href="{% url 'ask_read' x.id %}">{% autoescape off %}{{x.title}}{% endautoescape %}</a>
     <div class="authorInfo">
         <div class ='authorName'>{{x.author}}</div>
         {% load tz %}

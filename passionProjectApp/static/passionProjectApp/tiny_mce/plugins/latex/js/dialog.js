@@ -40,7 +40,7 @@ var LatexDialog = {
 
 	getSrc : function(code){
 
-		return 'https://chart.googleapis.com/chart?cht=tx&chf=a,s,000000|bg,s,FFFFFF00&chl=' + encodeURIComponent(code);
+		return '' + encodeURIComponent(code);
 
 	}
 };

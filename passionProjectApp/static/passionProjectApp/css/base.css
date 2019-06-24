@@ -103,7 +103,10 @@ body
 .registerbutton:hover {
     background: #401d40;
 }
-
+hr {
+    height:0;
+    margin-bottom:0;
+}
 /*******************************************************asidebar********************************************************/
 .asidebar {
     display: grid;
@@ -190,21 +193,18 @@ border-top: 20px solid #555;
 {
     text-align: center;
 }
-.questionTitle {
-    display:inline;
 
-}
 .questionTitleRight
 {
     margin-right: auto;
     padding-left: 3%;
     font-size: 2.3rem;
     padding-top: 1%;
+    width: fit-content;
 }
 .answerTitleRight
 {
     padding-left: 3%;
-    font-size: 2.3rem;
     padding-top: 1%;
 }
 .askbutton {
@@ -221,7 +221,7 @@ abbr[title]{
     margin-top: 2%;
 }
 
-.questionMargin p
+.qComment p
 {
     display:inline;
 }
@@ -281,9 +281,7 @@ abbr[title]{
     color:#848d95;
 }
 
-hr {
-    height:0
-}
+
 
 .askButton {
     margin-top: 6%;
@@ -318,6 +316,12 @@ abbr.pointer {
 
 /****************************************************index***********************************************************/
 
+.dateResults a:not(first-of-type)
+{
+    margin-left:3%;
+}
+
+/*alternating color scheme*/
 div.changeColors:nth-of-type(odd)
 {
     display: flex;
@@ -334,6 +338,7 @@ div.changeColors:nth-of-type(even)
     background: white;
 }
 
+/*total answers*/
 .answered
 {
     display: inline-block;
@@ -344,16 +349,18 @@ div.changeColors:nth-of-type(even)
     width:78px;
 }
 
-.questionInfo
+.answerAndVote
 {
     margin-left: 9%;
 }
 
-.questionIndex
+.questionIndexTitle
 {
     margin-right: auto;
     padding-left: 6%;
     width: fit-content;
+    display: flex;
+    align-self: center;
 }
 .authorName{
     display: flex;
@@ -371,15 +378,12 @@ div.changeColors:nth-of-type(even)
 {
     display:inline-block;
 }
+
 .dateResults{
     display:flex;
     justify-content: flex-end;
 }
 
-.dateResults a:not(first-of-type)
-{
-    margin-left:3%;
-}
 
 /****************************************************Right Aside*******************************************************/
 .rightAside {
