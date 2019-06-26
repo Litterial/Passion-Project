@@ -40,6 +40,11 @@
 </div>
 </div>
 {% endfor%}
+{% else %}
+There are no question todays. Here are some questions to check out:
+{% for other in other %}
+<p><a href=" {% url 'ask_read' other.id %}">{% autoescape off %}{{other.title}}{% endautoescape %}</a></p>
+{% endfor %}
 {% endif %}
 {% load mathfilters %}
 <div style="text-align: center">

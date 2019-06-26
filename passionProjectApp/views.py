@@ -10,6 +10,7 @@ import datetime,os
 from django.conf import settings
 import urllib.request
 from django.db.models import Q
+from random import sample
 from rest_framework.decorators import api_view,renderer_classes,permission_classes,authentication_classes
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
@@ -19,6 +20,11 @@ from rest_framework import authentication, permissions
 def index(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     #gets questions  with most answer
+    rando_reference=[p.id for p in randomquestion]
+    other=RealQuestion.objects.exclude(id__in = rando_reference).order_by('?')[:5]
+    other_refernce=[p.id for p in other]
+    print(rando_reference)
+    print(other_refernce)
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)
     tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
@@ -28,7 +34,7 @@ def index(request):
     allquestions=paginator.get_page(page)
     print(allquestions)
     print(len(tempquestions))
-    context={"allquestions":allquestions, "randomquestion":randomquestion,}
+    context={"allquestions":allquestions, "randomquestion":randomquestion,'other':other}
     print('today')
     print(today)
     print('cutoff')
