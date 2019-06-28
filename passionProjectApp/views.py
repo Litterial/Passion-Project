@@ -43,6 +43,9 @@ def index(request):
 def weekResults(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     #gets questions  with most answer
+    rando_reference=[p.id for p in randomquestion]
+    other=RealQuestion.objects.exclude(id__in = rando_reference).order_by('?')[:5]
+    other_refernce=[p.id for p in other]
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=7)
     tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
@@ -50,14 +53,18 @@ def weekResults(request):
     page=request.GET.get('page')
     print('lastpage')
     allquestions=paginator.get_page(page)
-    context={"allquestions":allquestions, "randomquestion":randomquestion,}
+    context={"allquestions":allquestions, "randomquestion":randomquestion,"other":other}
     print('today')
     print(today)
     print('cutoff')
     print(cutoff)
     return render(request,"passionProjectApp/weekResults.html",context)
 def monthResults(request):
+
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
+    rando_reference=[p.id for p in randomquestion]
+    other=RealQuestion.objects.exclude(id__in = rando_reference).order_by('?')[:5]
+    other_refernce=[p.id for p in other]
     #gets questions  with most answer
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=31)
@@ -66,7 +73,7 @@ def monthResults(request):
     page=request.GET.get('page')
     print('lastpage')
     allquestions=paginator.get_page(page)
-    context={"allquestions":allquestions, "randomquestion":randomquestion,}
+    context={"allquestions":allquestions, "randomquestion":randomquestion,"other":other}
     print('today')
     print(today)
     print('cutoff')
