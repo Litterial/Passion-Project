@@ -218,7 +218,7 @@ def answer(request,ID):
     if request.method=="POST":
         if form.is_valid():
             Answer.objects.create(message=request.POST['message'],parent=parentquestionID,author=request.user)
-            return redirect('ask_read',parentquestionID)
+            return redirect('ask_read',parentquestionID.id)
         else:
             form=AnswerForm(request.POST or None)
             context={'form':form,'errors':form.errors}
