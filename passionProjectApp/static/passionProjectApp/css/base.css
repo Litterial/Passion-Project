@@ -384,7 +384,12 @@ div.changeColors:nth-of-type(even)
     justify-content: flex-end;
 }
 
-
+.noQuestions
+{
+    padding:2.5% 0;
+    font-size: 1.3rem;
+    text-align: center;
+}
 /****************************************************Right Aside*******************************************************/
 .rightAside {
     grid-area: rando;

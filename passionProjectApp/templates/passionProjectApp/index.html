@@ -41,9 +41,32 @@
 </div>
 {% endfor%}
 {% else %}
-There are no question todays. Here are some questions to check out:
+<aside class="noQuestions">There are no question for today. Here are some other questions to check out.</aside>
+
 {% for other in other %}
-<p><a href=" {% url 'ask_read' other.id %}">{% autoescape off %}{{other.title}}{% endautoescape %}</a></p>
+<div class="changeColors">
+
+    <div class="answerAndVote">
+        {% if other.answer_set.count == 1 %}
+        <div class="answered"><div >{{other.answer_set.count}}</div> <div>answer</div></div>
+        {% else %}
+        <div class="answered"><div >{{other.answer_set.count}}</div> <div>answers</div></div>
+        {% endif %}
+    </div>
+
+
+    <a class='questionIndexTitle' href="{% url 'ask_read' other.id %}">{% autoescape off %}{{other.title}}{% endautoescape %}</a>
+    <div class="authorInfo">
+        <div class ='authorName'>{{other.author}}</div>
+        {% load tz %}
+        {% if other.last_update > other.date_created %}
+        {% timezone "America/Chicago" %}
+        <abbr title="created {{other.date_created}} edited {{other.last_update}}"> {% endtimezone %}edited {{other.last_update|date:"M j, Y H:i"}}</abbr>
+        {% else %} {% timezone "America/Chicago" %} <abbr title="{{other.date_created}}"> {% endtimezone %} asked {{other.date_created|date:"M j Y"}} at {% load tz %}{{other.date_created|utc|date:"G:i"}}</abbr>
+        {% endif %}
+
+    </div>
+</div>
 {% endfor %}
 {% endif %}
 {% load mathfilters %}
