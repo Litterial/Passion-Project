@@ -40,7 +40,43 @@
 </div>
 {% endfor%}
 {% endif %}
+{% load mathfilters %}
+<div style="text-align: center">
+    {% if searchpage.paginator.num_pages > 1 %}
+    {% if searchpage.paginator.num_pages > 6 %}
+    {% if searchpage.has_previous %}
+    <a href="?search={{search}}&page=1">First</a>
+    {% if searchpage.number != 1 or searchpage.number != 2 %}
+    <a href="?search={{search}}&page={{searchpage.previous_page_number}}">Previous</a>
+    {% endif %}
+    {% endif %}
+    {% endif %}
 
+    {% for y in  searchpage.paginator.page_range %}
+    {% if searchpage.paginator.num_pages < 6 %}
+    {% if searchpage.number == y %}
+    <b>{{y}}</b>
+    {% else %}
+    <a href ="?search={{search}}&page={{y}}">{{y}}</a>
+    {% endif %}
+    {% else %}
+
+    {% if searchpage.number == y %}
+    <b>{{y}}</b>
+    {% elif y > searchpage.number|sub:3  and y < searchpage.number|add:3 %}
+    <a href="?search={{search}}&page={{y}}">{{y}}</a>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+
+    {% if searchpage.has_next %}
+    <a href="?search={{search}}&page={{searchpage.next_page_number}}">Next</a>
+    {% if searchpage.number != searchpage.pagination.num_pages %}
+    <a href="?search={{search}}&page={{searchpage.paginator.num_pages}}">Last</a>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+</div>
 <!--<div class="searchGrid">-->
 <!--    <div class="answer"><div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div></div>-->
 <!--    <div class="vote"> <div class="answered"><div >{{x.answer_set.count}}</div> <div>answer</div></div></div>-->

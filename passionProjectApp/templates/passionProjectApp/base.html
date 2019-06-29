@@ -15,8 +15,7 @@
 {% if request.user.is_authenticated %}
 <div class="topbar">
     <div class ='logo login'><a href="{% url 'index' %}">Math.αlphα</a></div>
-    <form action='{% url "search" %}' method="POST" class="search">
-        {% csrf_token %}
+    <form action='{% url "search" %}' method="GET" class="search">
         <input type="text" name="search" placeholder="Search...">
     </form>
     <div class='registration'>
@@ -25,8 +24,7 @@
 {% else %}
 <div class="topbar">
     <div class ='logo login'><a href="{% url 'index' %}">Math.αlphα</a></div>
-    <form action='{% url "search" %}' method="POST" class="search">
-        {% csrf_token %}
+    <form action='{% url "search" %}' method="GET" class="search">
         <input type="text" name="search" placeholder="Search...">
     </form>
     <div class='registration'>
