@@ -115,9 +115,16 @@ $(".A-upvote-link ").click(function (e) {
     e.preventDefault();
     console.log('preventDefault works');
     var dataUrl = $(this).attr('data-href');
-    var tempID=("#answer"+($(this).attr("data-upvote")));
-    var questionID=document.querySelector(tempID);
+    var tempID=$(this).attr("data-upvote");
+    var ID="#answer"+tempID;
+    var upID='#upA'+tempID;
+    var downID='#downA'+tempID;
+    var questionID=document.querySelector(ID);
+    var upArrow=document.querySelector(upID);
+    var downArrow=document.querySelector(downID);
     console.log(questionID);
+    console.log(upArrow);
+    $(downArrow).addClass('triangledown').removeClass('triangledownvoted');
     $.ajax({
             url: dataUrl,
             method: "GET",
@@ -130,6 +137,7 @@ $(".A-upvote-link ").click(function (e) {
                     newLikes=data.voteTotal;
                     console.log('upvote');
                     console.log(newLikes);
+                    $(upArrow).addClass('triangleupvoted').removeClass('triangleup');
                     updateText(questionID,newLikes);
 
                 }
@@ -138,6 +146,7 @@ $(".A-upvote-link ").click(function (e) {
                     console.log(data.upvote);
                     console.log('downvote');
                     console.log(newLikes);
+                    $(upArrow).addClass('triangleup').removeClass('triangleupvoted');
                     updateText(questionID,newLikes);
                 }
 
@@ -155,9 +164,15 @@ $(".A-downvote-link ").click(function (e) {
     e.preventDefault();
     console.log('preventDefault works');
     var dataUrl = $(this).attr('data-href');
-    var tempID=("#answer"+($(this).attr("data-downvote")));
-    var questionID=document.querySelector(tempID);
+    var tempID=$(this).attr('data-downvote');
+    var ID="#answer"+tempID;
+    var upID="#upA"+tempID;
+    var downID="#downA"+tempID;
+    var upArrow=document.querySelector(upID);
+    var downArrow=document.querySelector(downID);
+    var questionID=document.querySelector(ID);
     console.log(questionID);
+    $(upArrow).addClass('triangleup').removeClass('triangleupvoted');
     $.ajax({
             url: dataUrl,
             method: "GET",
@@ -170,6 +185,7 @@ $(".A-downvote-link ").click(function (e) {
                     newLikes=data.voteTotal;
                     console.log('upvote');
                     console.log(newLikes);
+                    $(downArrow).addClass('triangledownvoted').removeClass('triangledown');
                     updateText(questionID,newLikes);
 
                 }
@@ -178,6 +194,7 @@ $(".A-downvote-link ").click(function (e) {
                     console.log(data.downvote);
                     console.log('downvote');
                     console.log(newLikes);
+                    $(downArrow).addClass('triangledown').removeClass('triangledownvoted');
                     updateText(questionID,newLikes);
                 }
 

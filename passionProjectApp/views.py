@@ -464,6 +464,7 @@ def answerUpvote(request,ID):
         else:
             like.upvote.add(request.user)
             like.downvote.remove(request.user)
+            upvote=True;
         update=True
         voteTotal=(len(like.upvote.all())-len(like.downvote.all()))
         print(voteTotal)

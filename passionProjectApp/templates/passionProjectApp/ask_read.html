@@ -77,9 +77,17 @@
         {% for x in answers %}
 <div class="answerpadding">
     <div class="voting">
-        <a class='A-upvote-link' data-upvote= "{{x.id}}" data-href='{% url "answerUpvote" x.id %}' href ="{% url 'answerUpvote' x.id %}"><div class='triangleup'></div></a>
+        {% if request.user in x.upvote.all %}
+        <a class='A-upvote-link' data-upvote= "{{x.id}}" data-href='{% url "answerUpvote" x.id %}' href ="{% url 'answerUpvote' x.id %}"><div class='triangleupvoted' id="upA{{x.id}}"></div></a>
+        {% else %}
+        <a class='A-upvote-link' data-upvote= "{{x.id}}" data-href='{% url "answerUpvote" x.id %}' href ="{% url 'answerUpvote' x.id %}"><div class='triangleup' id="upA{{x.id}}"></div></a>
+        {% endif %}
         <div class='numberMargin' id="answer{{x.id}}">{{x.upvote.count|sub:x.downvote.count}}</div>
-        <a class="A-downvote-link" data-downvote="{{x.id}}" data-href="{% url 'answerDownvote' x.id %}" href="{% url 'answerDownvote' x.id %}"><div class="triangledown"></div></a>
+        {% if request.user in x.downvote.all %}
+        <a class="A-downvote-link" data-downvote="{{x.id}}" data-href="{% url 'answerDownvote' x.id %}" href="{% url 'answerDownvote' x.id %}"><div class="triangledownvoted" id="downA{{x.id}}"></div></a>
+        {% else %}
+        <a class="A-downvote-link" data-downvote="{{x.id}}" data-href="{% url 'answerDownvote' x.id %}" href="{% url 'answerDownvote' x.id %}"><div class="triangledown" id="downA{{x.id}}"></div></a>
+        {% endif %}
     </div>
     <div class=" answerTitleRight questionFont"> {% autoescape off%}{{x.message}} {% endautoescape %}</div></div>
     <div class="questionMargin">
