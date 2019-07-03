@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from tinymce import models as tinymce_models
 import datetime
+from django.utils import timezone
 # Create your models here.
 # class Question(models.Model):
 #     title=models.CharField(max_length=1000)
@@ -15,8 +16,8 @@ import datetime
 class RealQuestion(models.Model):
     title = tinymce_models.HTMLField()
     question = tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
+    last_update=models.DateTimeField(default=timezone.now)
+    date_created=models.DateTimeField(default=timezone.now)
     upvote=models.ManyToManyField(User,blank=True,related_name='question_upvotes')
     downvote=models.ManyToManyField(User,blank=True,related_name='question_downvotes')
     author = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -27,8 +28,8 @@ class RealQuestion(models.Model):
 
 class RealQuestionComment(models.Model):
     message= tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
+    last_update=models.DateTimeField(default=timezone.now)
+    date_created=models.DateTimeField(default=timezone.now)
     parent=models.ForeignKey(RealQuestion,on_delete=models.CASCADE)
     upvote=models.ManyToManyField(User,blank=True,related_name='questcom_upvotes')
     downvote=models.ManyToManyField(User,blank=True,related_name='questcom_downvotes')
@@ -39,8 +40,8 @@ class RealQuestionComment(models.Model):
 
 class Answer(models.Model):
     message= tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.utcnow)
-    date_created=models.DateTimeField(default=datetime.datetime.utcnow)
+    last_update=models.DateTimeField(default=timezone.now)
+    date_created=models.DateTimeField(default=timezone.now)
     parent=models.ForeignKey(RealQuestion,on_delete=models.CASCADE)
     upvote=models.ManyToManyField(User,blank=True,related_name='answer_upvotes')
     downvote=models.ManyToManyField(User,blank=True,related_name='answer_downvotes')
@@ -51,8 +52,8 @@ class Answer(models.Model):
 
 class AnswerComment(models.Model):
     message= tinymce_models.HTMLField()
-    last_update=models.DateTimeField(default=datetime.datetime.now)
-    date_created=models.DateTimeField(default=datetime.datetime.now)
+    last_update=models.DateTimeField(default=timezone.now)
+    date_created=models.DateTimeField(default=timezone.now)
     parent=models.ForeignKey(Answer,on_delete=models.CASCADE)
     upvote=models.ManyToManyField(User,blank=True,related_name='anscom_upvotes')
     downvote=models.ManyToManyField(User,blank=True,related_name='anscom_downvotes')

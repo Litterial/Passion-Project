@@ -4,9 +4,17 @@
 {% if question %}
 <div class="titlepadding">
     <div class ='voting'>
-        <a class='Q-upvote-link' data-upvote= "{{question.id}}" data-href='{% url "questionUpvote" question.id %}' href ="{% url 'questionUpvote' question.id %}"><div class='triangleup'></div></a>
+        {% if request.user in question.upvote.all %}
+        <a class='Q-upvote-link' data-upvote= "{{question.id}}" data-href='{% url "questionUpvote" question.id %}' href ="{% url 'questionUpvote' question.id %}"><div class='triangleupvoted' id="upQ{{question.id}}"></div></a>
+        {% else %}
+        <a class='Q-upvote-link' data-upvote= "{{question.id}}" data-href='{% url "questionUpvote" question.id %}' href ="{% url 'questionUpvote' question.id %}"><div class='triangleup' id="upQ{{question.id}}"></div></a>
+        {% endif %}
         <div class='numberMargin' id="question{{question.id}}">{{question.upvote.count|sub:question.downvote.count}}</div>
-      <a class="Q-downvote-link" data-downvote="{{question.id}}" data-href="{% url 'questionDownvote' question.id %}" href="{% url 'questionDownvote' question.id %}"><div class="triangledown"></div></a>
+        {% if request.user in question.downvote.all %}
+        <a class="Q-downvote-link" data-downvote="{{question.id}}" data-href="{% url 'questionDownvote' question.id %}" href="{% url 'questionDownvote' question.id %}"><div class="triangledownvoted" id="downQ{{question.id}}"></div></a>
+         {% else %}
+        <a class="Q-downvote-link" data-downvote="{{question.id}}" data-href="{% url 'questionDownvote' question.id %}" href="{% url 'questionDownvote' question.id %}"><div class="triangledown" id="downQ{{question.id}}"></div></a>
+        {% endif %}
     </div>
     <h3 class="questionTitleRight"> {% autoescape off %}{{question.title}} {% endautoescape %}</h3>
     <a class="askbutton" href="{% url 'ask' %}"><button type="button" class="btn registerbutton">Ask a question</button></a>
