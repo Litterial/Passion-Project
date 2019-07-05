@@ -18,6 +18,7 @@ class RealQuestion(models.Model):
     question = tinymce_models.HTMLField()
     last_update=models.DateTimeField(default=timezone.now)
     date_created=models.DateTimeField(default=timezone.now)
+    topic=models.CharField(max_length=40, blank=True)
     upvote=models.ManyToManyField(User,blank=True,related_name='question_upvotes')
     downvote=models.ManyToManyField(User,blank=True,related_name='question_downvotes')
     author = models.ForeignKey(User,on_delete=models.CASCADE)

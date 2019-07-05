@@ -7,7 +7,7 @@ from tinymce.widgets import TinyMCE
 class RealQuestionForm(forms.ModelForm):
     class Meta:
         model = RealQuestion
-        fields=['title','question']
+        fields=['title','question','topic']
 
 
 class AnswerForm(forms.ModelForm):

@@ -128,7 +128,7 @@ def ask(request):
     form=RealQuestionForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            RealQuestion.objects.create(title=request.POST['title'],question=request.POST['question'],author=request.user)
+            RealQuestion.objects.create(title=request.POST['title'],question=request.POST['question'],topic=request.POST['topic'],author=request.user)
             return redirect('index')
         else:
             form=RealQuestionForm(request.POST or None)
@@ -379,7 +379,7 @@ def search (request):
     newsearch='' + search + " "
     print(search)
     print(newsearch)
-    questionsearch=RealQuestion.objects.filter(Q(title__icontains=search) | Q(question__icontains=search)).distinct().annotate(count=Count('answer')).order_by('-count')
+    questionsearch=RealQuestion.objects.filter(Q(title__icontains=search) | Q(question__icontains=search)|Q(topic__icontains=search)).distinct().annotate(count=Count('answer')).order_by('-count')
     print(questionsearch)
     paginator=Paginator(questionsearch,10)
     print(paginator)
