@@ -5,9 +5,12 @@ from django.contrib.auth.models import User
 from tinymce.widgets import TinyMCE
 
 class RealQuestionForm(forms.ModelForm):
+    title=forms.CharField(widget=TinyMCE(mce_attrs={'height':'100px'}))
     class Meta:
         model = RealQuestion
         fields=['title','question','topic']
+
+        widgets={'topic':forms.TextInput(attrs={'placeholder':'(e.g algebra,calculus)'})}
 
 
 class AnswerForm(forms.ModelForm):
