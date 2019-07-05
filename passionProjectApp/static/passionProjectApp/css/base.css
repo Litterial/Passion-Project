@@ -247,11 +247,22 @@ abbr[title]{
 
 .questionOptions {
     display:grid;
-    grid-template-areas: 'links updates';
-    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'links tag updates';
+    grid-template-columns: 1fr 1fr 3fr;
     font-size:14px;
     font-style: initial;
     padding-top:2%;
+}
+
+.tag
+{
+    grid-area: tag;
+}
+
+.tag a{
+    background: #E1ECF4;
+    color:#39739d;
+    padding: 2% 2% 1.5% 2%;
 }
 
 .questionOptions span a{

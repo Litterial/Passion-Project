@@ -29,6 +29,9 @@
     <a href="{% url 'ask_del' question.id %}"><abbr class='pointer' title="remove post including answers and comments">delete</abbr></a>
     {% endif %}
     </span>
+        {% if question.topic %}
+        <span class="tag"><a href="{% url 'search'%}?search={{question.topic}}">{{question.topic}}</a></span>
+        {% endif %}
     {% if question.last_update > question.date_created %}
     <span class="createdProfile">{% load tz %} {% timezone "America/Chicago" %} <abbr title="{{question.last_update}}">{% endtimezone %}
          edited {{ question.last_update|utc|date:"M j 'y"}} at {{ question.last_update|utc|date:'H:i' }}</abbr> {% timezone "America/Chicago" %}<span class="dateCreatedMargin">Asked <abbr title="{{question.date_created}}">{% endtimezone %}{{ question.date_created|utc|date:"M j 'y"}} at {{ question.date_created|utc|date:'H:i' }} by {{question.author}}</abbr></span>
