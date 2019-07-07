@@ -18,22 +18,35 @@ from rest_framework import authentication, permissions
 # Create your views here.
 
 def index(request):
-    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10] #Finds 10 random questions
     #gets questions  with most answer
-    rando_reference=[p.id for p in randomquestion]
+    rando_reference=[p.id for p in randomquestion] # grabs the id of every question found inside of randomquestion
+
+
+    today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
+    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)#cutoff date is ~24 hours before today
+
+    #searchs for questions between today and the cutoff day and orders by in descending order
+    #annotate calculates the values of each item in the query set
+    tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
+    #Paginator class takes a queryset argument and divides(paginations) it by a number argument
+    paginator=Paginator(tempquestions,10)
+    #request.GET looks for the key-value pair of the get request. .get() returns the value of the key.
+    page=request.GET.get('page')
+    print('lastpage')
+
+    allquestions=paginator.get_page(page)
+    print(allquestions)
+    print(len(tempquestions))
+
+    #used to find a different selection of questions from randomquestion in case there are no question created within the past 24 hours
     other=RealQuestion.objects.exclude(id__in = rando_reference).order_by('?')[:5]
     other_refernce=[p.id for p in other]
     print(rando_reference)
     print(other_refernce)
-    today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
-    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)
-    tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
-    paginator=Paginator(tempquestions,10)
-    page=request.GET.get('page')
-    print('lastpage')
-    allquestions=paginator.get_page(page)
-    print(allquestions)
-    print(len(tempquestions))
+
+
+
     context={"allquestions":allquestions, "randomquestion":randomquestion,'other':other}
     print('today')
     print(today)
