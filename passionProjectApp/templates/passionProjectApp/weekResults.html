@@ -43,7 +43,7 @@
 {% endfor%}
 {% else %}
 <aside class="noQuestions">There are no questions this week. Here are some other questions to check out.</aside>
-
+{% if other %}
 {% for other in other %}
 <div class="changeColors">
 
@@ -69,6 +69,7 @@
     </div>
 </div>
 {% endfor %}
+{% endif %}
 {% endif %}
 {% load mathfilters %}
 <div style="text-align: center">

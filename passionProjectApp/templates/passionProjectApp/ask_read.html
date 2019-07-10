@@ -30,7 +30,7 @@
     {% endif %}
     </span>
         {% if question.topic %}
-        <span class="tag"><a href="{% url 'search'%}?search={{question.topic}}">{{question.topic}}</a></span>
+        <span class="tag"><a href="{% url 'search'%}?search={{question.topic}}"><abbr class="pointer" title="view other questions tagged {{question.topic}}">{{question.topic}}</abbr></a></span>
         {% endif %}
     {% if question.last_update > question.date_created %}
     <span class="createdProfile">{% load tz %} {% timezone "America/Chicago" %} <abbr title="{{question.last_update}}">{% endtimezone %}

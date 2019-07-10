@@ -18,11 +18,12 @@ from rest_framework import authentication, permissions
 # Create your views here.
 
 def index(request):
-    randomquestion=RealQuestion.objects.all().order_by('?')[:10] #Finds 10 random questions
-    #gets questions  with most answer
-    rando_reference=[p.id for p in randomquestion] # grabs the id of every question found inside of randomquestion
+    #Finds 10 random questions
+    randomquestion=RealQuestion.objects.all().order_by('?')[:10]
 
-
+    # grabs the id of every question found inside of randomquestion
+    rando_reference=[p.id for p in randomquestion]
+    print(rando_reference)
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
     cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=1)#cutoff date is ~24 hours before today
 
@@ -45,14 +46,14 @@ def index(request):
     print(rando_reference)
     print(other_refernce)
 
-
-
     context={"allquestions":allquestions, "randomquestion":randomquestion,'other':other}
     print('today')
     print(today)
     print('cutoff')
     print(cutoff)
     return render(request,"passionProjectApp/index.html",context)
+
+#code is very similar to index
 def weekResults(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     #gets questions  with most answer
@@ -60,7 +61,7 @@ def weekResults(request):
     other=RealQuestion.objects.exclude(id__in = rando_reference).order_by('?')[:5]
     other_refernce=[p.id for p in other]
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
-    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=7)
+    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=7) #cutoff is ~ 7 days from today
     tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
     paginator=Paginator(tempquestions,10)
     page=request.GET.get('page')
@@ -72,15 +73,16 @@ def weekResults(request):
     print('cutoff')
     print(cutoff)
     return render(request,"passionProjectApp/weekResults.html",context)
-def monthResults(request):
 
+#code is very similiar to index
+def monthResults(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     rando_reference=[p.id for p in randomquestion]
     other=RealQuestion.objects.exclude(id__in = rando_reference).order_by('?')[:5]
     other_refernce=[p.id for p in other]
     #gets questions  with most answer
     today=datetime.datetime.utcnow()+datetime.timedelta(minutes=3)
-    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=31)
+    cutoff=datetime.datetime.utcnow()-datetime.timedelta(days=31) #cutoff date is ~1 month from today
     tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
     paginator=Paginator(tempquestions,10)
     page=request.GET.get('page')
@@ -93,33 +95,51 @@ def monthResults(request):
     print(cutoff)
     return render(request,"passionProjectApp/monthResults.html",context)
 
+#user registration
 def register(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     form=UserForm(request.POST or None)
     print('here')
+
+    #checks to see if the request to the page is a post
     if request.method =="POST":
+        #checks if the form is valid
         if form.is_valid():
+            #creates the new user
             newuser=User.objects.create_user(username=request.POST['username'],password=request.POST['password'])
-            login_created_author=authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password']) #checks to see if this is a valid user, if so return a user object
-            login(request,login_created_author) #request that this user is logged in
-            redirect_to = request.GET.get('next', None) # use get or Post as per your requirement
+
+            #checks to see if this is a valid user, if so return a user object
+            login_created_author=authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password'])
+            #logs in the user after they register
+            login(request,login_created_author)
+            #looks for a get request and grabs the value of the key 'next'
+            redirect_to = request.GET.get('next', None)
+            #checks to see if the url is value to prevent user from being sent to a different site
             safe_url=is_safe_url(redirect_to,allowed_hosts=request.get_host())
             print(redirect_to)
             print(safe_url)
             print(request.get_host())
+            #redirects user to index if there is no next request
             if redirect_to==None:
                 return redirect('index')
+            #if the url is save and there is a next request, directs user to the 'next' page
             if safe_url:
                 return redirect(redirect_to)
+            #else the site was not save and the user is redirected to register page to register again
             print('not save')
             return redirect('register')
+        #If the form is somehow invalid
         else:
             form=UserForm(request.POST or None)
             context={'form':form,'errors':form.errors}
             return render(request,"passionProjectApp/register.html",context,)
     return render(request,"passionProjectApp/register.html",{"form":form, "randomquestion":randomquestion})
+
+#test page for registration
 def registerPass(request):
     return render(request,"passionProjectApp/registerPass.html")
+
+# similar to index
 def allquestions(request):
     randomquestion=RealQuestion.objects.all().order_by('?')[:10]
     questionlist=RealQuestion.objects.all().order_by('date_created')
