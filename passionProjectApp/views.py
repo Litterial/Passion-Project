@@ -32,12 +32,12 @@ def index(request):
     tempquestions=RealQuestion.objects.filter(date_created__range=[cutoff,today]).annotate(count=Count('answer')).order_by('-count')
     #Paginator class takes a queryset argument and divides(paginations) it by a number argument
     paginator=Paginator(tempquestions,10)
+    print(paginator)
     #request.GET looks for the key-value pair of the get request. .get() returns the value of the key.
     page=request.GET.get('page')
     print('lastpage')
-
     allquestions=paginator.get_page(page)
-    print(allquestions)
+    print(paginator.num_pages)
     print(len(tempquestions))
 
     #used to find a different selection of questions from randomquestion in case there are no question created within the past 24 hours
@@ -416,12 +416,13 @@ def search (request):
     print(questionsearch)
     paginator=Paginator(questionsearch,10)
     print(paginator)
-
+    range_limit=range(1,6)
+    range_end=range(paginator.num_pages-4,paginator.num_pages+1)
     page=request.GET.get('page')
     searchpage=paginator.get_page(page)
     print(searchpage)
     sum=len(questionsearch)
-    context={ 'search':search,'searchpage':searchpage,'sum':sum,'randomquestion':randomquestion}
+    context={ 'search':search,'searchpage':searchpage,'sum':sum,'randomquestion':randomquestion,'range_limit':range_limit,'range_end':range_end}
     file_ = open(os.path.join(settings.BASE_DIR,  'common'))
     a=file_.read().split()
     for x in a:

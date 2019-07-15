@@ -43,35 +43,52 @@
 {% load mathfilters %}
 <div style="text-align: center">
     {% if searchpage.paginator.num_pages > 1 %}
-    {% if searchpage.paginator.num_pages > 6 %}
-    {% if searchpage.has_previous %}
+    {% if searchpage.paginator.num_pages > 5 %}
+    {% if searchpage.has_previous and searchpage.number > 4 %}
     <a href="?search={{search}}&page=1">First</a>
-    {% if searchpage.number != 1 or searchpage.number != 2 %}
-    <a href="?search={{search}}&page={{searchpage.previous_page_number}}">Previous</a>
-    {% endif %}
     {% endif %}
     {% endif %}
 
-    {% for y in  searchpage.paginator.page_range %}
     {% if searchpage.paginator.num_pages < 6 %}
-    {% if searchpage.number == y %}
-    <b>{{y}}</b>
+    {% for x in searchpage.paginator.page_range %}
+    {% if searchpage.number == x %}
+    <b>{{x}}</b>
     {% else %}
-    <a href ="?search={{search}}&page={{y}}">{{y}}</a>
+    <a href="?search={{search}}&page={{x}}">{{x}}</a>
     {% endif %}
-    {% else %}
+    {% endfor %}
 
+
+    {% else %}
+    {% if searchpage.number < 5 %}
+    {% for x in range_limit %}
+    {% if searchpage.number == x %}
+    <b>{{x}}</b>
+    {% else %}
+    <a href="?search={{search}}&page={{x}}">{{x}}</a>
+    {% endif %}
+    {% endfor %}
+    {% elif searchpage.number >= searchpage.paginator.num_pages|sub:2 %}
+    {% for i in range_end %}
+    {% if searchpage.number == i %}
+    <b>{{i}}</b>
+    {% else %}
+    <a href="?search={{search}}&page={{i}}">{{i}}</a>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    {% for x in searchpage.paginator.page_range %}
     {% if searchpage.number == y %}
     <b>{{y}}</b>
     {% elif y > searchpage.number|sub:3  and y < searchpage.number|add:3 %}
     <a href="?search={{search}}&page={{y}}">{{y}}</a>
     {% endif %}
-    {% endif %}
     {% endfor %}
+    {% endif %}
 
-    {% if searchpage.has_next %}
-    <a href="?search={{search}}&page={{searchpage.next_page_number}}">Next</a>
-    {% if searchpage.number != searchpage.pagination.num_pages %}
+
+
+    {% if searchpage.number != searchpage.paginator.num_pages %}
     <a href="?search={{search}}&page={{searchpage.paginator.num_pages}}">Last</a>
     {% endif %}
     {% endif %}
