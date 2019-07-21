@@ -45,8 +45,9 @@ def index(request):
     other_refernce=[p.id for p in other]
     print(rando_reference)
     print(other_refernce)
-
-    context={"allquestions":allquestions, "randomquestion":randomquestion,'other':other}
+    range_limit=range(1,6)
+    range_end=range(paginator.num_pages-4,paginator.num_pages+1)
+    context={"allquestions":allquestions, "randomquestion":randomquestion,'other':other,'range_limit':range_limit,'range_end':range_end}
     print('today')
     print(today)
     print('cutoff')
@@ -145,6 +146,8 @@ def allquestions(request):
     questionlist=RealQuestion.objects.all().order_by('date_created')
     paginator=Paginator(questionlist,10)
     page=request.GET.get('page')
+    range_limit=range(1,6)
+    range_end=range(paginator.num_pages-4,paginator.num_pages+1)
     print('lastpage')
     questionpage=paginator.get_page(page)
     print("questions")
@@ -153,7 +156,7 @@ def allquestions(request):
     print(paginator.num_pages)
     print("paginator")
     print(paginator)
-    return render(request,'passionProjectApp/allquestions.html',{'questionlist':questionlist,'randomquestion':randomquestion,'questionpage':questionpage})
+    return render(request,'passionProjectApp/allquestions.html',{'questionlist':questionlist,'randomquestion':randomquestion,'questionpage':questionpage,'range_limit':range_limit,'range_end':range_end})
 
 @login_required
 def ask(request):

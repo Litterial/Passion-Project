@@ -74,35 +74,51 @@
 {% load mathfilters %}
 <div style="text-align: center">
     {% if allquestions.paginator.num_pages > 1 %}
-    {% if allquestions.paginator.num_pages > 6 %}
-    {% if allquestions.has_previous %}
+    {% if allquestions.paginator.num_pages > 5 %}
+    {% if allquestions.has_previous and allquestions.number > 4 %}
     <a href="?page=1">First</a>
-    {% if allquestions.number != 1 or allquestions.number != 2 %}
-    <a href="?page={{allquestions.previous_page_number}}">Previous</a>
-    {% endif %}
     {% endif %}
     {% endif %}
 
-    {% for y in  allquestions.paginator.page_range %}
     {% if allquestions.paginator.num_pages < 6 %}
-    {% if allquestions.number == y %}
-    <b>{{y}}</b>
+    {% for x in allquestions.paginator.page_range %}
+    {% if allquestions.number == x %}
+    <b>{{x}}</b>
     {% else %}
-    <a href ="?page={{y}}">{{y}}</a>
+    <a href="?page={{x}}">{{x}}</a>
     {% endif %}
-    {% else %}
+    {% endfor %}
 
+
+    {% else %}
+    {% if allquestions.number < 5 %}
+    {% for x in range_limit %}
+    {% if allquestions.number == x %}
+    <b>{{x}}</b>
+    {% else %}
+    <a href="?page={{x}}">{{x}}</a>
+    {% endif %}
+    {% endfor %}
+    {% elif allquestions.number >= allquestions.paginator.num_pages|sub:2 %}
+    {% for i in range_end %}
+    {% if allquestions.number == i %}
+    <b>{{i}}</b>
+    {% else %}
+    <a href="?page={{i}}">{{i}}</a>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    {% for x in allquestions.paginator.page_range %}
     {% if allquestions.number == y %}
     <b>{{y}}</b>
     {% elif y > allquestions.number|sub:3  and y < allquestions.number|add:3 %}
     <a href="?page={{y}}">{{y}}</a>
     {% endif %}
-    {% endif %}
     {% endfor %}
+    {% endif %}
 
-    {% if allquestions.has_next %}
-    <a href="?page={{allquestions.next_page_number}}">Next</a>
-    {% if allquestions.number != allquestions.pagination.num_pages %}
+
+    {% if allquestions.number != allquestions.paginator.num_pages %}
     <a href="?page={{allquestions.paginator.num_pages}}">Last</a>
     {% endif %}
     {% endif %}
